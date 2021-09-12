@@ -4,18 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import xyz.haff.petclinic.repositories.PetTypeRepository;
+import xyz.haff.petclinic.repositories.PetRepository;
 
 @RequiredArgsConstructor
-@RequestMapping("/pet_types")
 @Controller
-public class PetTypeController {
-    private final PetTypeRepository repository;
+@RequestMapping("/pets")
+public class PetController {
+    private final PetRepository repository;
 
     @RequestMapping("/list")
     public String list(Model model) {
-        model.addAttribute("pet_types", repository.findAll());
+        model.addAttribute("pets", repository.findAll());
 
-        return "pet_types/list";
+        return "pets/list";
     }
 }

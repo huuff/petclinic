@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pets</title>
+</head>
+<body>
+<h1>Pets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+
+  <tr th:each="pet : ${pets}">
+    <td th:text="${pet.name}"></td>
+    <td th:text="${pet.type.name}"></td>
+  </tr>
+</table>
+</body>
+</html>
