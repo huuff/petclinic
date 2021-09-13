@@ -3,7 +3,6 @@
 * Add
   * Visits
   * Vets
-  * Owners
 * View of a pet and all of its visits
 * View of pet and all of its visits
 * View of an owner and all of its pets
