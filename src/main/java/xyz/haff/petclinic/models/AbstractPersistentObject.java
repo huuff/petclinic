@@ -9,6 +9,7 @@ import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 // TODO: Try to make these properties final
+// TODO: Call it `AbstractBaseEntity`
 
 @MappedSuperclass
 public abstract class AbstractPersistentObject implements PersistentObject {

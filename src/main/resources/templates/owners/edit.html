@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create or Update Owner</title>
+</head>
+<body>
+<h1>Create or Update Owner</h1>
+<!-- /* @thymesVar id="owner" type="xyz.haff.petclinic.models.Owner" */ -->
+<form th:object="${owner}" th:action="@{/owners/edit}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input th:field="*{firstName}"/>
+    <input th:field="*{lastName}"/>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
