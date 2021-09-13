@@ -7,7 +7,7 @@
 * View of pet and all of its visits
 * View of an owner and all of its pets
 * Form to add owner
-* Birthdate in owner
+* Birthdate in pet
 * Use `GetMapping` in controllers
 * Try not to use the Spring context in tests
 * Use a `toString()` in the `enum` to print it instead of thymeleaf functions
