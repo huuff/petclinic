@@ -29,6 +29,13 @@ public class OwnerController {
         return OWNER_CREATE_OR_UPDATE_FORM;
     }
 
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("owner", new Owner());
+
+        return OWNER_CREATE_OR_UPDATE_FORM;
+    }
+
     @PostMapping("/edit")
     public String saveOrUpdate(@ModelAttribute Owner owner) {
         var savedOwner = repository.save(owner);
