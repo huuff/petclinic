@@ -16,6 +16,7 @@
   </thead>
 
   <tr th:each="pet : ${pets}">
+    <!--/*@thymesVar id="pet" type="xyz.haff.petclinic.models.Pet"*/-->
     <td th:text="${pet.name}"></td>
     <td th:text="${pet.type.name}"></td>
   </tr>
