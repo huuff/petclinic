@@ -9,5 +9,5 @@
 * Form to add owner
 * Birthdate in pet
 * Use `GetMapping` in controllers
-* Try not to use the Spring context in tests
+* Set up test coverage and try to reach 70%
 * Use a `toString()` in the `enum` to print it instead of thymeleaf functions
