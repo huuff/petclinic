@@ -9,16 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-// TODO: Try to make this an enum
-
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "pet_types")
-public class PetType extends AbstractPersistentObject {
-
-    @Column(name = "name")
-    private String name;
+public enum PetType {
+    DOG, CAT
 }
