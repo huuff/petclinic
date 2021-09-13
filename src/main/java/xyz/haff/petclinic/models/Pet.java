@@ -20,4 +20,8 @@ public class Pet extends AbstractPersistentObject {
 
     @Enumerated(EnumType.STRING)
     private PetType type;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 }

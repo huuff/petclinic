@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.models.PetType;
 import xyz.haff.petclinic.repositories.PetRepository;
@@ -17,6 +18,7 @@ import xyz.haff.petclinic.repositories.PetRepository;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,7 +37,7 @@ public class PetControllerTest {
 
     @BeforeEach
     void setUp() {
-        var mittens = new Pet("Mittens", PetType.CAT);
+        var mittens = new Pet("Mittens", PetType.CAT, mock(Owner.class));
 
         pets = new HashSet<>() {{ add(mittens); }};
 
