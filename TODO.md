@@ -7,3 +7,4 @@
 * View of an owner and all of its pets
 * Birthdate in pet
 * Set up test coverage and try to reach 70%
+* Use maven release plugin
