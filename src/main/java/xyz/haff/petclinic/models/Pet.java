@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -19,7 +20,11 @@ public class Pet extends AbstractPersistentObject {
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private PetType type;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")

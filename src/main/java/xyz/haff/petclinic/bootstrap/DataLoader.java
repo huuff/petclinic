@@ -9,6 +9,7 @@ import xyz.haff.petclinic.models.PetType;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,8 +25,8 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Set<Pet> joesPets = new HashSet<>();
         var joe = new Owner("Joe", "Smith", joesPets);
-        var mittens = new Pet("Mittens", PetType.CAT, joe);
-        var toby = new Pet("Toby", PetType.DOG, joe);
+        var mittens = new Pet("Mittens", PetType.CAT, LocalDate.of(2015, 3, 17), joe);
+        var toby = new Pet("Toby", PetType.DOG, LocalDate.of(2017, 8, 21), joe);
         joesPets.add(mittens);
         joesPets.add(toby);
 

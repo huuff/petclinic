@@ -15,6 +15,7 @@ import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.models.PetType;
 import xyz.haff.petclinic.repositories.PetRepository;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,7 +38,7 @@ public class PetControllerTest {
 
     @BeforeEach
     void setUp() {
-        var mittens = new Pet("Mittens", PetType.CAT, mock(Owner.class));
+        var mittens = new Pet("Mittens", PetType.CAT, mock(LocalDate.class), mock(Owner.class));
 
         pets = new HashSet<>() {{ add(mittens); }};
 
