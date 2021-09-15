@@ -10,17 +10,21 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Name</th>
       <th>Type</th>
       <th>Birth Date</th>
+      <th>Owner</th>
     </tr>
   </thead>
 
   <tr th:each="pet : ${pets}">
     <!--/*@thymesVar id="pet" type="xyz.haff.petclinic.models.Pet"*/-->
+    <td><a th:text="${pet.id}" th:href="@{'/pets/' + ${pet.id} + '/edit'}"></a></td>
     <td th:text="${pet.name}"></td>
     <td th:text="${pet.type}"></td>
     <td th:text="${pet.birthDate}"></td>
+    <td><a th:text="${pet.owner.firstName} + ' ' + ${pet.owner.lastName}"></a></td>
   </tr>
 </table>
 </body>

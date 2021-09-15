@@ -9,6 +9,7 @@ import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 // TODO: Try to make these properties final
+// Version is definitely not working
 
 @MappedSuperclass
 public abstract class AbstractBaseEntity implements BaseEntity {
@@ -30,8 +31,7 @@ public abstract class AbstractBaseEntity implements BaseEntity {
             return false;
         }
 
-        BaseEntity other
-                = (BaseEntity)o;
+        BaseEntity other = (BaseEntity)o;
 
         // if the id is missing, return false
         if (id == null) return false;
