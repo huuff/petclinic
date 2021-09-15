@@ -11,13 +11,15 @@ import xyz.haff.petclinic.repositories.VetRepository;
 @RequestMapping("/vets")
 @RequiredArgsConstructor
 public class VetController {
+    private final static String LIST_VIEW = "vets/list" ;
+
     private final VetRepository repository;
 
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("vets", repository.findAll());
 
-        return "vets/list";
+        return LIST_VIEW;
     }
 
     @GetMapping("/{id}/edit")
@@ -32,6 +34,13 @@ public class VetController {
     public String updateOrCreate(@ModelAttribute Vet vet) {
         repository.save(vet);
 
-        return "redirect:" + "/vets/list";
+        return "redirect:/" + LIST_VIEW;
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("vet", new Vet());
+
+        return "vets/edit";
     }
 }
