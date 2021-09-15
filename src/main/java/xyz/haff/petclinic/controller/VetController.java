@@ -7,6 +7,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.models.Vet;
 import xyz.haff.petclinic.repositories.VetRepository;
+import xyz.haff.petclinic.repositories.VisitRepository;
 
 @Controller
 @RequestMapping("/vets")
@@ -14,7 +15,8 @@ import xyz.haff.petclinic.repositories.VetRepository;
 public class VetController {
     private final static String LIST_VIEW = "vets/list" ;
 
-    private final VetRepository repository;
+    private final VetRepository vetRepository;
+    private final VisitRepository visitRepository;
 
     @InitBinder
     public void unbindID(WebDataBinder dataBinder) {
@@ -23,7 +25,7 @@ public class VetController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("vets", repository.findAll());
+        model.addAttribute("vets", vetRepository.findAll());
 
         return LIST_VIEW;
     }
@@ -31,7 +33,7 @@ public class VetController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
         // TODO: Handle absence
-        model.addAttribute("vet", repository.findById(id));
+        model.addAttribute("vet", vetRepository.findById(id));
 
         return "vets/edit";
     }
@@ -39,7 +41,7 @@ public class VetController {
     @PostMapping("/{id}/edit")
     public String updateOrCreate(@PathVariable String id, @ModelAttribute Vet vet) {
         vet.setId(id);
-        repository.save(vet);
+        vetRepository.save(vet);
 
         return "redirect:/" + LIST_VIEW;
     }
@@ -53,8 +55,15 @@ public class VetController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute Vet vet) {
-        repository.save(vet);
+        vetRepository.save(vet);
 
         return "redirect:/" + LIST_VIEW;
+    }
+
+    @GetMapping("/{id}/visits")
+    public String visits(@PathVariable String id, Model model) {
+        model.addAttribute("visits", visitRepository.findAllByVetId(id));
+
+        return "visits/list";
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.PetRepository;
+import xyz.haff.petclinic.repositories.VisitRepository;
 
 @RequiredArgsConstructor
 @Controller
@@ -14,7 +15,8 @@ import xyz.haff.petclinic.repositories.PetRepository;
 public class PetController {
     private static final String PETS_LIST = "pets/list";
 
-    private final PetRepository repository;
+    private final PetRepository petRepository;
+    private final VisitRepository visitRepository;
 
     @InitBinder
     public void unbindID(WebDataBinder dataBinder) {
@@ -23,7 +25,7 @@ public class PetController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("pets", repository.findAll());
+        model.addAttribute("pets", petRepository.findAll());
 
         return PETS_LIST;
     }
@@ -31,7 +33,7 @@ public class PetController {
     @PostMapping("/{id}/edit")
     public String saveOrUpdate(@PathVariable String id, @ModelAttribute Pet pet) {
         pet.setId(id);
-        repository.save(pet);
+        petRepository.save(pet);
 
         // TODO: Redirect to view of pet? Redirect depending on where we come from?
         return "redirect:/owners/list";
@@ -39,8 +41,15 @@ public class PetController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("pet", repository.findById(id));
+        model.addAttribute("pet", petRepository.findById(id));
 
         return "pets/edit";
+    }
+
+    @GetMapping("/{id}/visits")
+    public String visits(@PathVariable String id, Model model) {
+        model.addAttribute("visits", visitRepository.findAllByPetId(id));
+
+        return "visits/list";
     }
 }
