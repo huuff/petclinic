@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pets")
-public class Pet extends AbstractPersistentObject {
+public class Pet extends AbstractBaseEntity {
 
     @Column(name = "name")
     private String name;

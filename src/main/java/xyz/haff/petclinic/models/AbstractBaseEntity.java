@@ -9,10 +9,9 @@ import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 // TODO: Try to make these properties final
-// TODO: Call it `AbstractBaseEntity`
 
 @MappedSuperclass
-public abstract class AbstractPersistentObject implements PersistentObject {
+public abstract class AbstractBaseEntity implements BaseEntity {
 
     @Id
     @Getter
@@ -26,13 +25,13 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PersistentObject)) {
+        if (!(o instanceof BaseEntity)) {
 
             return false;
         }
 
-        PersistentObject other
-                = (PersistentObject)o;
+        BaseEntity other
+                = (BaseEntity)o;
 
         // if the id is missing, return false
         if (id == null) return false;

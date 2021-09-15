@@ -13,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Owner extends AbstractPersistentObject {
+public class Owner extends AbstractBaseEntity {
 
     @Column(name = "first_name")
     private String firstName;

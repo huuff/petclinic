@@ -38,7 +38,7 @@ public class PetControllerTest {
 
     @BeforeEach
     void setUp() {
-        var mittens = new Pet("Mittens", PetType.CAT, mock(LocalDate.class), mock(Owner.class));
+        var mittens = new Pet("Mittens", PetType.CAT, LocalDate.now(), mock(Owner.class));
 
         pets = new HashSet<>() {{ add(mittens); }};
 
