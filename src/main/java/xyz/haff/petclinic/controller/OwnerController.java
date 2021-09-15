@@ -23,7 +23,7 @@ public class OwnerController {
         return "owners/list";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
         model.addAttribute("owner", repository.findById(id));
 
