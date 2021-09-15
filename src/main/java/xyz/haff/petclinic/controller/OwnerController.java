@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.models.Owner;
+import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 
 @RequiredArgsConstructor
@@ -41,6 +42,17 @@ public class OwnerController {
         var savedOwner = repository.save(owner);
 
         return "redirect:/owners/list";
+    }
+
+    @GetMapping("/{id}/add_pet")
+    public String list(@PathVariable String id, Model model) {
+        var newPet = new Pet();
+        // TODO: Handle absence of owner
+        newPet.setOwner(repository.findById(id).get());
+
+        model.addAttribute("pet", newPet);
+
+        return "pets/edit";
     }
 
 

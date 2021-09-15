@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Pet</title>
+</head>
+<body>
+<h1>Edit Pet</h1>
+<!-- /* @thymesVar id="pet" type="xyz.haff.petclinic.models.Pet" */ -->
+<form th:object="${pet}" th:action="@{/pets/edit}" method="post">
+    <input th:field="*{owner}" type="hidden"/>
+    <input th:field="*{name}"/>
+    <input type="date" th:field="*{birthDate}"/>
+    <select id="type" th:field="*{type}">
+        <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}" th:text="${type}"></option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
