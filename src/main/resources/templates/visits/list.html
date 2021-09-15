@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Visits</title>
+</head>
+<body>
+<h1>All visits</h1>
+
+<table>
+  <thead>
+    <tr>
+      <td>Date</td>
+      <td>Pet</td>
+      <td>Vet</td>
+      <td>Reason</td>
+    </tr>
+  </thead>
+  <tr th:each="visit : ${visits}">
+    <td th:text="${visit.date}"></td>
+    <td><a th:text="${visit.pet.name}" th:href="@{'/pets/' + ${visit.pet.id} + '/edit'}"></a></td>
+    <td><a th:text="${visit.vet.firstName} + ' ' + ${visit.vet.lastName}" th:href="@{'/vets/' + ${visit.vet.id} + '/edit'}"></a></td>
+    <td th:text="${visit.reason}"></td>
+  </tr>
+</table>
+</body>
+</html>

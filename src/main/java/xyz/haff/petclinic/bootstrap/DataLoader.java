@@ -7,6 +7,7 @@ import xyz.haff.petclinic.models.*;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
 import xyz.haff.petclinic.repositories.VetRepository;
+import xyz.haff.petclinic.repositories.VisitRepository;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ public class DataLoader implements CommandLineRunner {
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
     private final VetRepository vetRepository;
+    private final VisitRepository visitRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -38,5 +40,15 @@ public class DataLoader implements CommandLineRunner {
         vetRepository.save(drKenny);
         var drBrandon = new Vet("Brandon", "Surimi", Specialty.SURGERY);
         vetRepository.save(drBrandon);
+
+        var mittensVisit1 = new Visit(mittens, drKenny, LocalDate.of(2021, 1, 5), "Sneezy kitty");
+        visitRepository.save(mittensVisit1);
+        var mittensVisit2 = new Visit(mittens, drKenny, LocalDate.of(2021, 8, 13), "Fluffy kitty");
+        visitRepository.save(mittensVisit2);
+
+        var tobyVisit1 = new Visit(toby, drKenny, LocalDate.of(2021, 3, 21), "Barking too much");
+        visitRepository.save(tobyVisit1);
+        var tobyVisit2 = new Visit(toby, drBrandon, LocalDate.of(2021, 9, 15), "Oozing flims");
+        visitRepository.save(tobyVisit2);
     }
 }

@@ -1,7 +1,5 @@
 * Get auto-reloading with dev tools
 * Separate data and web as maven projects
-* Add
-  * Visits
 * View of a pet and all of its visits
 * Set up test coverage and try to reach 70%
 * Use maven release plugin
