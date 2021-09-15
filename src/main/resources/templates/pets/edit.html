@@ -5,9 +5,10 @@
     <title>Edit Pet</title>
 </head>
 <body>
+<!-- TODO: Maybe an owner drop-down? -->
 <h1>Edit Pet</h1>
 <!-- /* @thymesVar id="pet" type="xyz.haff.petclinic.models.Pet" */ -->
-<form th:object="${pet}" th:action="@{/pets/edit}" method="post">
+<form th:object="${pet}" method="post">
     <input th:field="*{id}" type="hidden"/>
     <input th:field="*{owner}" type="hidden"/>
     <input th:field="*{name}"/>

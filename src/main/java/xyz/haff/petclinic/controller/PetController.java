@@ -3,6 +3,7 @@ package xyz.haff.petclinic.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.PetRepository;
@@ -11,18 +12,26 @@ import xyz.haff.petclinic.repositories.PetRepository;
 @Controller
 @RequestMapping("/pets")
 public class PetController {
+    private static final String PETS_LIST = "pets/list";
+
     private final PetRepository repository;
+
+    @InitBinder
+    public void unbindID(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("id");
+    }
 
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("pets", repository.findAll());
 
-        return "pets/list";
+        return PETS_LIST;
     }
 
-    @PostMapping("/edit")
-    public String saveOrUpdate(@ModelAttribute Pet pet) {
-        var savedPet = repository.save(pet);
+    @PostMapping("/{id}/edit")
+    public String saveOrUpdate(@PathVariable String id, @ModelAttribute Pet pet) {
+        pet.setId(id);
+        repository.save(pet);
 
         // TODO: Redirect to view of pet? Redirect depending on where we come from?
         return "redirect:/owners/list";

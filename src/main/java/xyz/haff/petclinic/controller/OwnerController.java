@@ -18,8 +18,8 @@ public class OwnerController {
 
     private final OwnerRepository repository;
 
-    @InitBinder
-    public void setAllowedFields(WebDataBinder dataBinder) {
+    @InitBinder("owner")
+    public void unbindID(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
@@ -59,17 +59,24 @@ public class OwnerController {
         return "redirect:/" + OWNER_LIST;
     }
 
-
-
     @GetMapping("/{id}/add_pet")
     public String list(@PathVariable String id, Model model) {
         var newPet = new Pet();
-        // TODO: Handle absence of owner
-        newPet.setOwner(repository.findById(id).get());
 
         model.addAttribute("pet", newPet);
-
         return "pets/edit";
+    }
+
+    @PostMapping("/{ownerId}/add_pet")
+    public String list(@PathVariable String ownerId, @ModelAttribute Pet pet) {
+        // TODO: Handle absence of owner
+        var owner = repository.findById(ownerId).get();
+        owner.getPets().add(pet);
+        pet.setOwner(owner);
+
+        repository.save(owner);
+
+        return "redirect:/" + OWNER_LIST;
     }
 
 
