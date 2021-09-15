@@ -19,7 +19,7 @@
 
   <tr th:each="vet : ${vets}">
     <!-- /* @thymesVar id="vet" type="xyz.haff.petclinic.models.Vet" */ -->
-    <td th:text="${vet.id}"></td>
+    <td><a th:text="${vet.id}" th:href="@{'/vets/' + ${vet.id} + '/edit'}"></a></td>
     <td th:text="${vet.firstName}"></td>
     <td th:text="${vet.lastName}"></td>
     <td th:text="${vet.specialty}"></td>

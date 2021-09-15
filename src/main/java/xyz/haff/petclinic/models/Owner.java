@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "owners")
 public class Owner extends AbstractBaseEntity {
 
     @Column(name = "first_name")
