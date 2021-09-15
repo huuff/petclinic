@@ -3,11 +3,10 @@ package xyz.haff.petclinic.bootstrap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import xyz.haff.petclinic.models.Owner;
-import xyz.haff.petclinic.models.Pet;
-import xyz.haff.petclinic.models.PetType;
+import xyz.haff.petclinic.models.*;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
+import xyz.haff.petclinic.repositories.VetRepository;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -20,6 +19,7 @@ import java.util.Set;
 public class DataLoader implements CommandLineRunner {
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
+    private final VetRepository vetRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -33,5 +33,10 @@ public class DataLoader implements CommandLineRunner {
         ownerRepository.save(joe);
         petRepository.save(mittens);
         petRepository.save(toby);
+
+        var drKenny = new Vet("Kenny", "Wiggins", Specialty.OPHTHALMOLOGY);
+        vetRepository.save(drKenny);
+        var drBrandon = new Vet("Brandon", "Surimi", Specialty.SURGERY);
+        vetRepository.save(drBrandon);
     }
 }
