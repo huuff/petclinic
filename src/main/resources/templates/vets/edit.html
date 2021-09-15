@@ -7,7 +7,7 @@
 <body>
 <h1>Edit Vet</h1>
 <!-- /* @thymesVar id="vet" type="xyz.haff.petclinic.models.Vet" */ -->
-<form th:object="${vet}" th:action="@{/vets/edit/}" method="post">
+<form th:object="${vet}" method="post">
   <input type="hidden" th:field="*{id}"/>
   <input th:field="*{firstName}">
   <input th:field="*{lastName}">

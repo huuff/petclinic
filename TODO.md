@@ -6,6 +6,5 @@
 * Set up test coverage and try to reach 70%
 * Use maven release plugin
 * Add i18n
-* Disable binding of ids
 * Use `@ModelAttribute`
 * Add to CircleCI

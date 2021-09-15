@@ -3,6 +3,7 @@ package xyz.haff.petclinic.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.models.Vet;
 import xyz.haff.petclinic.repositories.VetRepository;
@@ -14,6 +15,11 @@ public class VetController {
     private final static String LIST_VIEW = "vets/list" ;
 
     private final VetRepository repository;
+
+    @InitBinder
+    public void unbindID(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("id");
+    }
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -30,8 +36,9 @@ public class VetController {
         return "vets/edit";
     }
 
-    @PostMapping("/edit")
-    public String updateOrCreate(@ModelAttribute Vet vet) {
+    @PostMapping("/{id}/edit")
+    public String updateOrCreate(@PathVariable String id, @ModelAttribute Vet vet) {
+        vet.setId(id);
         repository.save(vet);
 
         return "redirect:/" + LIST_VIEW;
@@ -42,5 +49,12 @@ public class VetController {
         model.addAttribute("vet", new Vet());
 
         return "vets/edit";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Vet vet) {
+        repository.save(vet);
+
+        return "redirect:/" + LIST_VIEW;
     }
 }
