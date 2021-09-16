@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.Validator;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.models.PetType;
@@ -59,7 +60,10 @@ public class OwnerControllerTest {
             add(owner2);
         }};
 
-        mockMvc = MockMvcBuilders.standaloneSetup(ownerController).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(ownerController)
+                .setValidator(mock(Validator.class))
+                .build();
     }
 
     @Test

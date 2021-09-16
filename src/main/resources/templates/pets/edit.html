@@ -11,7 +11,11 @@
     <input th:field="*{id}" type="hidden"/>
     <input th:field="*{owner}" type="hidden"/>
     <input th:field="*{name}"/>
-    <input type="date" th:field="*{birthDate}"/>
+    <div>
+        <label for="birthdate" th:text="#{birthdate}">Birth Date</label>
+        <input id="birthdate" type="date" th:field="*{birthDate}"/>
+        <p th:if="${#fields.hasErrors('birthDate')}" th:errorclass="error" th:errors="*{birthDate}"></p>
+    </div>
     <select id="type" th:field="*{type}">
         <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}" th:text="${type}"></option>
     </select>

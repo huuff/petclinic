@@ -4,4 +4,4 @@
 * Add button to appoint a visit for an owner after logging in
 * Use maven release plugin
 * Use `@ModelAttribute`. UPDATE: None of my controller methods are suitable for this, but I'm leaving the todo for the future
-* Add validations in forms
+* Add validation messages to all forms
