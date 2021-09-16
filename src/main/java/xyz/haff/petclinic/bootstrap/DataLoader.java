@@ -2,6 +2,7 @@ package xyz.haff.petclinic.bootstrap;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import xyz.haff.petclinic.models.*;
 import xyz.haff.petclinic.repositories.OwnerRepository;
@@ -13,10 +14,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-// TODO: Use this only in a test environment
-
 @RequiredArgsConstructor
 @Component
+@Profile("demo")
 public class DataLoader implements CommandLineRunner {
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
