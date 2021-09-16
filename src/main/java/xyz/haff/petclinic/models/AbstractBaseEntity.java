@@ -29,11 +29,9 @@ public abstract class AbstractBaseEntity implements BaseEntity {
         }
 
         BaseEntity other = (BaseEntity)o;
-
-        // if the id is missing, return false
+        
         if (id == null) return false;
 
-        // equivalence by id
         return id.equals(other.getId());
     }
 
