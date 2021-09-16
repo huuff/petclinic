@@ -9,19 +9,17 @@ import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 // TODO: Try to make these properties final
-// Version is definitely not working
+// TODO: Version is definitely not working
 
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class AbstractBaseEntity implements BaseEntity {
 
     @Id
-    @Getter
-    @Setter
     @Column(name = "id")
     private String id = UUID.randomUUID().toString();
 
-    @Getter
-    @Setter
     private Integer version;
 
     public boolean equals(Object o) {

@@ -6,22 +6,17 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-// TODO: See if I can use a parent `Person` class? An object with delegation?
-
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "owners")
-public class Owner extends AbstractBaseEntity {
-
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
+public class Owner extends Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
+
+    public Owner(String firstName, String lastName, Set<Pet> pets) {
+        super(firstName, lastName);
+        this.pets = pets;
+    }
 }
