@@ -7,4 +7,3 @@
 * Add i18n
 * Use `@ModelAttribute`. UPDATE: None of my controller methods are suitable for this, but I'm leaving the todo for the future
 * Add to CircleCI
-* Maybe use builder for my person subclasses?
