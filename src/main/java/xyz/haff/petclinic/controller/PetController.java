@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.PetRepository;
 import xyz.haff.petclinic.repositories.VisitRepository;
@@ -41,7 +42,7 @@ public class PetController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("pet", petRepository.findById(id));
+        model.addAttribute("pet", petRepository.findById(id).orElseThrow(NotFoundException::new));
 
         return "pets/edit";
     }

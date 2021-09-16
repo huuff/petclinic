@@ -1,10 +1,12 @@
 package xyz.haff.petclinic.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
@@ -32,7 +34,7 @@ public class OwnerController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("owner", repository.findById(id));
+        model.addAttribute("owner", repository.findById(id).orElseThrow(NotFoundException::new));
 
         return OWNER_CREATE_OR_UPDATE_FORM;
     }
@@ -61,6 +63,9 @@ public class OwnerController {
 
     @GetMapping("/{id}/add_pet")
     public String list(@PathVariable String id, Model model) {
+        if (!repository.existsById(id))
+            throw new NotFoundException();
+
         var newPet = new Pet();
 
         model.addAttribute("pet", newPet);
@@ -69,8 +74,7 @@ public class OwnerController {
 
     @PostMapping("/{ownerId}/add_pet")
     public String list(@PathVariable String ownerId, @ModelAttribute Pet pet) {
-        // TODO: Handle absence of owner
-        var owner = repository.findById(ownerId).get();
+        var owner = repository.findById(ownerId).orElseThrow(NotFoundException::new);
         owner.getPets().add(pet);
         pet.setOwner(owner);
 
@@ -78,7 +82,4 @@ public class OwnerController {
 
         return "redirect:/" + OWNER_LIST;
     }
-
-
-
 }
