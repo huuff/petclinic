@@ -26,7 +26,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @ExtendWith(MockitoExtension.class)
 public class PetControllerTest {
-
     @Mock
     PetRepository repository;
 

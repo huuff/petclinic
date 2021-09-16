@@ -62,7 +62,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{id}/add_pet")
-    public String list(@PathVariable String id, Model model) {
+    public String addPet(@PathVariable String id, Model model) {
         if (!repository.existsById(id))
             throw new NotFoundException();
 
@@ -73,7 +73,7 @@ public class OwnerController {
     }
 
     @PostMapping("/{ownerId}/add_pet")
-    public String list(@PathVariable String ownerId, @ModelAttribute Pet pet) {
+    public String addPet(@PathVariable String ownerId, @ModelAttribute Pet pet) {
         var owner = repository.findById(ownerId).orElseThrow(NotFoundException::new);
         owner.getPets().add(pet);
         pet.setOwner(owner);
