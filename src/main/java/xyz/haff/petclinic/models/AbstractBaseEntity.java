@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
-// TODO: Try to make these properties final
 // TODO: Version is definitely not working
 
 @Getter
