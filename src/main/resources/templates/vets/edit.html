@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Vet</title>
+    <title th:text="#{vet}">Vet</title>
 </head>
 <body>
-<h1>Edit Vet</h1>
+<h1 th:text="#{vet}">Vet</h1>
 <!-- /* @thymesVar id="vet" type="xyz.haff.petclinic.models.Vet" */ -->
 <form th:object="${vet}" method="post">
   <input type="hidden" th:field="*{id}"/>
@@ -14,7 +14,7 @@
   <select id="type" th:field="*{specialty}">
     <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}" th:value="${specialty.name()}" th:text="${specialty}"></option>
   </select>
-  <input type="submit">
+  <input type="submit" th:text="#{submit}">
 </form>
 </body>
 </html>
