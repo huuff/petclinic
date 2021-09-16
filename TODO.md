@@ -5,4 +5,3 @@
 * Use maven release plugin
 * Use `@ModelAttribute`. UPDATE: None of my controller methods are suitable for this, but I'm leaving the todo for the future
 * Add validations in forms
-* See if I can publish jacoco results with CircleCI

@@ -43,4 +43,4 @@ jobs:
         - run: mvn test
 
         - store_artifacts:
-            path: target
+            path: target/coverage
