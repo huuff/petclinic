@@ -11,12 +11,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import xyz.haff.petclinic.models.Owner;
+import xyz.haff.petclinic.models.Pet;
+import xyz.haff.petclinic.models.PetType;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.PetRepository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -29,19 +36,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OwnerControllerTest {
     @Mock
     OwnerRepository ownerRepository;
+    @Mock
+    PetRepository petRepository;
     @InjectMocks
     OwnerController ownerController;
     MockMvc mockMvc;
 
     @Captor
     ArgumentCaptor<Owner> ownerCaptor;
+    @Captor
+    ArgumentCaptor<Pet> petCaptor;
 
     Set<Owner> testOwners;
 
     @BeforeEach
     public void setUp() {
-        var owner1 = new Owner("Mike", "Test", mock(Set.class));
-        var owner2 = new Owner("William", "Teston", mock(Set.class));
+        var owner1 = new Owner("Mike", "Test", new HashSet<>());
+        var owner2 = new Owner("William", "Teston", new HashSet<>());
 
         testOwners = new HashSet<>() {{
             add(owner1);
@@ -59,7 +70,7 @@ public class OwnerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/list"))
                 .andExpect(model().attribute("owners", hasSize(2)))
-                ;
+        ;
     }
 
     @Test
@@ -68,7 +79,7 @@ public class OwnerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/edit"))
                 .andExpect(model().attributeExists("owner"))
-                ;
+        ;
 
         verifyNoInteractions(ownerRepository);
     }
@@ -78,7 +89,7 @@ public class OwnerControllerTest {
         var notExpected = "TEST_ID";
 
         mockMvc.perform(post("/owners/create")
-            .param("id", notExpected));
+                .param("id", notExpected));
 
         verify(ownerRepository).save(ownerCaptor.capture());
 
@@ -93,7 +104,7 @@ public class OwnerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/edit"))
                 .andExpect(model().attributeExists("owner"))
-                ;
+        ;
     }
 
     @Test
@@ -119,13 +130,56 @@ public class OwnerControllerTest {
         var lastName = "LastName";
 
         mockMvc.perform(post("/owners/1/edit")
-            .param("firstName", firstName)
-            .param("lastName", lastName))
-                ;
+                .param("firstName", firstName)
+                .param("lastName", lastName))
+        ;
 
         verify(ownerRepository).save(ownerCaptor.capture());
 
         assertEquals(firstName, ownerCaptor.getValue().getFirstName());
         assertEquals(lastName, ownerCaptor.getValue().getLastName());
+    }
+
+    @Test
+    void initAddPet() throws Exception {
+        when(ownerRepository.existsById(any())).thenReturn(true);
+
+        mockMvc.perform(get("/owners/1/add_pet"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pets/edit"))
+                .andExpect(model().attributeExists("pet"))
+        ;
+    }
+
+    @Test
+    void processAddPet() throws Exception {
+        when(ownerRepository.findById(any())).thenReturn(testOwners.stream().findFirst());
+
+        mockMvc.perform(post("/owners/1/add_pet"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/owners/list"))
+        ;
+    }
+
+    @Test
+    void addPetAddsPet() throws Exception {
+        var name = "PetName";
+        var type = PetType.DOG;
+        var birthDate = LocalDate.of(2012, 12, 12);
+        var owner = testOwners.stream().findFirst().get();
+
+        when(ownerRepository.findById(any())).thenReturn(Optional.of(owner));
+        mockMvc.perform(post("/owners/1/add_pet")
+                .param("name", name)
+                .param("type", type.name())
+                .param("birthDate", birthDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+
+        verify(petRepository).save(petCaptor.capture());
+
+        assertEquals(name, petCaptor.getValue().getName());
+        assertEquals(type, petCaptor.getValue().getType());
+        assertEquals(birthDate, petCaptor.getValue().getBirthDate());
+        assertEquals(owner, petCaptor.getValue().getOwner());
+        assertThat(owner.getPets(), hasItems(petCaptor.getValue()));
     }
 }

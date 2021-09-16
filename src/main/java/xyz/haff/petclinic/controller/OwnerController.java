@@ -1,7 +1,6 @@
 package xyz.haff.petclinic.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -10,6 +9,7 @@ import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.PetRepository;
 
 @RequiredArgsConstructor
 @Controller
@@ -18,7 +18,8 @@ public class OwnerController {
     private static final String OWNER_CREATE_OR_UPDATE_FORM = "owners/edit";
     private static final String OWNER_LIST = "owners/list";
 
-    private final OwnerRepository repository;
+    private final OwnerRepository ownerRepository;
+    private final PetRepository petRepository;
 
     @InitBinder("owner")
     public void unbindID(WebDataBinder dataBinder) {
@@ -27,14 +28,14 @@ public class OwnerController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("owners", repository.findAll());
+        model.addAttribute("owners", ownerRepository.findAll());
 
         return OWNER_LIST;
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("owner", repository.findById(id).orElseThrow(NotFoundException::new));
+        model.addAttribute("owner", ownerRepository.findById(id).orElseThrow(NotFoundException::new));
 
         return OWNER_CREATE_OR_UPDATE_FORM;
     }
@@ -42,7 +43,7 @@ public class OwnerController {
     @PostMapping("/{id}/edit")
     public String saveOrUpdate(@PathVariable String id, @ModelAttribute Owner owner) {
         owner.setId(id);
-        repository.save(owner);
+        ownerRepository.save(owner);
 
         return "redirect:/" + OWNER_LIST;
     }
@@ -56,14 +57,14 @@ public class OwnerController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute Owner owner) {
-        repository.save(owner);
+        ownerRepository.save(owner);
 
         return "redirect:/" + OWNER_LIST;
     }
 
     @GetMapping("/{id}/add_pet")
     public String addPet(@PathVariable String id, Model model) {
-        if (!repository.existsById(id))
+        if (!ownerRepository.existsById(id))
             throw new NotFoundException();
 
         var newPet = new Pet();
@@ -72,13 +73,15 @@ public class OwnerController {
         return "pets/edit";
     }
 
+    // This in a service?
     @PostMapping("/{ownerId}/add_pet")
     public String addPet(@PathVariable String ownerId, @ModelAttribute Pet pet) {
-        var owner = repository.findById(ownerId).orElseThrow(NotFoundException::new);
+        var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
         owner.getPets().add(pet);
         pet.setOwner(owner);
 
-        repository.save(owner);
+        ownerRepository.save(owner);
+        petRepository.save(pet);
 
         return "redirect:/" + OWNER_LIST;
     }
