@@ -18,7 +18,7 @@
   </thead>
   <tr th:each="visit : ${visits}">
     <td th:text="${visit.date}"></td>
-    <td><a th:text="${visit.pet.name}" th:href="@{'/pets/' + ${visit.pet.id} + '/edit'}"></a></td>
+    <td><a th:text="${visit.pet.name}" th:href="@{|/pets/${visit.pet.id}/edit|}"></a></td>
     <td><a th:text="${visit.vet.firstName} + ' ' + ${visit.vet.lastName}" th:href="@{'/vets/' + ${visit.vet.id} + '/edit'}"></a></td>
     <td th:text="${visit.reason}"></td>
   </tr>

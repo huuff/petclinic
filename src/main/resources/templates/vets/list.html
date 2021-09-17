@@ -20,11 +20,11 @@
 
   <tr th:each="vet : ${vets}">
     <!-- /* @thymesVar id="vet" type="xyz.haff.petclinic.models.Vet" */ -->
-    <td><a th:text="${vet.id}" th:href="@{'/vets/' + ${vet.id} + '/edit'}"></a></td>
+    <td><a th:text="${vet.id}" th:href="@{|/vets/${vet.id}/edit|}"></a></td>
     <td th:text="${vet.firstName}"></td>
     <td th:text="${vet.lastName}"></td>
     <td th:text="${vet.specialty}"></td>
-    <td><a th:href="@{'/vets/' + ${vet.id} + '/visits'}" th:text="#{visits}">Visits</a></td>
+    <td><a th:href="@{|/vets/${vet.id}/visits|}" th:text="#{visits}">Visits</a></td>
   </tr>
 </table>
 <a th:href="@{/vets/create}" th:text="#{add_new}">Add new</a>
