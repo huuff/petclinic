@@ -5,4 +5,4 @@
 * Use maven release plugin
 * Use `@ModelAttribute`. UPDATE: None of my controller methods are suitable for this, but I'm leaving the todo for the future
 * Add validation messages to all forms
-* Add pet form not working. UPDATE: It's because `owner` is null. Fix it with a backing bean
+* Use the model name (Vet name, owner name, pet name...) in the templates instead a generic `Pet` or `Owner` or `Vet`

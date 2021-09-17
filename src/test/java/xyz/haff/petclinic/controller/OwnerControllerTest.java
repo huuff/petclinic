@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
+import xyz.haff.petclinic.converters.PetFormToPetConverter;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.models.PetType;
@@ -39,7 +40,8 @@ public class OwnerControllerTest {
     OwnerRepository ownerRepository;
     @Mock
     PetRepository petRepository;
-    @InjectMocks
+    PetFormToPetConverter petFormToPetConverter = new PetFormToPetConverter();
+
     OwnerController ownerController;
     MockMvc mockMvc;
 
@@ -59,6 +61,9 @@ public class OwnerControllerTest {
             add(owner1);
             add(owner2);
         }};
+
+        mockitoSession().initMocks(this);
+        ownerController = new OwnerController(ownerRepository, petRepository, petFormToPetConverter);
 
         mockMvc = MockMvcBuilders
                 .standaloneSetup(ownerController)

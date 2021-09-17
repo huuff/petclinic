@@ -29,7 +29,6 @@ public class Pet extends AbstractBaseEntity {
     private PetType type;
 
     @Column(name = "birth_date")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @NotNull
     @Past
     private LocalDate birthDate;

@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import xyz.haff.petclinic.converters.PetFormToPetConverter;
 import xyz.haff.petclinic.exceptions.NotFoundException;
+import xyz.haff.petclinic.forms.PetForm;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
@@ -23,6 +25,7 @@ public class OwnerController {
 
     private final OwnerRepository ownerRepository;
     private final PetRepository petRepository;
+    private final PetFormToPetConverter petFormToPetConverter;
 
     @InitBinder("owner")
     public void unbindID(WebDataBinder dataBinder) {
@@ -84,7 +87,7 @@ public class OwnerController {
         if (!ownerRepository.existsById(id))
             throw new NotFoundException();
 
-        var newPet = new Pet();
+        var newPet = new PetForm();
 
         model.addAttribute("pet", newPet);
         return "pets/edit";
@@ -92,12 +95,14 @@ public class OwnerController {
 
     // This in a service?
     @PostMapping("/{ownerId}/add_pet")
-    public String addPet(@PathVariable String ownerId, @Valid @ModelAttribute Pet pet, BindingResult bindingResult, Model model) {
-        var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
-        owner.getPets().add(pet);
-        pet.setOwner(owner);
+    public String addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
+        var pet = petFormToPetConverter.convert(petForm);
 
         if (!bindingResult.hasErrors()) {
+            var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
+            owner.getPets().add(pet);
+            pet.setOwner(owner);
+
             ownerRepository.save(owner);
             petRepository.save(pet);
 

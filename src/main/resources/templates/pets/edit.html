@@ -6,10 +6,8 @@
 </head>
 <body>
 <h1 th:text="#{pet}">Edit Pet</h1>
-<!-- /* @thymesVar id="pet" type="xyz.haff.petclinic.models.Pet" */ -->
+<!-- /* @thymesVar id="pet" type="xyz.haff.petclinic.forms.PetForm" */ -->
 <form th:object="${pet}" method="post">
-    <input th:field="*{id}" type="hidden"/>
-    <input th:field="*{owner}" type="hidden"/>
     <input th:field="*{name}"/>
     <div>
         <label for="birthdate" th:text="#{birthdate}">Birth Date</label>
