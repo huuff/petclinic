@@ -108,7 +108,7 @@ public class OwnerController {
 
             return "redirect:/" + OWNER_LIST;
         } else {
-            model.addAttribute("petForm", pet);
+            model.addAttribute("petForm", petForm);
             return "pets/edit";
         }
     }

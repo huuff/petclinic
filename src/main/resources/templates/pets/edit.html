@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- /* @thymesVar id="petForm" type="xyz.haff.petclinic.forms.PetForm" */ -->
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:with="title=${!#strings.isEmpty(petForm.name)} ? ${petForm.name} : #{pet}">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:with="title=${!#strings.isEmpty(petForm.name)} ? ${petForm.name} : #{pet}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Pet</title>
@@ -19,11 +20,15 @@
         <input id="birthdate" type="date" th:field="*{birthDate}"/>
         <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
     </div>
-    <!--TODO: add a default null one-->
-    <select id="type" th:field="*{type}">
-        <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}"
-                th:text="${type}"></option>
-    </select>
+    <div>
+        <label for="type" th:text="#{type}"></label>
+        <select id="type" th:field="*{type}">
+            <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}"></option>
+            <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}"
+                    th:text="${type}"></option>
+        </select>
+        <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+    </div>
     <button type="submit" th:text="#{submit}"></button>
 </form>
 </body>
