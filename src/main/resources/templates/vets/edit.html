@@ -8,9 +8,19 @@
 <h1 th:text="#{vet}">Vet</h1>
 <!-- /* @thymesVar id="vet" type="xyz.haff.petclinic.models.Vet" */ -->
 <form th:object="${vet}" method="post">
-  <input type="hidden" th:field="*{id}"/>
-  <input th:field="*{firstName}">
-  <input th:field="*{lastName}">
+
+  <div>
+    <label for="firstName" th:text="#{first_name}"></label>
+    <input id="firstName" th:field="*{firstName}">
+    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+  </div>
+  <div>
+    <label for="lastName" th:text="#{last_name}"></label>
+    <input id="lastName" th:field="*{lastName}">
+    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+  </div>
+
+  <!--TODO: add a default null one-->
   <select id="type" th:field="*{specialty}">
     <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}" th:value="${specialty.name()}" th:text="${specialty}"></option>
   </select>
