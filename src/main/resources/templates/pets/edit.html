@@ -19,6 +19,7 @@
         <input id="birthdate" type="date" th:field="*{birthDate}"/>
         <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
     </div>
+    <!--TODO: add a default null one-->
     <select id="type" th:field="*{type}">
         <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}"
                 th:text="${type}"></option>
