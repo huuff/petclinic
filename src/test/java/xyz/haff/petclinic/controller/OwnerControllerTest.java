@@ -156,7 +156,7 @@ public class OwnerControllerTest {
         mockMvc.perform(get("/owners/1/add_pet"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("pets/edit"))
-                .andExpect(model().attributeExists("pet"))
+                .andExpect(model().attributeExists("petForm"))
         ;
     }
 

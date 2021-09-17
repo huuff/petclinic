@@ -6,16 +6,21 @@
 </head>
 <body>
 <h1 th:text="#{pet}">Edit Pet</h1>
-<!-- /* @thymesVar id="pet" type="xyz.haff.petclinic.forms.PetForm" */ -->
-<form th:object="${pet}" method="post">
-    <input th:field="*{name}"/>
+<!-- /* @thymesVar id="petForm" type="xyz.haff.petclinic.forms.PetForm" */ -->
+<form th:object="${petForm}" method="post">
+    <div>
+        <label for="name" th:text="#{name}">Name</label>
+        <input id="name" type="text" th:field="*{name}"/>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
+    </div>
     <div>
         <label for="birthdate" th:text="#{birthdate}">Birth Date</label>
         <input id="birthdate" type="date" th:field="*{birthDate}"/>
-        <p th:if="${#fields.hasErrors('birthDate')}" th:errorclass="error" th:errors="*{birthDate}"></p>
+        <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
     </div>
     <select id="type" th:field="*{type}">
-        <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}" th:text="${type}"></option>
+        <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}"
+                th:text="${type}"></option>
     </select>
     <button type="submit" th:text="#{submit}"></button>
 </form>

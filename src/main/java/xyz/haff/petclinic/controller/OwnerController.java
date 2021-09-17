@@ -89,7 +89,7 @@ public class OwnerController {
 
         var newPet = new PetForm();
 
-        model.addAttribute("pet", newPet);
+        model.addAttribute("petForm", newPet);
         return "pets/edit";
     }
 
@@ -108,7 +108,7 @@ public class OwnerController {
 
             return "redirect:/" + OWNER_LIST;
         } else {
-            model.addAttribute("pet", pet);
+            model.addAttribute("petForm", pet);
             return "pets/edit";
         }
     }

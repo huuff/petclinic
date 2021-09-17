@@ -43,7 +43,7 @@ public class PetController {
     public String edit(@PathVariable String id, Model model) {
         var pet = petRepository.findById(id).orElseThrow(NotFoundException::new);
 
-        model.addAttribute("pet", petToPetFormConverter.convert(pet) );
+        model.addAttribute("petForm", petToPetFormConverter.convert(pet) );
 
         return "pets/edit";
     }
@@ -63,7 +63,7 @@ public class PetController {
             petRepository.save(pet);
             return "redirect:/owners/list";
         } else {
-            model.addAttribute("pet", pet);
+            model.addAttribute("petForm", petForm);
             return "pets/edit";
         }
     }
