@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:with="title=${!#strings.isEmpty(vet.firstName)} ? |${vet.firstName} ${vet.lastName}| : #{vet}">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{vet}">Vet</title>
+    <title th:text="${title}">Vet</title>
 </head>
 <body>
-<h1 th:text="#{vet}">Vet</h1>
+<h1 th:text="${title}">Vet</h1>
 <!-- /* @thymesVar id="vet" type="xyz.haff.petclinic.models.Vet" */ -->
 <form th:object="${vet}" method="post">
 
