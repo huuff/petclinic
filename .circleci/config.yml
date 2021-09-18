@@ -15,9 +15,9 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: workspace
+          at: target
       - codecov/upload:
-          file: workspace/jacoco.exec
+          file: target/jacoco.exec
 
 workflows:
   maven_test:
@@ -30,7 +30,7 @@ workflows:
             - persist_to_workspace:
                 root: workspace
                 paths:
-                  - jacoco.exec
+                  - target/*
       - upload-to-codecov:
           requires:
             - maven/test
