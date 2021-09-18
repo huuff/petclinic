@@ -26,11 +26,11 @@ workflows:
           executor: jdk11
           post-steps:
             - run: mkdir -p workspace
-            #- run: cp target/jacoco.exec workspace/jacoco.exec
+            - run: cp -r target/* workspace
             - persist_to_workspace:
                 root: workspace
                 paths:
-                  - ./target/*
+                  - *
       - upload-to-codecov:
           requires:
             - maven/test
