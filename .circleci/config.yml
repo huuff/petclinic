@@ -21,6 +21,11 @@ workflows:
     jobs:
       - maven/test:
           executor: jdk11
+          post-steps:
+            - persist_to_workspace:
+                root: /tmp/workspace
+                paths:
+                  - target/jacoco.exec
       - upload-to-codecov:
           requires:
             - maven/test
