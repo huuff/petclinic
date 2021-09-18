@@ -6,6 +6,8 @@ orbs:
 
 jobs:
   upload-to-codecov:
+    docker:
+      - image: cimg/openjdk:11.0.12
     steps:
       - codecov/upload
 
