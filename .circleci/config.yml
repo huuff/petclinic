@@ -19,7 +19,8 @@ jobs:
 workflows:
   maven_test:
     jobs:
-      - maven/test
+      - maven/test:
+          executor: jdk11
       - upload-to-codecov:
           requires:
             - maven/test
