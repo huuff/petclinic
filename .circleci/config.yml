@@ -8,6 +8,7 @@ executors:
   jdk11:
     docker:
       - image: cimg/openjdk:11.0.12
+    working_directory: /tmp
 
 jobs:
   upload-to-codecov:
@@ -22,12 +23,14 @@ workflows:
       - maven/test:
           executor: jdk11
           pre-steps:
-            - run: mkdir -p /tmp/workspace
+            - run: mkdir -p workspace
           post-steps:
+            - put_code_coverage_in_workspace:
+                - run: cp target/jacoco.exec workspace/jacoco.exec
             - persist_to_workspace:
-                root: /tmp/workspace
+                root: workspace
                 paths:
-                  - target/jacoco.exec
+                  - jacoco.exec
       - upload-to-codecov:
           requires:
             - maven/test
