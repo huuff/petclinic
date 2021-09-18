@@ -13,8 +13,10 @@ jobs:
   upload-to-codecov:
     executor: jdk11
     steps:
+      - attach_workspace:
+          at: workspace
       - codecov/upload:
-          file: target/jacoco.exec
+          file: workspace/jacoco.exec
 
 workflows:
   maven_test:
