@@ -10,15 +10,6 @@ executors:
       - image: cimg/openjdk:11.0.12
 
 jobs:
-  test:
-    executor: jdk11
-    steps:
-      - maven/test:
-          executor: jdk11
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - target/jacoco.exec
   upload-to-codecov:
     executor: jdk11
     steps:
@@ -28,5 +19,8 @@ jobs:
 workflows:
   maven_test:
     jobs:
-      - test
-      - upload-to-codecov
+      - maven/test:
+          executor: jdk11
+      - upload-to-codecov:
+          requires:
+            - maven/test
