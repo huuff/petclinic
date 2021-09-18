@@ -20,10 +20,14 @@
     <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
   </div>
 
-  <!--TODO: add a default null one-->
-  <select id="type" th:field="*{specialty}">
-    <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}" th:value="${specialty.name()}" th:text="${specialty}"></option>
-  </select>
+  <div>
+    <label for="type" th:text="#{type}"></label>
+    <select id="type" th:field="*{specialty}">
+      <option th:text="#{selector}" th:value="null" th:selected="${vet.specialty == null}"></option>
+      <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}" th:value="${specialty.name()}" th:text="${specialty}"></option>
+    </select>
+    <p th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></p>
+  </div>
   <input type="submit" th:text="#{submit}">
 </form>
 </body>

@@ -64,10 +64,14 @@ public class VetController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Vet vet) {
-        vetRepository.save(vet);
-
-        return "redirect:/" + LIST_VIEW;
+    public String create(@ModelAttribute @Valid Vet vet, BindingResult bindingResult, Model model) {
+        if (!bindingResult.hasErrors()) {
+            vetRepository.save(vet);
+            return "redirect:/" + LIST_VIEW;
+        } else {
+            model.addAttribute("vet", vet);
+            return "vets/edit";
+        }
     }
 
     @GetMapping("/{id}/visits")
