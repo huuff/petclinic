@@ -15,9 +15,8 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: target
-      - codecov/upload:
-          file: target/jacoco.exec
+          at: ./target
+      - codecov/upload
 
 workflows:
   maven_test:
