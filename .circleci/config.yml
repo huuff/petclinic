@@ -11,8 +11,7 @@ executors:
 
 jobs:
   upload-to-codecov:
-    executor:
-      - jdk11
+    executor: jdk11
     steps:
       - codecov/upload:
           file: target/jacoco.exec
