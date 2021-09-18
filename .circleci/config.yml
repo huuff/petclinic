@@ -29,8 +29,8 @@ workflows:
             - run: cp -r target/* workspace
             - persist_to_workspace:
                 root: workspace
-                paths:
-                  - *
+                #paths:
+                  #- *
       - upload-to-codecov:
           requires:
             - maven/test
