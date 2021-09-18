@@ -4,10 +4,15 @@ orbs:
   maven: circleci/maven@1.2.0
   codecov: codecov/codecov@3.1.0
 
-jobs:
-  upload-to-codecov:
+executors:
+  jdk11:
     docker:
       - image: cimg/openjdk:11.0.12
+
+jobs:
+  upload-to-codecov:
+    executor:
+      - jdk11
     steps:
       - codecov/upload:
           file: target/jacoco.exec
