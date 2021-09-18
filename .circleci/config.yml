@@ -10,7 +10,7 @@ jobs:
       - image: cimg/openjdk:11.0.12
     steps:
       - codecov/upload:
-        file: target/jacoco.exec
+          file: target/jacoco.exec
 
 workflows:
   maven_test:
