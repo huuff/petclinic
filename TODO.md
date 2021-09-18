@@ -6,3 +6,4 @@
 * Use `@ModelAttribute`. UPDATE: None of my controller methods are suitable for this, but I'm leaving the todo for the future
 * A template for person forms that already adds firstname and lastname
 * Use gradle
+* Try to setup the same docker image for both jobs in circleci because otherwise it's fucking my credits up
