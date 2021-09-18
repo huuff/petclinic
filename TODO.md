@@ -5,3 +5,4 @@
 * Use maven release plugin
 * Use `@ModelAttribute`. UPDATE: None of my controller methods are suitable for this, but I'm leaving the todo for the future
 * A template for person forms that already adds firstname and lastname
+* Use gradle
