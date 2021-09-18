@@ -15,7 +15,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ./target
+          at: ./
       - codecov/upload
 
 workflows:

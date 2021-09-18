@@ -7,4 +7,3 @@
 * A template for person forms that already adds firstname and lastname
 * Use gradle
 * Use JDK 17
-* Try to fix uploading coverage to `codecov.io`. Maybe I need to use CircleCI's workspaces?
