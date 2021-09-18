@@ -21,9 +21,8 @@ workflows:
     jobs:
       - maven/test:
           executor: jdk11
-          pre-steps:
-            - run: mkdir -p workspace
           post-steps:
+            - run: mkdir -p workspace
             - run: cp target/jacoco.exec workspace/jacoco.exec
             - persist_to_workspace:
                 root: workspace
