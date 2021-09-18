@@ -8,3 +8,7 @@ workflows:
   maven_test:
     jobs:
       - maven/test
+  upload-to-codecov:
+    jobs:
+      - checkout
+      - codecov/upload
