@@ -29,6 +29,8 @@
     <p th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></p>
   </div>
   <input type="submit" th:text="#{submit}">
+
+  <p th:if="${#fields.hasGlobalErrors}" th:errors="*{global}"></p>
 </form>
 </body>
 </html>

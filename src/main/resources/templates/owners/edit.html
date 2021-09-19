@@ -19,7 +19,7 @@
         <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
     </div>
     <button type="submit" th:text="#{submit}"></button>
-    <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}">asdasd</p>
+    <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
 </form>
 </body>
 </html>

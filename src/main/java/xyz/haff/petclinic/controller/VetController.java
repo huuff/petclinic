@@ -65,7 +65,10 @@ public class VetController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute @Valid Vet vet, BindingResult bindingResult, Model model) {
-        //TODO: Prevent duplicates
+        if (vetRepository.existsByFirstNameAndLastName(vet.getFirstName(), vet.getLastName())) {
+            bindingResult.reject("duplicate");
+        }
+
         if (!bindingResult.hasErrors()) {
             vetRepository.save(vet);
             return "redirect:/" + LIST_VIEW;
