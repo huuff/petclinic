@@ -70,7 +70,10 @@ public class OwnerController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
-        // TODO: Prevent duplicates
+        if (ownerRepository.existsByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())) {
+            bindingResult.reject("duplicate");
+        }
+
         if (!bindingResult.hasErrors()) {
             ownerRepository.save(owner);
 
@@ -96,6 +99,7 @@ public class OwnerController {
     // This in a service?
     @PostMapping("/{ownerId}/add_pet")
     public String addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
+        // TODO: prevent duplicates
         var pet = petFormToPetConverter.convert(petForm);
 
         if (!bindingResult.hasErrors()) {
