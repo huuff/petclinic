@@ -30,6 +30,8 @@
         <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
     </div>
     <button type="submit" th:text="#{submit}"></button>
+
+    <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
 </form>
 </body>
 </html>

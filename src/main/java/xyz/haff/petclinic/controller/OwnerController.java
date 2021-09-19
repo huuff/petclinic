@@ -99,11 +99,14 @@ public class OwnerController {
     // This in a service?
     @PostMapping("/{ownerId}/add_pet")
     public String addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
-        // TODO: prevent duplicates
-        var pet = petFormToPetConverter.convert(petForm);
+        var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
 
+        if (owner.getPets().stream().anyMatch(pet -> pet.getName().equals(petForm.getName()) && pet.getBirthDate().equals(petForm.getBirthDate())))
+            bindingResult.reject("duplicate");
+
+        var pet = petFormToPetConverter.convert(petForm);
         if (!bindingResult.hasErrors()) {
-            var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
+
             owner.getPets().add(pet);
             pet.setOwner(owner);
 
