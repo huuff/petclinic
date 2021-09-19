@@ -9,3 +9,4 @@
 * Use JDK 17
 * Get back to 75%-90% coverage
 * Use mongodb and reactive
+* Use MapStruct for form objects?
