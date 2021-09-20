@@ -6,11 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import xyz.haff.petclinic.converters.PetFormToPetConverter;
+import xyz.haff.petclinic.mappers.PetFormToPetMapper;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.forms.PetForm;
 import xyz.haff.petclinic.models.Owner;
-import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
 
@@ -25,7 +24,7 @@ public class OwnerController {
 
     private final OwnerRepository ownerRepository;
     private final PetRepository petRepository;
-    private final PetFormToPetConverter petFormToPetConverter;
+    private final PetFormToPetMapper petFormToPetMapper;
 
     @InitBinder("owner")
     public void unbindID(WebDataBinder dataBinder) {
@@ -104,7 +103,7 @@ public class OwnerController {
         if (owner.getPets().stream().anyMatch(pet -> pet.getName().equals(petForm.getName()) && pet.getBirthDate().equals(petForm.getBirthDate())))
             bindingResult.reject("duplicate");
 
-        var pet = petFormToPetConverter.convert(petForm);
+        var pet = petFormToPetMapper.convert(petForm);
         if (!bindingResult.hasErrors()) {
 
             owner.getPets().add(pet);

@@ -6,11 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import xyz.haff.petclinic.converters.PetFormToPetConverter;
-import xyz.haff.petclinic.converters.PetToPetFormConverter;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.forms.PetForm;
-import xyz.haff.petclinic.models.Pet;
+import xyz.haff.petclinic.mappers.PetToPetFormMapper;
 import xyz.haff.petclinic.repositories.PetRepository;
 import xyz.haff.petclinic.repositories.VisitRepository;
 
@@ -25,7 +23,7 @@ public class PetController {
 
     private final PetRepository petRepository;
     private final VisitRepository visitRepository;
-    private final PetToPetFormConverter petToPetFormConverter;
+    private final PetToPetFormMapper petToPetFormMapper;
 
     @InitBinder
     public void unbindID(WebDataBinder dataBinder) {
@@ -43,9 +41,9 @@ public class PetController {
     public String edit(@PathVariable String id, Model model) {
         var pet = petRepository.findById(id).orElseThrow(NotFoundException::new);
 
-        model.addAttribute("petForm", petToPetFormConverter.convert(pet) );
+        model.addAttribute("petForm", petToPetFormMapper.convert(pet) );
 
-        return "pets/edit";
+        return PETS_EDIT;
     }
 
     // TODO: could edit a random pet if sent to this endpoint, maybe Spring Security would help
@@ -64,7 +62,7 @@ public class PetController {
             return "redirect:/owners/list";
         } else {
             model.addAttribute("petForm", petForm);
-            return "pets/edit";
+            return PETS_EDIT;
         }
     }
 
