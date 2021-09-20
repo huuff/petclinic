@@ -20,7 +20,7 @@
   </thead>
 
   <tr th:each="pet : ${pets}">
-    <!--/*@thymesVar id="pet" type="xyz.haff.petclinic.models.Pet"*/-->
+      <!--/*@thymesVar id="pet" type="xyz.haff.models.Pet"*/-->
     <td><a th:text="${pet.id}" th:href="@{|/pets/${pet.id}/edit|}"></a></td>
     <td th:text="${pet.name}"></td>
     <td th:text="${pet.type}"></td>
