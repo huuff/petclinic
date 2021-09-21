@@ -15,14 +15,13 @@
     </parent>
     <groupId>xyz.haff</groupId>
     <artifactId>petclinic</artifactId>
-    <version>${revision}</version>
+    <version>0.1.0</version>
     <name>petclinic</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <version.number>0.0.5</version.number>
-        <revision>0.0.5-SNAPSHOT</revision>
+        <revision>0-SNAPSHOT</revision>
     </properties>
 
     <scm>
@@ -160,7 +159,7 @@
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>1.12.0</version>
                 <configuration>
-                    <tag>${project.artifactId}-${version.number}</tag>
+                    <tag>${project.artifactId}-${project.version}</tag>
                 </configuration>
             </plugin>
 
