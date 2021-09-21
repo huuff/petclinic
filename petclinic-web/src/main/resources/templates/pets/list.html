@@ -14,7 +14,7 @@
       <th th:text="#{name}">Name</th>
       <th th:text="#{type}">Type</th>
       <th th:text="#{birthdate}">Birth Date</th>
-      <th th:text="#{owner}">Owner</th>
+<!--      <th th:text="#{owner}">Owner</th>-->
       <th th:text="#{visits}">Visits</th>
     </tr>
   </thead>
@@ -25,7 +25,7 @@
     <td th:text="${pet.name}"></td>
     <td th:text="${pet.type}"></td>
     <td th:text="${pet.birthDate}"></td>
-    <td><a th:text="${pet.owner.firstName} + ' ' + ${pet.owner.lastName}" th:href="@{|/owners/${pet.owner.id}/edit|}"></a></td>
+<!--    <td><a th:text="${pet.owner.firstName} + ' ' + ${pet.owner.lastName}" th:href="@{|/owners/${pet.owner.id}/edit|}"></a></td>-->
     <td><a th:href="@{|/pets/${pet.id}/visits|}" th:text="#{visits}">Visits</a></td>
   </tr>
 </table>

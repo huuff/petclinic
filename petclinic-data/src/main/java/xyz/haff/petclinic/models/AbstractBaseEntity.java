@@ -2,21 +2,17 @@ package xyz.haff.petclinic.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 // TODO: Version is definitely not working
 
 @Getter
 @Setter
-@MappedSuperclass
 public abstract class AbstractBaseEntity implements BaseEntity {
 
     @Id
-    @Column(name = "id")
     private String id = UUID.randomUUID().toString();
 
     private Integer version;

@@ -27,28 +27,28 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Set<Pet> joesPets = new HashSet<>();
         var joe = new Owner("Joe", "Smith", joesPets);
-        var mittens = new Pet("Mittens", PetType.CAT, LocalDate.of(2015, 3, 17), joe);
-        var toby = new Pet("Toby", PetType.DOG, LocalDate.of(2017, 8, 21), joe);
+        var mittens = new Pet("Mittens", PetType.CAT, LocalDate.of(2015, 3, 17));
+        var toby = new Pet("Toby", PetType.DOG, LocalDate.of(2017, 8, 21));
         joesPets.add(mittens);
         joesPets.add(toby);
 
-        ownerRepository.save(joe);
-        petRepository.save(mittens);
-        petRepository.save(toby);
+        ownerRepository.save(joe).block();
+        petRepository.save(mittens).block();
+        petRepository.save(toby).block();
 
         var drKenny = new Vet("Kenny", "Wiggins", Specialty.OPHTHALMOLOGY);
-        vetRepository.save(drKenny);
+        vetRepository.save(drKenny).block();
         var drBrandon = new Vet("Brandon", "Surimi", Specialty.SURGERY);
-        vetRepository.save(drBrandon);
+        vetRepository.save(drBrandon).block();
 
         var mittensVisit1 = new Visit(mittens, drKenny, LocalDate.of(2021, 1, 5), "Sneezy kitty");
-        visitRepository.save(mittensVisit1);
+        visitRepository.save(mittensVisit1).block();
         var mittensVisit2 = new Visit(mittens, drKenny, LocalDate.of(2021, 8, 13), "Fluffy kitty");
-        visitRepository.save(mittensVisit2);
+        visitRepository.save(mittensVisit2).block();
 
         var tobyVisit1 = new Visit(toby, drKenny, LocalDate.of(2021, 3, 21), "Barking too much");
-        visitRepository.save(tobyVisit1);
+        visitRepository.save(tobyVisit1).block();
         var tobyVisit2 = new Visit(toby, drBrandon, LocalDate.of(2021, 9, 15), "Oozing flims");
-        visitRepository.save(tobyVisit2);
+        visitRepository.save(tobyVisit2).block();
     }
 }

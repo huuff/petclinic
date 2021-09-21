@@ -36,7 +36,8 @@ public class VetController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("vet", vetRepository.findById(id).orElseThrow(NotFoundException::new));
+        // TODO: Don't block
+        model.addAttribute("vet", vetRepository.findById(id).blockOptional().orElseThrow(NotFoundException::new));
 
         return "vets/edit";
     }

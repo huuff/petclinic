@@ -39,7 +39,8 @@ public class PetController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
-        var pet = petRepository.findById(id).orElseThrow(NotFoundException::new);
+        // TODO: Don't block
+        var pet = petRepository.findById(id).blockOptional().orElseThrow(NotFoundException::new);
 
         model.addAttribute("petForm", petToPetFormMapper.convert(pet) );
 
@@ -49,7 +50,8 @@ public class PetController {
     // TODO: could edit a random pet if sent to this endpoint, maybe Spring Security would help
     @PostMapping("/{id}/edit")
     public String update(@PathVariable String id, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
-        var pet = petRepository.findById(id).orElseThrow(NotFoundException::new);
+        // TODO: Don't block
+        var pet = petRepository.findById(id).blockOptional().orElseThrow(NotFoundException::new);
 
         // TODO: Redirect to view of pet? Redirect depending on where we come from?
         if (!bindingResult.hasErrors()) {

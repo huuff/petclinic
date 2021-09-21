@@ -6,14 +6,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import xyz.haff.petclinic.mappers.PetFormToPetMapper;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.forms.PetForm;
+import xyz.haff.petclinic.mappers.PetFormToPetMapper;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -26,6 +29,7 @@ public class OwnerController {
     private final PetRepository petRepository;
     private final PetFormToPetMapper petFormToPetMapper;
 
+    // TODO: Maybe just use form objects?
     @InitBinder("owner")
     public void unbindID(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
@@ -38,9 +42,12 @@ public class OwnerController {
         return OWNER_LIST;
     }
 
+    // TODO: Do not block
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("owner", ownerRepository.findById(id).orElseThrow(NotFoundException::new));
+        Optional<Owner> owner = ownerRepository.findById(id).blockOptional();
+
+        model.addAttribute("owner",  owner.orElseThrow(NotFoundException::new));
 
         return OWNER_EDIT;
     }
@@ -86,7 +93,8 @@ public class OwnerController {
 
     @GetMapping("/{id}/add_pet")
     public String addPet(@PathVariable String id, Model model) {
-        if (!ownerRepository.existsById(id))
+        // TODO: don't block
+        if (!ownerRepository.existsById(id).block())
             throw new NotFoundException();
 
         var newPet = new PetForm();
@@ -98,7 +106,8 @@ public class OwnerController {
     // This in a service?
     @PostMapping("/{ownerId}/add_pet")
     public String addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
-        var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
+        // TODO: don't block
+        var owner = ownerRepository.findById(ownerId).blockOptional().orElseThrow(NotFoundException::new);
 
         if (owner.getPets().stream().anyMatch(pet -> pet.getName().equals(petForm.getName()) && pet.getBirthDate().equals(petForm.getBirthDate())))
             bindingResult.reject("duplicate");
@@ -107,7 +116,6 @@ public class OwnerController {
         if (!bindingResult.hasErrors()) {
 
             owner.getPets().add(pet);
-            pet.setOwner(owner);
 
             ownerRepository.save(owner);
             petRepository.save(pet);

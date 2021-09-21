@@ -1,18 +1,18 @@
 package xyz.haff.petclinic.models;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "vets")
+@Document
 public class Vet extends Person {
-    @Enumerated(EnumType.STRING)
-    @Column(name = "specialty")
+
     @NotNull
     private Specialty specialty;
 
