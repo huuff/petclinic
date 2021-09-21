@@ -15,7 +15,7 @@
     </parent>
     <groupId>xyz.haff</groupId>
     <artifactId>petclinic</artifactId>
-    <version>0.1.0</version>
+    <version>${revision}</version>
     <name>petclinic</name>
     <description>Demo project for Spring Boot</description>
     <properties>
