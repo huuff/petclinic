@@ -163,11 +163,10 @@
                 </configuration>
             </plugin>
 
-            <!-- TODO: Is this needed? Also, this is not the latest version -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.2.2</version>
+                <version>1.2.7</version>
                 <configuration>
                 </configuration>
                 <executions>
