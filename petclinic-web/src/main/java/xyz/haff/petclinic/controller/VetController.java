@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.Vet;
 import xyz.haff.petclinic.repositories.VetRepository;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class VetController {
     private final static String LIST_VIEW = "vets/list" ;
+    private final static String EDIT_VIEW = "vets/edit" ;
 
     private final VetRepository vetRepository;
 
@@ -33,24 +35,24 @@ public class VetController {
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable String id, Model model) {
-        // TODO: Don't block
-        model.addAttribute("vet", vetRepository.findById(id).blockOptional().orElseThrow(NotFoundException::new));
-
-        return "vets/edit";
+    public Mono<String> edit(@PathVariable String id, Model model) {
+        return vetRepository.findById(id)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .flatMap((vet) -> {
+                   model.addAttribute("vet", vet);
+                   return Mono.just(EDIT_VIEW);
+                });
     }
 
     @PostMapping("/{id}/edit")
-    public String updateOrCreate(@PathVariable String id, @Valid @ModelAttribute Vet vet, BindingResult bindingResult, Model model) {
+    public Mono<String> updateOrCreate(@PathVariable String id, @Valid @ModelAttribute Vet vet, BindingResult bindingResult, Model model) {
 
         if (!bindingResult.hasErrors()) {
             vet.setId(id);
-            vetRepository.save(vet);
-
-            return "redirect:/" + LIST_VIEW;
+            return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
         } else {
             model.addAttribute("vet", vet);
-            return "vets/edit";
+            return Mono.just("vets/edit");
         }
 
     }
