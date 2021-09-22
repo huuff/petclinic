@@ -6,9 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import xyz.haff.petclinic.models.*;
 import xyz.haff.petclinic.repositories.OwnerRepository;
-import xyz.haff.petclinic.repositories.PetRepository;
 import xyz.haff.petclinic.repositories.VetRepository;
-import xyz.haff.petclinic.repositories.VisitRepository;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -18,10 +16,8 @@ import java.util.Set;
 @Component
 @Profile("demo")
 public class DataLoader implements CommandLineRunner {
-    private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
     private final VetRepository vetRepository;
-    private final VisitRepository visitRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -32,23 +28,20 @@ public class DataLoader implements CommandLineRunner {
         joesPets.add(mittens);
         joesPets.add(toby);
 
-        ownerRepository.save(joe).block();
-        petRepository.save(mittens).block();
-        petRepository.save(toby).block();
-
         var drKenny = new Vet("Kenny", "Wiggins", Specialty.OPHTHALMOLOGY);
         vetRepository.save(drKenny).block();
         var drBrandon = new Vet("Brandon", "Surimi", Specialty.SURGERY);
         vetRepository.save(drBrandon).block();
 
-        var mittensVisit1 = new Visit(mittens, drKenny, LocalDate.of(2021, 1, 5), "Sneezy kitty");
-        visitRepository.save(mittensVisit1).block();
-        var mittensVisit2 = new Visit(mittens, drKenny, LocalDate.of(2021, 8, 13), "Fluffy kitty");
-        visitRepository.save(mittensVisit2).block();
+        var mittensVisit1 = new Visit(drKenny, LocalDate.of(2021, 1, 5), "Sneezy kitty");
+        mittens.getVisits().add(mittensVisit1);
+        var mittensVisit2 = new Visit(drKenny, LocalDate.of(2021, 8, 13), "Fluffy kitty");
+        mittens.getVisits().add(mittensVisit2);
 
-        var tobyVisit1 = new Visit(toby, drKenny, LocalDate.of(2021, 3, 21), "Barking too much");
-        visitRepository.save(tobyVisit1).block();
-        var tobyVisit2 = new Visit(toby, drBrandon, LocalDate.of(2021, 9, 15), "Oozing flims");
-        visitRepository.save(tobyVisit2).block();
+        var tobyVisit1 = new Visit(drKenny, LocalDate.of(2021, 3, 21), "Barking too much");
+        toby.getVisits().add(tobyVisit1);
+        var tobyVisit2 = new Visit(drBrandon, LocalDate.of(2021, 9, 15), "Oozing flims");
+        toby.getVisits().add(tobyVisit2);
+        ownerRepository.save(joe).block();
     }
 }

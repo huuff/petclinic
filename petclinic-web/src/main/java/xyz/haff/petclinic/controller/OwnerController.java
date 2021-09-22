@@ -6,14 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.forms.PetForm;
 import xyz.haff.petclinic.mappers.PetFormToPetMapper;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.repositories.OwnerRepository;
-import xyz.haff.petclinic.repositories.PetRepository;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -26,7 +24,6 @@ public class OwnerController {
     private static final String OWNER_LIST = "owners/list";
 
     private final OwnerRepository ownerRepository;
-    private final PetRepository petRepository;
     private final PetFormToPetMapper petFormToPetMapper;
 
     // TODO: Maybe just use form objects?
@@ -75,20 +72,15 @@ public class OwnerController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
-        if (ownerRepository.existsByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())) {
-            bindingResult.reject("duplicate");
-        }
-
-        if (!bindingResult.hasErrors()) {
-            ownerRepository.save(owner);
-
-            return "redirect:/" + OWNER_LIST;
-        } else {
-            model.addAttribute("owner", owner);
-
-            return OWNER_EDIT;
-        }
+    public Mono<String> create(@ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
+        return ownerRepository.existsByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())
+                .doOnNext((exists) -> {
+                    if (exists)
+                        bindingResult.reject("duplicate");
+                }).then(!bindingResult.hasErrors()
+                        ? ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST)
+                        : Mono.create((sink) -> model.addAttribute("owner", owner)).thenReturn(OWNER_EDIT)
+                );
     }
 
     @GetMapping("/{id}/add_pet")
@@ -118,7 +110,6 @@ public class OwnerController {
             owner.getPets().add(pet);
 
             ownerRepository.save(owner);
-            petRepository.save(pet);
 
             return "redirect:/" + OWNER_LIST;
         } else {

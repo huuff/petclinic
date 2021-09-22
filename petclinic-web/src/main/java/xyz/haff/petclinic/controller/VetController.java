@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.Vet;
 import xyz.haff.petclinic.repositories.VetRepository;
-import xyz.haff.petclinic.repositories.VisitRepository;
 
 import javax.validation.Valid;
 
@@ -20,7 +19,6 @@ public class VetController {
     private final static String LIST_VIEW = "vets/list" ;
 
     private final VetRepository vetRepository;
-    private final VisitRepository visitRepository;
 
     @InitBinder
     public void unbindID(WebDataBinder dataBinder) {
@@ -77,12 +75,5 @@ public class VetController {
             model.addAttribute("vet", vet);
             return "vets/edit";
         }
-    }
-
-    @GetMapping("/{id}/visits")
-    public String visits(@PathVariable String id, Model model) {
-        model.addAttribute("visits", visitRepository.findAllByVetId(id));
-
-        return "visits/list";
     }
 }

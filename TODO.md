@@ -7,3 +7,4 @@
 * Use JDK 17
 * Get back to 75%-90% coverage
 * Use mongodb and reactive
+* Add a main class to use `mvn spring-boot:run`
