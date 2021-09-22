@@ -8,3 +8,4 @@
 * Get back to 75%-90% coverage
 * Use mongodb and reactive
 * Add a main class to use `mvn spring-boot:run`
+* Wherever there are reactive outputs, add reactive inputs

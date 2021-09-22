@@ -39,28 +39,25 @@ public class OwnerController {
         return OWNER_LIST;
     }
 
-    // TODO: Do not block
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable String id, Model model) {
-        Optional<Owner> owner = ownerRepository.findById(id).blockOptional();
+    public Mono<String> edit(@PathVariable String id, Model model) {
+        return ownerRepository.findById(id)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .flatMap((owner) -> {
+                    model.addAttribute("owner", owner);
 
-        model.addAttribute("owner",  owner.orElseThrow(NotFoundException::new));
-
-        return OWNER_EDIT;
+                    return Mono.just(OWNER_EDIT);
+                });
     }
 
     @PostMapping("/{id}/edit")
-    public String saveOrUpdate(@PathVariable String id, @ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
-        owner.setId(id);
-
+    public Mono<String> saveOrUpdate(@PathVariable String id, @ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
-            ownerRepository.save(owner);
-
-            return "redirect:/" + OWNER_LIST;
+            owner.setId(id);
+            return ownerRepository.save(owner).then(Mono.just("redirect:/" + OWNER_LIST));
         } else {
             model.addAttribute("owner", owner);
-
-            return OWNER_EDIT;
+            return Mono.just(OWNER_EDIT);
         }
     }
 
@@ -73,48 +70,42 @@ public class OwnerController {
 
     @PostMapping("/create")
     public Mono<String> create(@ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
-        return ownerRepository.existsByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())
-                .doOnNext((exists) -> {
-                    if (exists)
-                        bindingResult.reject("duplicate");
-                }).then(!bindingResult.hasErrors()
-                        ? ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST)
-                        : Mono.create((sink) -> model.addAttribute("owner", owner)).thenReturn(OWNER_EDIT)
-                );
+        // TODO: Prevent duplicates here
+        if (!bindingResult.hasErrors()) {
+            return ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST);
+        } else {
+            model.addAttribute("owner", owner);
+            return Mono.just(OWNER_EDIT);
+        }
     }
 
     @GetMapping("/{id}/add_pet")
-    public String addPet(@PathVariable String id, Model model) {
-        // TODO: don't block
-        if (!ownerRepository.existsById(id).block())
-            throw new NotFoundException();
+    public Mono<String> addPet(@PathVariable String id, Model model) {
+        return ownerRepository.existsById(id)
+                .flatMap((exists) -> {
+                    if (!exists)
+                        return Mono.error(NotFoundException::new);
 
-        var newPet = new PetForm();
-
-        model.addAttribute("petForm", newPet);
-        return "pets/edit";
+                    var newPet = new PetForm();
+                    model.addAttribute("petForm", newPet);
+                    return Mono.just("pets/edit");
+                });
     }
 
     // This in a service?
+    // TODO: Prevent duplicates
     @PostMapping("/{ownerId}/add_pet")
-    public String addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
-        // TODO: don't block
-        var owner = ownerRepository.findById(ownerId).blockOptional().orElseThrow(NotFoundException::new);
-
-        if (owner.getPets().stream().anyMatch(pet -> pet.getName().equals(petForm.getName()) && pet.getBirthDate().equals(petForm.getBirthDate())))
-            bindingResult.reject("duplicate");
-
-        var pet = petFormToPetMapper.convert(petForm);
-        if (!bindingResult.hasErrors()) {
-
-            owner.getPets().add(pet);
-
-            ownerRepository.save(owner);
-
-            return "redirect:/" + OWNER_LIST;
-        } else {
-            model.addAttribute("petForm", petForm);
-            return "pets/edit";
-        }
+    public Mono<String> addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
+        return ownerRepository.findById(ownerId)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .flatMap((owner) -> {
+                    if (!bindingResult.hasErrors()) {
+                        owner.getPets().add(petFormToPetMapper.convert(petForm)); // TODO: Try to autoconvert
+                        return ownerRepository.save(owner).then(Mono.just("redirect:/" + OWNER_LIST));
+                    } else {
+                        model.addAttribute("petForm", petForm);
+                        return Mono.just("pets/edit");
+                    }
+                });
     }
 }
