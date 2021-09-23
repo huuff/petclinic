@@ -65,21 +65,13 @@ public class VetController {
 
     @PostMapping("/create")
     public Mono<String> create(@ModelAttribute @Valid Vet vet, BindingResult bindingResult, Model model) {
-        return vetRepository.existsByFirstNameAndLastName(vet.getFirstName(), vet.getLastName())
-                .flatMap((exists) -> {
-                    if (exists) {
-                        bindingResult.reject("duplicate");
-                        return vetRepository
-                                .findByFirstNameAndLastName(vet.getFirstName(), vet.getLastName()) // TODO: Only using find instead of exists and find?
-                                .flatMap((foundVet) -> Mono.just("redirect:/vets/" + foundVet.getId() + "/edit"));
-                    }
-
-                    if (!bindingResult.hasErrors()) {
-                        return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
-                    } else {
-                        model.addAttribute("vet", vet);
-                        return Mono.just(EDIT_VIEW);
-                    }
-                });
+        return vetRepository.findByFirstNameAndLastName(vet.getFirstName(), vet.getLastName())
+                .flatMap((foundVet) -> {
+                    bindingResult.reject("duplicate");
+                    return Mono.just("redirect:/vets/" + foundVet.getId() + "/edit");
+                }).switchIfEmpty(!bindingResult.hasErrors()
+                        ? vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW))
+                        : Mono.just(EDIT_VIEW)
+                );
     }
 }

@@ -70,22 +70,14 @@ public class OwnerController {
 
     @PostMapping("/create")
     public Mono<String> create(@ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
-        return ownerRepository.existsByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())
-                .flatMap((exists) -> {
-                    if (exists) {
+        return ownerRepository.findByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())
+                .flatMap((found) -> {
                         bindingResult.reject("duplicate");
-                        return ownerRepository
-                                .findByFirstNameAndLastName(owner.getFirstName(), owner.getLastName()) // TODO: Maybe just use this instead of exists?
-                                .flatMap((foundOwner) ->  Mono.just("redirect:/owners/" + foundOwner.getId() + "/edit"));
-                    }
-
-                    if (!bindingResult.hasErrors()) {
-                        return ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST);
-                    } else {
-                        model.addAttribute("owner", owner);
-                        return Mono.just(OWNER_EDIT);
-                    }
-                });
+                        return  Mono.just("redirect:/owners/" + found.getId() + "/edit");
+                    }).switchIfEmpty(!bindingResult.hasErrors()
+                        ? ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST)
+                        : Mono.just(OWNER_EDIT)
+                );
     }
 
     @GetMapping("/{id}/add_pet")
