@@ -11,3 +11,4 @@
 * Add a view of a pet with all of its visits.
 * Have a default template for the `duplicate` error that shows an alert, indicating the name of what is duplicated.
 * Add back editing pets
+* Removing pets, owners and vets
