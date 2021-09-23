@@ -64,18 +64,14 @@ public class VetController {
         return "vets/edit";
     }
 
+    // TODO: Prevent duplicates
     @PostMapping("/create")
-    public String create(@ModelAttribute @Valid Vet vet, BindingResult bindingResult, Model model) {
-        if (vetRepository.existsByFirstNameAndLastName(vet.getFirstName(), vet.getLastName())) {
-            bindingResult.reject("duplicate");
-        }
-
+    public Mono<String> create(@ModelAttribute @Valid Vet vet, BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
-            vetRepository.save(vet);
-            return "redirect:/" + LIST_VIEW;
+            return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
         } else {
             model.addAttribute("vet", vet);
-            return "vets/edit";
+            return Mono.just("vets/edit");
         }
     }
 }
