@@ -25,4 +25,8 @@ public abstract class Person extends AbstractBaseEntity {
     @NotBlank
     @NotNull
     private String lastName;
+
+    public String fullName() {
+        return firstName + " " + lastName;
+    }
 }
