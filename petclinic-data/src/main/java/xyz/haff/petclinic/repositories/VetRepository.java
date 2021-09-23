@@ -6,8 +6,5 @@ import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.models.Vet;
 
 public interface VetRepository extends ReactiveMongoRepository<Vet, String> {
-
-    Mono<Boolean> existsByFirstNameAndLastName(String firstName, String lastName);
-
     Mono<Vet> findByFirstNameAndLastName(String firstName, String lastName);
 }
