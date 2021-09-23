@@ -7,5 +7,6 @@
 * Use JDK 17
 * Get back to 75%-90% coverage
 * Wherever there are reactive outputs, add reactive inputs
+* Add a list of visits to a vet
 * Have a default template for the `duplicate` error that shows an alert, indicating the name of what is duplicated.
 * Removing pets, owners and vets

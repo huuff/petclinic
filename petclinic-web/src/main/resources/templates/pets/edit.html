@@ -30,27 +30,26 @@
         <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
     </div>
     <button type="submit" th:text="#{submit}"></button>
-
     <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
 </form>
 
-<!-- TODO: Show only if not new -->
-<h2 th:text="#{visits}">Visits</h2>
-<table>
-    <thead>
+<div th:if="${isNew == null or !isNew}">
+    <h2 th:text="#{visits}">Visits</h2>
+    <table>
+        <thead>
         <tr>
             <th th:text="#{date}">Date</th>
             <th th:text="#{vet}">Vet</th>
             <th th:text="#{reason}">Reason</th>
         </tr>
-    </thead>
-    <tr th:each="visit : ${pet.visits}">
-        <!-- /* @thymesVar id="visit" type="xyz.haff.models.Visit" */ -->
-        <td th:text="${visit.date}">Date</td>
-        <td><a th:text="${visit.vet.fullName()}" th:href="@{|/vets/${visit.vet.id}/edit|}">Vet</a></td>
-        <td th:text="${visit.reason}">Reason</td>
-    </tr>
-</table>
-
+        </thead>
+        <tr th:each="visit : ${pet.visits}">
+            <!-- /* @thymesVar id="visit" type="xyz.haff.models.Visit" */ -->
+            <td th:text="${visit.date}">Date</td>
+            <td><a th:text="${visit.vet.fullName()}" th:href="@{|/vets/${visit.vet.id}/edit|}">Vet</a></td>
+            <td th:text="${visit.reason}">Reason</td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

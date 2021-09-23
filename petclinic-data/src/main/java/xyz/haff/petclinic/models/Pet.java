@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pet extends AbstractBaseEntity {
+public class Pet {
     @NotBlank
     @NotNull
     private String name;

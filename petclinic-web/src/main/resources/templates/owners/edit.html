@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:with="title=${!#strings.isEmpty(owner.firstName)} ? |${owner.firstName} ${owner.lastName}| : #{owner}">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:with="title=${!#strings.isEmpty(owner.firstName)} ? |${owner.firstName} ${owner.lastName}| : #{owner}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Owner</title>
@@ -23,24 +24,25 @@
     <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
 </form>
 
-<!-- TODO: Show this only if not new -->
-<h2 th:text="#{pets}">Pets</h2>
-<table>
-    <thead>
+<div th:if="!${owner.isNew()}">
+    <h2 th:text="#{pets}">Pets</h2>
+    <table>
+        <thead>
         <tr>
             <th th:text="#{name}">Name</th>
             <th th:text="#{type}">Type</th>
             <th th:text="#{birthdate}">Birthdate</th>
             <th th:text="#{view}">View</th>
         </tr>
-    </thead>
-    <tr th:each="pet : ${owner.pets}">
-        <td th:text="${pet.name}">Name</td>
-        <td th:text="${pet.type}">Type</td>
-        <td th:text="${pet.birthDate}">Birthdate</td>
-        <td><a th:text="#{view}" th:href="@{|/owners/${owner.id}/pets/${pet.name}|}">View</a></td>
-    </tr>
-</table>
-<a th:text="#{add_new}" th:href="@{|/owners/${owner.id}/add_pet|}">Add new</a>
+        </thead>
+        <tr th:each="pet : ${owner.pets}">
+            <td th:text="${pet.name}">Name</td>
+            <td th:text="${pet.type}">Type</td>
+            <td th:text="${pet.birthDate}">Birthdate</td>
+            <td><a th:text="#{view}" th:href="@{|/owners/${owner.id}/pets/${pet.name}|}">View</a></td>
+        </tr>
+    </table>
+    <a th:text="#{add_new}" th:href="@{|/owners/${owner.id}/add_pet|}">Add new</a>
+</div>
 </body>
 </html>

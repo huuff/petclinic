@@ -98,7 +98,7 @@ public class OwnerController {
 
     // TODO: This in a service
     @PostMapping("/{ownerId}/pets/{name}")
-    public Mono<String> updatePet(@PathVariable String ownerId, @PathVariable String name, @ModelAttribute @Valid Pet pet, BindingResult bindingResult) {
+    public Mono<String> updatePet(@PathVariable String ownerId, @PathVariable String name, @ModelAttribute @Valid Pet pet, BindingResult bindingResult, Model model) {
         return ownerRepository.findById(ownerId)
                 .switchIfEmpty(Mono.error(NotFoundException::new))
                 .zipWhen((owner) ->
@@ -113,6 +113,7 @@ public class OwnerController {
                         ownerAndPet.getT2().setBirthDate(pet.getBirthDate());
                         return ownerRepository.save(ownerAndPet.getT1()).then(Mono.just("redirect:/owners/" + ownerId + "/pets/" + pet.getName()));
                     } else {
+                        model.addAttribute("pet", pet);
                         return Mono.just("pets/edit");
                     }
                 });
@@ -127,6 +128,7 @@ public class OwnerController {
                         return Mono.error(NotFoundException::new);
 
                     var newPet = new Pet();
+                    model.addAttribute("isNew", true);
                     model.addAttribute("pet", newPet);
                     return Mono.just("pets/edit");
                 });
@@ -147,6 +149,7 @@ public class OwnerController {
                         owner.getPets().add(pet);
                         return ownerRepository.save(owner).then(Mono.just("redirect:/" + OWNER_LIST));
                     } else {
+                        model.addAttribute("isNew", true);
                         return Mono.just("pets/edit");
                     }
                 });

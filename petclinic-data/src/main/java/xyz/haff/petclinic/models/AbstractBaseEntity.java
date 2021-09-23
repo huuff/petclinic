@@ -3,10 +3,9 @@ package xyz.haff.petclinic.models;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 
 import java.util.UUID;
-
-// TODO: Version is definitely not working
 
 @Getter
 @Setter
@@ -15,6 +14,7 @@ public abstract class AbstractBaseEntity implements BaseEntity {
     @Id
     private String id = UUID.randomUUID().toString();
 
+    @Version
     private Integer version;
 
     public boolean equals(Object o) {
@@ -42,5 +42,9 @@ public abstract class AbstractBaseEntity implements BaseEntity {
     public String toString() {
         return this.getClass().getName()
                 + "[id=" + id + "]";
+    }
+
+    public boolean isNew() {
+        return version == null;
     }
 }
