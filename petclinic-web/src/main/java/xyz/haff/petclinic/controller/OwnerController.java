@@ -12,6 +12,7 @@ import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.services.PetService;
 
 import javax.validation.Valid;
 
@@ -23,7 +24,8 @@ public class OwnerController {
     private static final String OWNER_LIST = "owners/list";
 
     private final OwnerRepository ownerRepository;
-    
+    private final PetService petService;
+
     @InitBinder("owner")
     public void unbindID(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
@@ -80,45 +82,25 @@ public class OwnerController {
                 );
     }
 
-    // TODO: This in a service?
     @GetMapping("/{ownerId}/pets/{name}")
     public Mono<String> viewPet(@PathVariable String ownerId, @PathVariable String name, Model model) {
-        return ownerRepository.findById(ownerId)
-                .switchIfEmpty(Mono.error(NotFoundException::new))
-                .flatMapMany(owner -> Flux.fromIterable(owner.getPets()))
-                .filter(pet -> pet.getName().equals(name))
-                .switchIfEmpty(Mono.error(NotFoundException::new))
-                .next()
+        return petService.findPetByOwnerIdAndName(ownerId, name)
                 .flatMap((pet) -> {
                     model.addAttribute("pet", pet);
                     return Mono.just("pets/edit");
                 });
     }
 
-    // TODO: This in a service
     @PostMapping("/{ownerId}/pets/{name}")
     public Mono<String> updatePet(@PathVariable String ownerId, @PathVariable String name, @ModelAttribute @Valid Pet pet, BindingResult bindingResult, Model model) {
-        return ownerRepository.findById(ownerId)
-                .switchIfEmpty(Mono.error(NotFoundException::new))
-                .zipWhen((owner) ->
-                    Flux.fromIterable(owner.getPets())
-                        .filter((ownerPet) -> ownerPet.getName().equals(name))
-                        .switchIfEmpty(Mono.error(NotFoundException::new))
-                        .next()
-                ).flatMap((ownerAndPet) -> {
-                    if (!bindingResult.hasErrors()) {
-                        ownerAndPet.getT2().setName(pet.getName());
-                        ownerAndPet.getT2().setType(pet.getType());
-                        ownerAndPet.getT2().setBirthDate(pet.getBirthDate());
-                        return ownerRepository.save(ownerAndPet.getT1()).then(Mono.just("redirect:/owners/" + ownerId + "/pets/" + pet.getName()));
-                    } else {
-                        model.addAttribute("pet", pet);
-                        return Mono.just("pets/edit");
-                    }
-                });
+        if (!bindingResult.hasErrors()) {
+            return petService.mergePet(ownerId, name, pet).then(Mono.just("redirect:/owners/" + ownerId + "/pets/" + pet.getName()));
+        } else {
+            model.addAttribute("pet", pet);
+            return Mono.just("pets/edit");
+        }
     }
 
-    // TODO: Maybe /pets/new?
     @GetMapping("/{id}/add_pet")
     public Mono<String> addPet(@PathVariable String id, Model model) {
         return ownerRepository.existsById(id)
@@ -133,20 +115,22 @@ public class OwnerController {
                 });
     }
 
-    // This in a service?
+    // TODO: Any more reactive way of doing this?
     @PostMapping("/{ownerId}/add_pet")
     public Mono<String> addPet(@PathVariable String ownerId, @Valid @ModelAttribute Pet pet, BindingResult bindingResult, Model model) {
         return ownerRepository.findById(ownerId)
                 .switchIfEmpty(Mono.error(NotFoundException::new))
                 .flatMap((owner) -> {
-                    if (owner.getPets().stream().anyMatch(ownerPet -> ownerPet.getName().equals(pet.getName()))) {
+                    var existingPet = owner.getPets().stream().filter(ownerPet -> ownerPet.getName().equals(pet.getName())).findFirst();
+
+                    if (existingPet.isPresent()) {
                         bindingResult.reject("duplicate");
-                        return Mono.just("pets/edit"); // TODO: Redirect to that pet
+                        return Mono.just("redirect:/owners/" + owner.getId() + "/pets/" + existingPet.get().getName());
                     }
 
                     if (!bindingResult.hasErrors()) {
                         owner.getPets().add(pet);
-                        return ownerRepository.save(owner).then(Mono.just("redirect:/" + OWNER_LIST));
+                        return ownerRepository.save(owner).then(Mono.just("redirect:/owners" + ownerId));
                     } else {
                         model.addAttribute("isNew", true);
                         return Mono.just("pets/edit");

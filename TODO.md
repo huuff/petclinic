@@ -10,3 +10,4 @@
 * Add a list of visits to a vet
 * Have a default template for the `duplicate` error that shows an alert, indicating the name of what is duplicated.
 * Removing pets, owners and vets
+* Thinking of going back to relational databases and `rdbc` because I'm not liking mongo
