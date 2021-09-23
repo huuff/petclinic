@@ -17,8 +17,8 @@ import javax.validation.Valid;
 @RequestMapping("/vets")
 @RequiredArgsConstructor
 public class VetController {
-    private final static String LIST_VIEW = "vets/list" ;
-    private final static String EDIT_VIEW = "vets/edit" ;
+    private final static String LIST_VIEW = "vets/list";
+    private final static String EDIT_VIEW = "vets/edit";
 
     private final VetRepository vetRepository;
 
@@ -39,14 +39,13 @@ public class VetController {
         return vetRepository.findById(id)
                 .switchIfEmpty(Mono.error(NotFoundException::new))
                 .flatMap((vet) -> {
-                   model.addAttribute("vet", vet);
-                   return Mono.just(EDIT_VIEW);
+                    model.addAttribute("vet", vet);
+                    return Mono.just(EDIT_VIEW);
                 });
     }
 
     @PostMapping("/{id}/edit")
     public Mono<String> updateOrCreate(@PathVariable String id, @Valid @ModelAttribute Vet vet, BindingResult bindingResult, Model model) {
-
         if (!bindingResult.hasErrors()) {
             vet.setId(id);
             return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
@@ -64,14 +63,20 @@ public class VetController {
         return "vets/edit";
     }
 
-    // TODO: Prevent duplicates
     @PostMapping("/create")
     public Mono<String> create(@ModelAttribute @Valid Vet vet, BindingResult bindingResult, Model model) {
-        if (!bindingResult.hasErrors()) {
-            return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
-        } else {
-            model.addAttribute("vet", vet);
-            return Mono.just("vets/edit");
-        }
+        return vetRepository.existsByFirstNameAndLastName(vet.getFirstName(), vet.getLastName())
+                .flatMap((exists) -> {
+                    if (exists) {
+                        bindingResult.reject("duplicate");
+                    }
+
+                    if (!bindingResult.hasErrors()) {
+                        return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
+                    } else {
+                        model.addAttribute("vet", vet);
+                        return Mono.just("vets/edit");
+                    }
+                });
     }
 }
