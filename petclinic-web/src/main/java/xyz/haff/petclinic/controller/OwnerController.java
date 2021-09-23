@@ -50,11 +50,14 @@ public class OwnerController {
                 });
     }
 
-    @PostMapping("/{id}/edit") // TODO: We're losing the pets here
+    @PostMapping("/{id}/edit")
     public Mono<String> saveOrUpdate(@PathVariable String id, @ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
-            owner.setId(id);
-            return ownerRepository.save(owner).then(Mono.just("redirect:/" + OWNER_LIST));
+            return ownerRepository.findById(id).flatMap((foundOwner) -> { // TODO: Some kind of merge operation?
+                foundOwner.setFirstName(owner.getFirstName());
+                foundOwner.setLastName(owner.getLastName());
+                return ownerRepository.save(foundOwner).then(Mono.just("redirect:/" + OWNER_LIST));
+            });
         } else {
             model.addAttribute("owner", owner);
             return Mono.just(OWNER_EDIT);

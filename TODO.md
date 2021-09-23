@@ -7,7 +7,6 @@
 * Use JDK 17
 * Get back to 75%-90% coverage
 * Wherever there are reactive outputs, add reactive inputs
-* Add a view of an owner with all of their pets.
 * Add a view of a pet with all of its visits.
 * Have a default template for the `duplicate` error that shows an alert, indicating the name of what is duplicated.
 * Add back editing pets

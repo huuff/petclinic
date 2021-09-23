@@ -8,24 +8,24 @@
 <h1 th:text="#{vets}">Vets</h1>
 
 <table>
-  <thead>
-  <tr>
-    <th th:text="#{first_name}">First Name</th>
-    <th th:text="#{last_name}">Last Name</th>
-    <th th:text="#{specialty}">Specialty</th>
-    <th th:text="#{visits}">Visits</th>
-    <th th:text="#{view}">View</th>
-  </tr>
-  </thead>
+    <thead>
+    <tr>
+        <th th:text="#{first_name}">First Name</th>
+        <th th:text="#{last_name}">Last Name</th>
+        <th th:text="#{specialty}">Specialty</th>
+        <th th:text="#{visits}">Visits</th>
+        <th th:text="#{view}">View</th>
+    </tr>
+    </thead>
 
-  <tr th:each="vet : ${vets}">
-      <!-- /* @thymesVar id="vet" type="xyz.haff.models.Vet" */ -->
-    <td th:text="${vet.firstName}"></td>
-    <td th:text="${vet.lastName}"></td>
-    <td th:text="${vet.specialty}"></td>
-    <td><a th:href="@{|/vets/${vet.id}/visits|}" th:text="#{visits}">Visits</a></td>
-    <td><a th:text="#{view}" th:href="@{|/vets/${vet.id}/edit|}"></a></td>
-  </tr>
+    <tr th:each="vet : ${vets}">
+        <!-- /* @thymesVar id="vet" type="xyz.haff.models.Vet" */ -->
+        <td th:text="${vet.firstName}"></td>
+        <td th:text="${vet.lastName}"></td>
+        <td th:text="${vet.specialty}"></td>
+        <td><a th:href="@{|/vets/${vet.id}/visits|}" th:text="#{visits}">Visits</a></td>
+        <td><a th:text="#{view}" th:href="@{|/vets/${vet.id}/edit|}"></a></td>
+    </tr>
 </table>
 <a th:href="@{/vets/create}" th:text="#{add_new}">Add new</a>
 </body>
