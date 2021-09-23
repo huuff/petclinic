@@ -23,8 +23,7 @@ public class OwnerController {
     private static final String OWNER_LIST = "owners/list";
 
     private final OwnerRepository ownerRepository;
-
-    // TODO: Maybe just use form objects?
+    
     @InitBinder("owner")
     public void unbindID(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
