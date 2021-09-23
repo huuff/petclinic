@@ -69,13 +69,16 @@ public class VetController {
                 .flatMap((exists) -> {
                     if (exists) {
                         bindingResult.reject("duplicate");
+                        return vetRepository
+                                .findByFirstNameAndLastName(vet.getFirstName(), vet.getLastName()) // TODO: Only using find instead of exists and find?
+                                .flatMap((foundVet) -> Mono.just("redirect:/vets/" + foundVet.getId() + "/edit"));
                     }
 
                     if (!bindingResult.hasErrors()) {
                         return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
                     } else {
                         model.addAttribute("vet", vet);
-                        return Mono.just("vets/edit");
+                        return Mono.just(EDIT_VIEW);
                     }
                 });
     }

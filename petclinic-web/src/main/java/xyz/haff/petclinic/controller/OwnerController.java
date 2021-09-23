@@ -50,7 +50,7 @@ public class OwnerController {
                 });
     }
 
-    @PostMapping("/{id}/edit")
+    @PostMapping("/{id}/edit") // TODO: We're losing the pets here
     public Mono<String> saveOrUpdate(@PathVariable String id, @ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
             owner.setId(id);
@@ -74,11 +74,14 @@ public class OwnerController {
                 .flatMap((exists) -> {
                     if (exists) {
                         bindingResult.reject("duplicate");
+                        return ownerRepository
+                                .findByFirstNameAndLastName(owner.getFirstName(), owner.getLastName()) // TODO: Maybe just use this instead of exists?
+                                .flatMap((foundOwner) ->  Mono.just("redirect:/owners/" + foundOwner.getId() + "/edit"));
                     }
 
                     if (!bindingResult.hasErrors()) {
                         return ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST);
-                    } else { // TODO: Maybe not return the same owner if it existed? It looks weird
+                    } else {
                         model.addAttribute("owner", owner);
                         return Mono.just(OWNER_EDIT);
                     }
@@ -103,12 +106,12 @@ public class OwnerController {
     public Mono<String> addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
         return ownerRepository.findById(ownerId)
                 .switchIfEmpty(Mono.error(NotFoundException::new))
-                .doOnNext((owner) -> {
+                .flatMap((owner) -> {
                     if (owner.getPets().stream().anyMatch(pet -> pet.getName().equals(petForm.getName()))) {
                         bindingResult.reject("duplicate");
+                        return Mono.just("pets/edit"); // TODO: Redirect to that pet
                     }
-                })
-                .flatMap((owner) -> {
+
                     if (!bindingResult.hasErrors()) {
                         owner.getPets().add(petFormToPetMapper.convert(petForm)); // TODO: Try to autoconvert
                         return ownerRepository.save(owner).then(Mono.just("redirect:/" + OWNER_LIST));

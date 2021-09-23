@@ -8,4 +8,6 @@ import xyz.haff.petclinic.models.Owner;
 public interface OwnerRepository extends ReactiveMongoRepository<Owner, String> {
 
     Mono<Boolean> existsByFirstNameAndLastName(String firstName, String lastName);
+
+    Mono<Owner> findByFirstNameAndLastName(String firstName, String lastName);
 }

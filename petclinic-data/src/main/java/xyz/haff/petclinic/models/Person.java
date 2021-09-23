@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+// TODO: Set `firstName` and `lastName` as unique
+
 @Getter
 @Setter
 @AllArgsConstructor
