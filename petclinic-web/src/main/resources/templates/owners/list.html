@@ -10,15 +10,14 @@
 <table>
   <thead>
     <tr>
-      <th>UUID</th>
       <th th:text="#{first_name}">First Name</th>
       <th th:text="#{last_name}">Last Name</th>
       <th th:text="#{pets}">Pets</th>
       <th th:text="#{add_pet}">Add Pet</th>
+      <th th:text="#{view}">View</th>
     </tr>
   </thead>
   <tr th:each="owner : ${owners}">
-    <td><a th:text="${owner.id}" th:href="@{|/owners/${owner.id}/edit|}"></a></td>
     <td th:text="${owner.firstName}"></td>
     <td th:text="${owner.lastName}"></td>
     <td>
@@ -27,6 +26,7 @@
         <span th:if="!${i.last}" th:text="','"></span>
       </span>
     <td><a th:href="@{|/owners/${owner.id}/add_pet/|}" th:text="#{add_pet}">Add pet</a></td>
+    <td><a th:text="#{view}" th:href="@{|/owners/${owner.id}/edit|}">View</a></td>
   </tr>
 </table>
 <a th:href="@{/owners/create}" th:text="#{add_new}">Add new</a>
