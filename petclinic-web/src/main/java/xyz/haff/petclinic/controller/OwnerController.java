@@ -70,13 +70,19 @@ public class OwnerController {
 
     @PostMapping("/create")
     public Mono<String> create(@ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
-        // TODO: Prevent duplicates here
-        if (!bindingResult.hasErrors()) {
-            return ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST);
-        } else {
-            model.addAttribute("owner", owner);
-            return Mono.just(OWNER_EDIT);
-        }
+        return ownerRepository.existsByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())
+                .flatMap((exists) -> {
+                    if (exists) {
+                        bindingResult.reject("duplicate");
+                    }
+
+                    if (!bindingResult.hasErrors()) {
+                        return ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST);
+                    } else { // TODO: Maybe not return the same owner if it existed? It looks weird
+                        model.addAttribute("owner", owner);
+                        return Mono.just(OWNER_EDIT);
+                    }
+                });
     }
 
     @GetMapping("/{id}/add_pet")
