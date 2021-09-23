@@ -12,20 +12,12 @@
     <tr>
       <th th:text="#{first_name}">First Name</th>
       <th th:text="#{last_name}">Last Name</th>
-      <th th:text="#{pets}">Pets</th>
-      <th th:text="#{add_pet}">Add Pet</th>
       <th th:text="#{view}">View</th>
     </tr>
   </thead>
   <tr th:each="owner : ${owners}">
     <td th:text="${owner.firstName}"></td>
     <td th:text="${owner.lastName}"></td>
-    <td>
-      <span th:each="pet, i: ${owner.pets}">
-        <a th:text="${pet.name}" th:href="@{|/pets/${pet.id}/edit|}"></a>
-        <span th:if="!${i.last}" th:text="','"></span>
-      </span>
-    <td><a th:href="@{|/owners/${owner.id}/add_pet/|}" th:text="#{add_pet}">Add pet</a></td>
     <td><a th:text="#{view}" th:href="@{|/owners/${owner.id}/edit|}">View</a></td>
   </tr>
 </table>

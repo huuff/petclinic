@@ -38,7 +38,7 @@
         <td th:text="${pet.name}">Name</td>
         <td th:text="${pet.type}">Type</td>
         <td th:text="${pet.birthDate}">Birthdate</td>
-        <td>View</td>
+        <td><a th:text="#{view}" th:href="@{|/owners/${owner.id}/pets/${pet.name}|}">View</a></td>
     </tr>
 </table>
 </body>

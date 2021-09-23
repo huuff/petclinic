@@ -6,15 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.exceptions.NotFoundException;
-import xyz.haff.petclinic.forms.PetForm;
-import xyz.haff.petclinic.mappers.PetFormToPetMapper;
 import xyz.haff.petclinic.models.Owner;
+import xyz.haff.petclinic.models.Pet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -24,7 +23,6 @@ public class OwnerController {
     private static final String OWNER_LIST = "owners/list";
 
     private final OwnerRepository ownerRepository;
-    private final PetFormToPetMapper petFormToPetMapper;
 
     // TODO: Maybe just use form objects?
     @InitBinder("owner")
@@ -75,12 +73,49 @@ public class OwnerController {
     public Mono<String> create(@ModelAttribute @Valid Owner owner, BindingResult bindingResult, Model model) {
         return ownerRepository.findByFirstNameAndLastName(owner.getFirstName(), owner.getLastName())
                 .flatMap((found) -> {
-                        bindingResult.reject("duplicate");
-                        return  Mono.just("redirect:/owners/" + found.getId() + "/edit");
-                    }).switchIfEmpty(!bindingResult.hasErrors()
+                    bindingResult.reject("duplicate");
+                    return Mono.just("redirect:/owners/" + found.getId() + "/edit");
+                }).switchIfEmpty(!bindingResult.hasErrors()
                         ? ownerRepository.save(owner).thenReturn("redirect:/" + OWNER_LIST)
                         : Mono.just(OWNER_EDIT)
                 );
+    }
+
+    // TODO: This in a service?
+    @GetMapping("/{ownerId}/pets/{name}")
+    public Mono<String> viewPet(@PathVariable String ownerId, @PathVariable String name, Model model) {
+        return ownerRepository.findById(ownerId)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .flatMapMany(owner -> Flux.fromIterable(owner.getPets()))
+                .filter(pet -> pet.getName().equals(name))
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .next()
+                .flatMap((pet) -> {
+                    model.addAttribute("pet", pet);
+                    return Mono.just("pets/edit");
+                });
+    }
+
+    // TODO: This in a service
+    @PostMapping("/{ownerId}/pets/{name}")
+    public Mono<String> updatePet(@PathVariable String ownerId, @PathVariable String name, @ModelAttribute @Valid Pet pet, BindingResult bindingResult) {
+        return ownerRepository.findById(ownerId)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .zipWhen((owner) ->
+                    Flux.fromIterable(owner.getPets())
+                        .filter((ownerPet) -> ownerPet.getName().equals(name))
+                        .switchIfEmpty(Mono.error(NotFoundException::new))
+                        .next()
+                ).flatMap((ownerAndPet) -> {
+                    if (!bindingResult.hasErrors()) {
+                        ownerAndPet.getT2().setName(pet.getName());
+                        ownerAndPet.getT2().setType(pet.getType());
+                        ownerAndPet.getT2().setBirthDate(pet.getBirthDate());
+                        return ownerRepository.save(ownerAndPet.getT1()).then(Mono.just("redirect:/owners/" + ownerId + "/pets/" + pet.getName()));
+                    } else {
+                        return Mono.just("pets/edit");
+                    }
+                });
     }
 
     @GetMapping("/{id}/add_pet")
@@ -90,30 +125,30 @@ public class OwnerController {
                     if (!exists)
                         return Mono.error(NotFoundException::new);
 
-                    var newPet = new PetForm();
-                    model.addAttribute("petForm", newPet);
+                    var newPet = new Pet();
+                    model.addAttribute("pet", newPet);
                     return Mono.just("pets/edit");
                 });
     }
 
     // This in a service?
     @PostMapping("/{ownerId}/add_pet")
-    public Mono<String> addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
+    public Mono<String> addPet(@PathVariable String ownerId, @Valid @ModelAttribute Pet pet, BindingResult bindingResult, Model model) {
         return ownerRepository.findById(ownerId)
                 .switchIfEmpty(Mono.error(NotFoundException::new))
                 .flatMap((owner) -> {
-                    if (owner.getPets().stream().anyMatch(pet -> pet.getName().equals(petForm.getName()))) {
+                    if (owner.getPets().stream().anyMatch(ownerPet -> ownerPet.getName().equals(pet.getName()))) {
                         bindingResult.reject("duplicate");
                         return Mono.just("pets/edit"); // TODO: Redirect to that pet
                     }
 
                     if (!bindingResult.hasErrors()) {
-                        owner.getPets().add(petFormToPetMapper.convert(petForm)); // TODO: Try to autoconvert
+                        owner.getPets().add(pet);
                         return ownerRepository.save(owner).then(Mono.just("redirect:/" + OWNER_LIST));
                     } else {
-                        model.addAttribute("petForm", petForm);
                         return Mono.just("pets/edit");
                     }
                 });
     }
+
 }

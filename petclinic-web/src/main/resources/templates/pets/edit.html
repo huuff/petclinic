@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- /* @thymesVar id="petForm" type="xyz.haff.forms.PetForm" */ -->
+<!-- /* @thymesVar id="pet" type="xyz.haff.models.Pet" */ -->
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:with="title=${!#strings.isEmpty(petForm.name)} ? ${petForm.name} : #{pet}">
+      th:with="title=${!#strings.isEmpty(pet.name)} ? ${pet.name} : #{pet}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Pet</title>
@@ -9,7 +9,7 @@
 <body>
 <h1 th:text="${title}">Edit Pet</h1>
 
-<form th:object="${petForm}" method="post">
+<form th:object="${pet}" method="post">
     <div>
         <label for="name" th:text="#{name}">Name</label>
         <input id="name" type="text" th:field="*{name}"/>
@@ -23,7 +23,7 @@
     <div>
         <label for="type" th:text="#{type}"></label>
         <select id="type" th:field="*{type}">
-            <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}"></option>
+            <option th:text="#{selector}" th:value="null" th:selected="${pet.type == null}"></option>
             <option th:each="type : ${T(xyz.haff.petclinic.models.PetType).values()}" th:value="${type.name()}"
                     th:text="${type}"></option>
         </select>
