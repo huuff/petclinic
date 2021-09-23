@@ -93,11 +93,15 @@ public class OwnerController {
     }
 
     // This in a service?
-    // TODO: Prevent duplicates
     @PostMapping("/{ownerId}/add_pet")
     public Mono<String> addPet(@PathVariable String ownerId, @Valid @ModelAttribute PetForm petForm, BindingResult bindingResult, Model model) {
         return ownerRepository.findById(ownerId)
                 .switchIfEmpty(Mono.error(NotFoundException::new))
+                .doOnNext((owner) -> {
+                    if (owner.getPets().stream().anyMatch(pet -> pet.getName().equals(petForm.getName()))) {
+                        bindingResult.reject("duplicate");
+                    }
+                })
                 .flatMap((owner) -> {
                     if (!bindingResult.hasErrors()) {
                         owner.getPets().add(petFormToPetMapper.convert(petForm)); // TODO: Try to autoconvert
