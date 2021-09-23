@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.Vet;
 import xyz.haff.petclinic.repositories.VetRepository;
+import xyz.haff.petclinic.services.VisitService;
 
 import javax.validation.Valid;
 
@@ -21,6 +22,7 @@ public class VetController {
     private final static String EDIT_VIEW = "vets/edit";
 
     private final VetRepository vetRepository;
+    private final VisitService visitService;
 
     @InitBinder
     public void unbindID(WebDataBinder dataBinder) {
@@ -40,6 +42,7 @@ public class VetController {
                 .switchIfEmpty(Mono.error(NotFoundException::new))
                 .flatMap((vet) -> {
                     model.addAttribute("vet", vet);
+                    model.addAttribute("visits", visitService.visitsByVet(id));
                     return Mono.just(EDIT_VIEW);
                 });
     }
@@ -51,6 +54,7 @@ public class VetController {
             return vetRepository.save(vet).then(Mono.just("redirect:/" + LIST_VIEW));
         } else {
             model.addAttribute("vet", vet);
+            model.addAttribute("visits", visitService.visitsByVet(id));
             return Mono.just("vets/edit");
         }
 

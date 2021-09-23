@@ -13,7 +13,6 @@
         <th th:text="#{first_name}">First Name</th>
         <th th:text="#{last_name}">Last Name</th>
         <th th:text="#{specialty}">Specialty</th>
-        <th th:text="#{visits}">Visits</th>
         <th th:text="#{view}">View</th>
     </tr>
     </thead>
@@ -23,7 +22,6 @@
         <td th:text="${vet.firstName}"></td>
         <td th:text="${vet.lastName}"></td>
         <td th:text="${vet.specialty}"></td>
-        <td><a th:href="@{|/vets/${vet.id}/visits|}" th:text="#{visits}">Visits</a></td>
         <td><a th:text="#{view}" th:href="@{|/vets/${vet.id}/edit|}"></a></td>
     </tr>
 </table>

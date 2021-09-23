@@ -32,5 +32,24 @@
 
   <p th:if="${#fields.hasGlobalErrors}" th:errors="*{global}"></p>
 </form>
+
+<div th:if="!${vet.isNew()}">
+  <h2 th:text="#{visits}">Visits</h2>
+  <table>
+    <thead>
+      <tr>
+        <th th:text="#{date}">Date</th>
+        <th th:text="#{pet}">Pet</th>
+        <th th:text="#{reason}">Reason</th>
+      </tr>
+    </thead>
+    <!-- TODO: Would be cool to put a link to the pet here, but turns out it's pretty hard with my current setting with mongo -->
+    <tr th:each="visit : ${visits}">
+      <td th:text="${visit.T2.date}">Date</td>
+      <td th:text="${visit.T1.name}">Pet</td>
+      <td th:text="${visit.T2.reason}">Reason</td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>
