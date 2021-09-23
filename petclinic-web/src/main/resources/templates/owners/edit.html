@@ -41,5 +41,6 @@
         <td><a th:text="#{view}" th:href="@{|/owners/${owner.id}/pets/${pet.name}|}">View</a></td>
     </tr>
 </table>
+<a th:text="#{add_new}" th:href="@{|/owners/${owner.id}/add_pet|}">Add new</a>
 </body>
 </html>

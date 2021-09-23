@@ -34,6 +34,7 @@
     <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
 </form>
 
+<!-- TODO: Show only if not new -->
 <h2 th:text="#{visits}">Visits</h2>
 <table>
     <thead>
