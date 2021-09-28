@@ -3,12 +3,8 @@ package xyz.haff.petclinic.repositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.models.Owner;
-import xyz.haff.petclinic.models.User;
-
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -30,7 +26,7 @@ public class OwnerRepositoryCustomImpl implements OwnerRepositoryCustom<Owner> {
                         .then().then(Mono.just(owner))
                         ;
             else
-                return Mono.error(RuntimeException::new);
+                return Mono.error(RuntimeException::new); // TODO
         });
     }
 }

@@ -8,6 +8,8 @@ import xyz.haff.petclinic.models.User;
 import java.util.Collection;
 import java.util.List;
 
+// TODO: Better name, maybe merge with `User`?
+
 @RequiredArgsConstructor
 public class MyUserPrincipal implements UserDetails {
     private final User user;
