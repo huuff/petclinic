@@ -1,10 +1,7 @@
 package xyz.haff.petclinic.repositories;
 
-import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import org.springframework.data.repository.CrudRepository;
-import reactor.core.publisher.Mono;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import xyz.haff.petclinic.models.Owner;
 
-public interface OwnerRepository extends ReactiveMongoRepository<Owner, String> {
-    Mono<Owner> findByFirstNameAndLastName(String firstName, String lastName);
+public interface OwnerRepository extends ReactiveCrudRepository<Owner, String> {
 }

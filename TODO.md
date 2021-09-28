@@ -1,13 +1,2 @@
-* Get auto-reloading with dev tools
-* Add login, owner profile, etc
-* Add button to appoint a visit for an owner after logging in
-* Use `@ModelAttribute`. UPDATE: None of my controller methods are suitable for this, but I'm leaving the todo for the future
-* A template for person forms that already adds firstname and lastname
-* Use gradle
-* Use JDK 17
-* Get back to 75%-90% coverage
-* Wherever there are reactive outputs, add reactive inputs
-* Add a list of visits to a vet
-* Have a default template for the `duplicate` error that shows an alert, indicating the name of what is duplicated.
-* Removing pets, owners and vets
-* Thinking of going back to relational databases and `rdbc` because I'm not liking mongo
+# Tasks
+* See if I can get the `H2` console served from `/h2-console`
