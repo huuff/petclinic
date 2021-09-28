@@ -1,10 +1,8 @@
 package xyz.haff.petclinic.repositories;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.r2dbc.core.DatabaseClient;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.models.Owner;
@@ -12,30 +10,28 @@ import xyz.haff.petclinic.models.User;
 
 import java.util.UUID;
 
+@Repository
 @RequiredArgsConstructor
-@Slf4j
-@Service
-public class DbClientOwnerRepository implements OwnerRepository {
+public class OwnerRepositoryCustomImpl implements OwnerRepositoryCustom<Owner> {
     private final DatabaseClient dbClient;
     private final UserRepository userRepository;
 
-    @Transactional
-    public Mono<Object> save(Mono<Owner> ownerPublisher) {
-        return ownerPublisher.flatMap(owner -> userRepository.save(owner.getUser()).flatMap(user -> {
-                    if (owner.getVersion() == 0)
-                        return dbClient.sql("INSERT INTO owner (id, version, user, first_name, last_name) " +
-                                "VALUES (:id, :version, :user, :firstName, :lastName)")
+    @Override
+    public <S extends Owner> Mono<S> save(S owner) {
+        return userRepository.save(owner.getUser()).flatMap(user -> {
+            if (owner.getVersion() == 0)
+                return dbClient.sql("INSERT INTO owner (id, version, user, first_name, last_name) " +
+                        "VALUES (:id, :version, :user, :firstName, :lastName)")
                         .bind("id", owner.getId())
                         .bind("version", 1)
                         .bind("user", user.getId())
                         .bind("firstName", owner.getFirstName())
                         .bind("lastName", owner.getLastName())
-                        .then()
+                        .then().then(Mono.just(owner))
                         ;
-                    else
-                        return Mono.error(RuntimeException::new);
-                })
-        );
+            else
+                return Mono.error(RuntimeException::new);
+        });
     }
 
     // TODO: Try using kotlin here, it'll be cuter
@@ -65,5 +61,4 @@ public class DbClientOwnerRepository implements OwnerRepository {
                         (String) rowSpec.get("LAST_NAME")
                 ));
     }
-
 }

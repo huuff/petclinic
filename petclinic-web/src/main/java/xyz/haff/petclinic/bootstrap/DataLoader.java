@@ -23,9 +23,9 @@ public class DataLoader implements CommandLineRunner {
         var mikeUser = new User("mike", "weston");
 
         var joeSmith = new Owner(joeUser, "Joe", "Smith");
-        ownerRepository.save(Mono.just(joeSmith)).block();
+        ownerRepository.save(joeSmith).block();
         var michaelWeston = new Owner(mikeUser, "Michael", "Weston");
-        ownerRepository.save(Mono.just(michaelWeston)).block();
+        ownerRepository.save(michaelWeston).block();
 
         ownerRepository.findAll()
                 .doOnNext(owner -> log.info(owner.toString()))
