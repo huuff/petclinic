@@ -5,8 +5,9 @@ import org.springframework.data.annotation.Version
 import java.util.*
 
 data class Owner @JvmOverloads constructor(
-    @Id val id: UUID = UUID.randomUUID(),
-    @Version val version: Int = 0,
-    val firstName: String,
-    val lastName: String
+    @Id public val id: UUID = UUID.randomUUID(),
+    @Version public val version: Int = 0,
+    public val user: User,
+    public val firstName: String,
+    public val lastName: String,
 )
