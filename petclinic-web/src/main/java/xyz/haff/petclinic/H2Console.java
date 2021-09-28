@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 @Component
 @Slf4j
-@Profile("h2")
+@Profile("demo")
 public class H2Console {
 
     private Server webServer;

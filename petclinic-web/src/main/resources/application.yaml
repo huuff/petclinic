@@ -1,6 +1,5 @@
 spring:
   profiles:
-    include: h2
     active: demo
   h2:
     console:

@@ -9,7 +9,6 @@ import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.User;
 import xyz.haff.petclinic.repositories.OwnerRepository;
-import xyz.haff.petclinic.repositories.UserRepository;
 
 @Component
 @RequiredArgsConstructor
