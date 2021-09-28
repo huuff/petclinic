@@ -7,7 +7,7 @@ import xyz.haff.petclinic.models.Owner;
 
 import java.util.UUID;
 
-public interface OwnerRepository  extends R2dbcRepository<Owner, UUID>, OwnerRepositoryCustom<Owner> {
+public interface OwnerRepository extends R2dbcRepository<Owner, UUID>, OwnerRepositoryCustom<Owner> {
 
     // TODO: Use kotlin? or JDK17 strings?
     @Query("SELECT " +

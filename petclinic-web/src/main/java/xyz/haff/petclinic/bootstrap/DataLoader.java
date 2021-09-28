@@ -19,8 +19,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        var joeUser = new User("joe", "smith");
-        var mikeUser = new User("mike", "weston");
+        var joeUser = new User("joe", "{noop}smith");
+        var mikeUser = new User("mike", "{noop}weston");
 
         var joeSmith = new Owner(joeUser, "Joe", "Smith");
         ownerRepository.save(joeSmith).block();
