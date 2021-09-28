@@ -21,8 +21,6 @@ class OwnerRepositoryTest {
     @Autowired
     private OwnerRepository ownerRepository;
 
-
-
     @Test
     void saveAndRead() {
         var joeUser = new User("joe", "smith");

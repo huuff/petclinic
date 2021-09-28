@@ -33,32 +33,4 @@ public class OwnerRepositoryCustomImpl implements OwnerRepositoryCustom<Owner> {
                 return Mono.error(RuntimeException::new);
         });
     }
-
-    // TODO: Try using kotlin here, it'll be cuter
-    public Flux<Owner> findAll() {
-        return dbClient.sql("SELECT " +
-                "o.id as OWNER_ID, " +
-                "o.version as OWNER_VERSION, " +
-                "o.first_name as FIRST_NAME, " +
-                "o.last_name as LAST_NAME, " +
-                "u.id as USER_ID, " +
-                "u.version as USER_VERSION, " +
-                "u.username as USERNAME, " +
-                "u.password as PASSWORD " +
-                "FROM owner as o JOIN user as u ON o.user=u.id")
-                .fetch()
-                .all()
-                .map(rowSpec -> new Owner(
-                        (UUID) rowSpec.get("OWNER_ID"),
-                        (Integer) rowSpec.get("OWNER_VERSION"),
-                        new User(
-                                (UUID) rowSpec.get("USER_ID"),
-                                (Integer) rowSpec.get("USER_VERSION"),
-                                (String) rowSpec.get("USERNAME"),
-                                (String) rowSpec.get("PASSWORD")
-                        ),
-                        (String) rowSpec.get("FIRST_NAME"),
-                        (String) rowSpec.get("LAST_NAME")
-                ));
-    }
 }
