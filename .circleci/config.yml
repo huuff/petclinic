@@ -27,7 +27,7 @@ workflows:
             - persist_to_workspace:
                 root: ./
                 paths:
-                  - petclinic-web/target
+                  - ./target
       - upload-to-codecov:
           requires:
             - maven/test

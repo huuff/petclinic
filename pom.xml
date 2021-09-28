@@ -23,6 +23,7 @@
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <revision>0-SNAPSHOT</revision>
         <kotlin.version>1.6.0-M1</kotlin.version>
+        <jacoco.reportPath>${project.basedir}/../target/jacoco.exec</jacoco.reportPath>
     </properties>
 
     <scm>
@@ -222,6 +223,11 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportPath}</destFile>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>report</id>
