@@ -1,6 +1,7 @@
 package xyz.haff.petclinic.repositories;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import xyz.haff.petclinic.models.User;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class OwnerRepository {
     private final DatabaseClient dbClient;
@@ -19,6 +21,7 @@ public class OwnerRepository {
 
     @Transactional
     public Mono<Object> save(Mono<Owner> ownerPublisher) {
+        log.info("Calling OwnerRepository.save()");
         return ownerPublisher.flatMap(owner -> userRepository.save(owner.getUser()).flatMap(user -> {
                     if (owner.getVersion() == 0)
                         return dbClient.sql("INSERT INTO owner (id, version, user, first_name, last_name) " +
