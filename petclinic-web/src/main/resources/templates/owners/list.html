@@ -12,7 +12,7 @@
         <th th:text="#{name}">Full name</th>
     </thead>
     <tr th:each="owner : ${owners}">
-        <td th:text="${owner.fullName()}"></td>
+        <td th:text="${owner.personalData.fullName()}"></td>
     </tr>
 </table>
 </body>

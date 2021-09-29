@@ -4,3 +4,5 @@
 * Allow modifying owner info from `/owners`
 * Show name of user in `index`. UPDATE: It's in, test it and add it for vets
 * Show link to `/owners` in `index` for vets
+* Add `VET` and `OWNER` roles
+* Test every repository with custom logic
