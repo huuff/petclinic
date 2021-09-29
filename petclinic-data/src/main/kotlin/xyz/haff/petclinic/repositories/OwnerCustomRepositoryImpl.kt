@@ -20,7 +20,7 @@ open class OwnerCustomRepositoryImpl(private val dbClient: DatabaseClient,
                         "VALUES (:id, :version, :personal_data)"
             )
                 .bind("id", owner.id)
-                .bind("version", 1)
+                .bind("version", 0)
                 .bind("personal_data", personalDataId)
                 .then()
                 .then(Mono.just(owner))

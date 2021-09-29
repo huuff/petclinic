@@ -5,3 +5,5 @@
 * Show link to `/owners` in `index` for vets
 * Add `VET` and `OWNER` roles
 * Test every repository with custom logic
+* Should I ensure that all versions are at least 1 when an object is saved?
+* An abstract base entity class?
