@@ -4,18 +4,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import xyz.haff.petclinic.entity_converters.ConvertersConfiguration;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.User;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 @Slf4j
 @ActiveProfiles("test")
+@DataR2dbcTest
+@Import(ConvertersConfiguration.class)
 class OwnerRepositoryTest {
 
     @Autowired

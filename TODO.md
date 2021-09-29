@@ -1,5 +1,4 @@
 # Tasks
-* Put the repositories tests in the `petclinic-data` module
 * Add vets
 * Allow only vets to access `/owners`
 * Allow modifying owner info from `/owners`
