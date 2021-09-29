@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.PersonalData;
 import xyz.haff.petclinic.models.User;
+import xyz.haff.petclinic.models.Vet;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.VetRepository;
 
 @Component
 @RequiredArgsConstructor
@@ -16,6 +18,7 @@ import xyz.haff.petclinic.repositories.OwnerRepository;
 @Profile("demo")
 public class DataLoader implements CommandLineRunner {
     private final OwnerRepository ownerRepository;
+    private final VetRepository vetRepository;
 
     @Override
     public void run(String... args) {
@@ -28,6 +31,11 @@ public class DataLoader implements CommandLineRunner {
         var mikePerson = new PersonalData("Michael", "Weston", mikeUser);
         var mikeWeston = new Owner(mikePerson);
         ownerRepository.save(mikeWeston).block();
+
+        var kennyUser = new User("kenny", "{noop}wiggins");
+        var kennyPerson = new PersonalData("Kenny", "Wiggins", kennyUser);
+        var kennyWiggins = new Vet(kennyPerson);
+        vetRepository.save(kennyWiggins).block();
 
         ownerRepository.findAll()
                 .doOnNext(owner -> log.info(owner.toString()))
