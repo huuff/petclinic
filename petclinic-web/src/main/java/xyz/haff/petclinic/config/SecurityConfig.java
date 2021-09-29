@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
 import xyz.haff.petclinic.repositories.UserRepository;
-import xyz.haff.petclinic.security.MyUserPrincipal;
+import xyz.haff.petclinic.security.UserDetailsAdapter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     @Bean
     public ReactiveUserDetailsService userDetailsService() {
-        return (username) -> userRepository.findByUsername(username).map(MyUserPrincipal::new);
+        return (username) -> userRepository.findByUsername(username).map(UserDetailsAdapter::new);
     }
 
     @Bean
