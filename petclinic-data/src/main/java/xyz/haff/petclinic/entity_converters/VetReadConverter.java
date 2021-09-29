@@ -6,25 +6,26 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.User;
+import xyz.haff.petclinic.models.Vet;
 
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@ReadingConverter
 @Component
-public class OwnerReadConverter implements Converter<Row, Owner> {
+@ReadingConverter
+public class VetReadConverter implements Converter<Row, Vet> {
     private final PersonalDataReadConverter personalDataReadConverter;
 
-    // TODO: Why so yellow?
+    // TODO: Y SO YELLO?????
+    // TODO: Maybe user converter?
+
     @Override
-    public Owner convert(@NotNull Row row) {
-        return new Owner(
-                row.get("OWNER_ID", UUID.class),
-                row.get("OWNER_VERSION", Integer.class),
-                personalDataReadConverter.convert(row)
+    public Vet convert(Row row) {
+        return new Vet(
+                row.get("VET_ID", UUID.class),
+                row.get("VET_VERSION", Integer.class),
+               personalDataReadConverter.convert(row)
         );
     }
 }

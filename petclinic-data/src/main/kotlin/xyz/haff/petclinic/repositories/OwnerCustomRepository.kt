@@ -2,7 +2,7 @@ package xyz.haff.petclinic.repositories
 
 import reactor.core.publisher.Mono
 
-interface OwnerRepositoryCustom<T> {
+interface OwnerCustomRepository<T> {
 
-    fun <S : T?> save(owner: S): Mono<S>
+    fun <S : T> save(owner: S): Mono<S>
 }

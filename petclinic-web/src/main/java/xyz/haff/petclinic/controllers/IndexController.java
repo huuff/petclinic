@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import reactor.core.publisher.Mono;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
 import java.security.Principal;
@@ -20,10 +21,9 @@ public class IndexController {
     @GetMapping({"/", "", "/index.html", "index"})
     public Mono<String> index(Model model, @AuthenticationPrincipal Mono<UserDetailsAdapter> userDetailsPublisher) {
         return userDetailsPublisher
-                .doOnNext(userDetailsAdapter -> {
-                    var user = userDetailsAdapter.getUser();
-
-                    model.addAttribute("name", ownerRepository.findByUsername(user.getUsername()).map(Owner::getFirstName));
+                .map(UserDetailsAdapter::getUser)
+                .doOnNext(user -> {
+                    model.addAttribute("name", "TODO");
                 })
                 .then(Mono.just("index"))
                 ;

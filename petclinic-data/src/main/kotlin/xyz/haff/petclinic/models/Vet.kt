@@ -4,9 +4,8 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import java.util.*
 
-data class Owner @JvmOverloads constructor(
+data class Vet(
     @Id val id: UUID = UUID.randomUUID(),
     @Version val version: Int = 0,
     val personalData: PersonalData
-) {
-}
+)

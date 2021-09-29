@@ -11,7 +11,7 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
-  jpa:
+  jpa: # TODO: Any use for these?
     show-sql: true
     hibernate.ddl-auto: update
     properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
@@ -22,6 +22,8 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG # TODO: Only for demo
     org.hibernate: ERROR
+    io.r2dbc.h2.QUERY: DEBUG
+    io.r2dbc.h2.PARAM: DEBUG
   pattern.console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
 
 xyz.haff.petclinic:
