@@ -22,12 +22,13 @@ workflows:
   maven_test:
     jobs:
       - maven/test:
+          command: '-X verify'
           executor: jdk11
           post-steps:
             - persist_to_workspace:
                 root: ./
                 paths:
-                  - ./target
+                  - ./petclinic-web/target
       - upload-to-codecov:
           requires:
             - maven/test
