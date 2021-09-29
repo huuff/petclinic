@@ -6,6 +6,7 @@
     <modules>
         <module>petclinic-data</module>
         <module>petclinic-web</module>
+        <module>petclinic-aggregator</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
