@@ -18,6 +18,7 @@
     </properties>
 
     <dependencies>
+        <!-- TODO: Is any of these still needed? -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
