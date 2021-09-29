@@ -23,7 +23,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(OwnersController.class)
 class OwnersControllerTest {
-    private final String FAKE_USERNAME = "fake";
 
     @MockBean
     OwnerRepository ownerRepository;
@@ -32,12 +31,12 @@ class OwnersControllerTest {
     WebTestClient client;
 
     @Test
-    @WithMockUser(FAKE_USERNAME)
+    @WithMockUser("asd")
     void listAll() {
         when(ownerRepository.findAll()).thenReturn(Flux.just(new Owner(
                 UUID.randomUUID(),
                 1,
-                new PersonalData("asd", "asdf", new User(FAKE_USERNAME, "asd"))
+                new PersonalData("asd", "asdf", new User("asdf", "asd"))
         )));
 
         var htmlResult = client.get()
