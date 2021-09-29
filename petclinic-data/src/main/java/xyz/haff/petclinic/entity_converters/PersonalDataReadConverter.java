@@ -3,7 +3,6 @@ package xyz.haff.petclinic.entity_converters;
 import io.r2dbc.spi.Row;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.ReadingConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import xyz.haff.petclinic.models.PersonalData;

@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
-import xyz.haff.petclinic.repositories.VetRepository;
 
 import java.util.List;
 

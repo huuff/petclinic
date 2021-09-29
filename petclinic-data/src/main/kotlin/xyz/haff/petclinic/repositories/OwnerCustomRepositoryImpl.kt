@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Mono
 import xyz.haff.petclinic.models.Owner
-import reactor.kotlin.core.util.function.*;
 
 @Repository
 open class OwnerCustomRepositoryImpl(private val dbClient: DatabaseClient,

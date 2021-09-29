@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import xyz.haff.petclinic.models.User;
 import xyz.haff.petclinic.models.Vet;
 
 import java.util.UUID;

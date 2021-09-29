@@ -2,8 +2,6 @@ package xyz.haff.petclinic.repositories
 
 import org.springframework.r2dbc.core.DatabaseClient
 import reactor.core.publisher.Mono
-import reactor.kotlin.core.util.function.component1
-import reactor.kotlin.core.util.function.component2
 import xyz.haff.petclinic.models.Vet
 
 class VetCustomRepositoryImpl (

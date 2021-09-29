@@ -6,12 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import reactor.core.publisher.Mono;
-import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.repositories.OwnerRepository;
-import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
-
-import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
