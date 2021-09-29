@@ -2,6 +2,7 @@ package xyz.haff.petclinic.repositories
 
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.r2dbc.repository.R2dbcRepository
+import org.springframework.data.repository.query.Param
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import xyz.haff.petclinic.models.Owner
@@ -34,7 +35,7 @@ interface OwnerRepository : R2dbcRepository<Owner, UUID>, OwnerRepositoryCustom<
             u.username as USERNAME,
             u.password as PASSWORD
             FROM owner as o JOIN user as u ON o.user=u.id
-            WHERE u.id=':username'
+            WHERE username = ?1
     """)
     fun findByUsername(username: String): Mono<Owner>
 }
