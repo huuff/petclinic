@@ -6,8 +6,7 @@ import reactor.core.publisher.Flux
 import xyz.haff.petclinic.models.Owner
 import java.util.*
 
-interface OwnerRepository : R2dbcRepository<Owner, UUID>,
-    xyz.haff.petclinic.repositories.OwnerRepositoryCustom<Owner> {
+interface OwnerRepository : R2dbcRepository<Owner, UUID>, OwnerRepositoryCustom<Owner> {
 
     @Query("""
         SELECT 
