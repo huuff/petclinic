@@ -8,7 +8,7 @@
 <h1 th:text="#{owners}">Owners</h1>
 
 <ul>
-  <li th:each="owner : ${owners}" th:text="${owner.fullName()}">Full name</li>
+  <li th:each="owner : ${owners}" th:text="${owner.personalData.fullName}">Full name</li>
 </ul>
 </body>
 </html>

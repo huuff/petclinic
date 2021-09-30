@@ -8,12 +8,12 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@MappedSuperclass
 @SuperBuilder
-public abstract class Person extends AbstractBaseEntity {
+public class PersonalData extends AbstractBaseEntity {
     @NonNull private String firstName;
     @NonNull private String lastName;
 
