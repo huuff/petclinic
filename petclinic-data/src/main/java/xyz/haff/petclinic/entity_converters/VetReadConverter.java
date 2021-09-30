@@ -16,7 +16,6 @@ public class VetReadConverter implements Converter<Row, Vet> {
     private final PersonalDataReadConverter personalDataReadConverter;
 
     // TODO: Y SO YELLO?????
-    // TODO: Maybe user converter?
 
     @Override
     public Vet convert(Row row) {

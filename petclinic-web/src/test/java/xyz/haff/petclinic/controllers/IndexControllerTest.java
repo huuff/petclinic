@@ -25,7 +25,6 @@ import static xyz.haff.petclinic.testing.TestData.TEST_OWNER;
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(IndexController.class)
 public class IndexControllerTest {
-    private static final String TEST_USERNAME = TEST_OWNER.getPersonalData().getUser().getUsername();
 
     @MockBean
     PersonalDataRepository personalDataRepository;
@@ -38,8 +37,8 @@ public class IndexControllerTest {
 
     @Test
     void nameAppearsInWelcome() {
-        when(personalDataRepository.findByUsername(eq(TEST_USERNAME))).thenReturn(Mono.just(TEST_OWNER.getPersonalData()));
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Mono.just(TEST_OWNER.getPersonalData().getUser()));
+        when(personalDataRepository.findByUsername(eq(TEST_OWNER.getPersonalData().getUser().getUsername())))
+                .thenReturn(Mono.just(TEST_OWNER.getPersonalData()));
 
         var htmlResult = client
                 .mutateWith(mockUser(new UserDetailsAdapter(TEST_OWNER.getPersonalData().getUser())))

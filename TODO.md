@@ -7,3 +7,4 @@
 * An abstract base entity class?
 * Append `ID` to all foreign key columns
 * Look into using coroutines in kotlin?
+* `r2dbc` queries induce much suffering, try `jOOQ`?
