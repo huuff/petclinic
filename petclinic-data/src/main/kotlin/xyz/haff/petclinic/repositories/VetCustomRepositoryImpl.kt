@@ -31,7 +31,7 @@ class VetCustomRepositoryImpl (
             .then()
             .then(Mono.just(vet.copy(
                 personalData = personalData,
-                version = 1
+                baseEntity = vet.baseEntity.nextVersion()
             ) as S))
     }
 

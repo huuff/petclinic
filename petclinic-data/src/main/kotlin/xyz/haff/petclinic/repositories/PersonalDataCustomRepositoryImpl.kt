@@ -39,7 +39,7 @@ open class PersonalDataCustomRepositoryImpl(
             .then()
             .then(Mono.just(personalData.copy(
                 user = user,
-                version = 1
+                baseEntity = personalData.baseEntity.nextVersion()
             ) as S))
     }
 }

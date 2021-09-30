@@ -6,9 +6,8 @@ import org.springframework.security.core.GrantedAuthority
 import java.util.*
 
 data class Role @JvmOverloads constructor(
-    @Id val id: UUID = UUID.randomUUID(),
-    @Version val version: Int = 0,
+    val baseEntity: BaseEntity = BaseEntity(),
     val name: String
-): GrantedAuthority {
+): GrantedAuthority, Entity by baseEntity {
     override fun getAuthority(): String = name
 }

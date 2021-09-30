@@ -34,7 +34,7 @@ open class OwnerCustomRepositoryImpl(private val dbClient: DatabaseClient,
             .then()
             .then(Mono.just(owner.copy(
                 personalData = personalData,
-                version = 1
+                baseEntity = owner.baseEntity.nextVersion()
             ) as S))
     }
 }

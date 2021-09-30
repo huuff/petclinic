@@ -38,7 +38,7 @@ open class UserCustomRepositoryImpl(
             .then()
             .then(Mono.just(user.copy(
                 role = role,
-                version = 1
+                baseEntity = user.baseEntity.nextVersion()
             ) as S))
     }
 }

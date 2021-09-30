@@ -4,6 +4,7 @@ import io.r2dbc.spi.Row;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.stereotype.Component;
+import xyz.haff.petclinic.models.BaseEntity;
 import xyz.haff.petclinic.models.Role;
 
 import java.util.UUID;
@@ -21,8 +22,10 @@ public class RoleReadConverter implements Converter<Row, Role> {
     @Override
     public Role convert(Row row) {
         return new Role(
-                row.get("R_ID", UUID.class),
-                row.get("R_VERSION", Integer.class),
+                new BaseEntity(
+                        row.get("R_ID", UUID.class),
+                        row.get("R_VERSION", Integer.class)
+                ),
                 row.get("R_NAME", String.class)
         );
     }

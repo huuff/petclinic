@@ -7,11 +7,10 @@ import java.util.*
 // TODO: Or rather, just `Person`?
 
 data class PersonalData @JvmOverloads constructor(
-    @Id val id: UUID = UUID.randomUUID(),
-    @Version val version: Int = 0,
+    val baseEntity: BaseEntity = BaseEntity(),
     val firstName: String,
     val lastName: String,
     val user: User
-) {
+): Entity by baseEntity {
     fun fullName(): String = "$firstName $lastName"
 }

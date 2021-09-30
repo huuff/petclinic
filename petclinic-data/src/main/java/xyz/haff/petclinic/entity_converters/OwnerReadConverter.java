@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.stereotype.Component;
+import xyz.haff.petclinic.models.BaseEntity;
 import xyz.haff.petclinic.models.Owner;
 
 import javax.validation.constraints.NotNull;
@@ -20,8 +21,10 @@ public class OwnerReadConverter implements Converter<Row, Owner> {
     @Override
     public Owner convert(@NotNull Row row) {
         return new Owner(
-                row.get("OWNER_ID", UUID.class),
-                row.get("OWNER_VERSION", Integer.class),
+                new BaseEntity(
+                        row.get("OWNER_ID", UUID.class),
+                        row.get("OWNER_VERSION", Integer.class)
+                ),
                 personalDataReadConverter.convert(row)
         );
     }
