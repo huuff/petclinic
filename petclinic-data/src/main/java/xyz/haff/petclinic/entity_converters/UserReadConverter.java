@@ -20,6 +20,7 @@ public class UserReadConverter implements Converter<Row, User> {
     public User convert(Row row) {
         return new User(
                 row.get("U_ID", UUID.class),
+                row.get("U_VERSION", Integer.class),
                 roleReadConverter.convert(row),
                 row.get("U_USERNAME", String.class),
                 row.get("U_PASSWORD", String.class)

@@ -44,8 +44,7 @@ class OwnerRepositoryTest {
 
         assertThat(savedOwner).isNotNull();
         StepVerifier.create(ownerRepository.findAll())
-                //.expectNext(savedOwner) // TODO: Fix this
-                .expectNextCount(1)
+                .expectNext(savedOwner)
                 .verifyComplete()
                 ;
     }
