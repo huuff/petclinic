@@ -26,6 +26,7 @@ import static xyz.haff.petclinic.testing.TestData.TEST_VET;
         RoleReadConverter.class,
         VetReadConverter.class,
         OwnerReadConverter.class,
+        UserRepository.class,
         DataLoader.class
 })
 public class VetRepositoryTest {
