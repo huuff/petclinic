@@ -1,10 +1,12 @@
 package xyz.haff.petclinic.repositories
 
 import org.springframework.r2dbc.core.DatabaseClient
+import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 import xyz.haff.petclinic.models.PersonalData
 
-class PersonalDataCustomRepositoryImpl(
+@Repository
+open class PersonalDataCustomRepositoryImpl(
     private val userRepository: UserRepository,
     private val databaseClient: DatabaseClient
 ) : PersonalDataCustomRepository<PersonalData> {

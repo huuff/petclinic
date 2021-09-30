@@ -16,6 +16,8 @@ public class ConvertersConfiguration extends AbstractR2dbcConfiguration {
     private final PersonalDataReadConverter personalDataReadConverter;
     private final OwnerReadConverter ownerReadConverter;
     private final VetReadConverter vetReadConverter;
+    private final UserReadConverter userReadConverter;
+    private final RoleReadConverter roleReadConverter;
 
     @NotNull
     @Override
@@ -29,7 +31,8 @@ public class ConvertersConfiguration extends AbstractR2dbcConfiguration {
         return List.of(
                 personalDataReadConverter,
                 ownerReadConverter,
-                vetReadConverter
+                vetReadConverter,
+                userReadConverter
         );
     }
 

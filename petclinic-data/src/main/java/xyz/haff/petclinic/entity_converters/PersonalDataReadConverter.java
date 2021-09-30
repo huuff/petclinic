@@ -1,6 +1,7 @@
 package xyz.haff.petclinic.entity_converters;
 
 import io.r2dbc.spi.Row;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -11,8 +12,11 @@ import xyz.haff.petclinic.models.User;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 @Component
 public class PersonalDataReadConverter implements Converter<Row, PersonalData> {
+    private final UserReadConverter userReadConverter;
+
     @Override
     public PersonalData convert(@NotNull Row row) {
         return new PersonalData(
@@ -20,11 +24,7 @@ public class PersonalDataReadConverter implements Converter<Row, PersonalData> {
                 row.get("PD_VERSION", Integer.class),
                 row.get("PD_FIRST_NAME", String.class),
                 row.get("PD_LAST_NAME", String.class),
-                new User( // TODO: UserConverter?
-                        row.get("U_ID", UUID.class),
-                        row.get("U_USERNAME", String.class),
-                        row.get("U_PASSWORD", String.class)
-                )
+                userReadConverter.convert(row)
         );
     }
 }

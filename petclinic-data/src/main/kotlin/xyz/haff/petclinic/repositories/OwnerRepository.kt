@@ -19,10 +19,14 @@ interface OwnerRepository : R2dbcRepository<Owner, UUID>, OwnerCustomRepository<
             u.id as U_ID,
             u.version as U_VERSION, 
             u.username as U_USERNAME,
-            u.password as U_PASSWORD
+            u.password as U_PASSWORD,
+            r.id as R_ID,
+            r.version as R_VERSION,
+            r.name as R_NAME
             FROM owner as o 
             JOIN user as u ON pd.user=u.id
             JOIN personal_data as pd on o.personal_data=pd.id
+            JOIN role as r on r.id=u.role_id
     """)
     override fun findAll(): Flux<Owner>
 }

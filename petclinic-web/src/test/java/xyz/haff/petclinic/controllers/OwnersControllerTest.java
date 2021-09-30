@@ -11,6 +11,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.PersonalData;
+import xyz.haff.petclinic.models.Role;
 import xyz.haff.petclinic.models.User;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 
@@ -35,7 +36,7 @@ class OwnersControllerTest {
         when(ownerRepository.findAll()).thenReturn(Flux.just(new Owner(
                 UUID.randomUUID(),
                 1,
-                new PersonalData("asd", "asdf", new User("asdf", "asd"))
+                new PersonalData("asd", "asdf", new User(new Role("OWNER"), "asdf", "asd"))
         )));
 
         var htmlResult = client.get()
