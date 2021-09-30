@@ -1,10 +1,7 @@
 package xyz.haff.petclinic.bootstrap;
 
 import lombok.experimental.UtilityClass;
-import xyz.haff.petclinic.models.Owner;
-import xyz.haff.petclinic.models.PersonalData;
-import xyz.haff.petclinic.models.Role;
-import xyz.haff.petclinic.models.User;
+import xyz.haff.petclinic.models.*;
 
 @UtilityClass
 public class TestData {
@@ -21,6 +18,14 @@ public class TestData {
                     .firstName("Michael")
                     .lastName("Weston")
                     .user(User.builder().username("mike").password("{noop}weston").role(Role.OWNER).build())
+                    .build()
+            ).build();
+
+    public static final Vet kennyWiggins = Vet.builder()
+            .personalData(PersonalData.builder()
+                    .firstName("Kenny")
+                    .lastName("Wiggins")
+                    .user(User.builder().username("ken").password("{noop}wiggins").role(Role.VET).build())
                     .build()
             ).build();
 }
