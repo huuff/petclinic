@@ -11,12 +11,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 import xyz.haff.petclinic.bootstrap.DataLoader;
 import xyz.haff.petclinic.entity_converters.*;
-import xyz.haff.petclinic.models.PersonalData;
-import xyz.haff.petclinic.models.Role;
-import xyz.haff.petclinic.models.User;
-import xyz.haff.petclinic.models.Vet;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static xyz.haff.petclinic.testing.TestData.TEST_VET;
 
 @ExtendWith(SpringExtension.class)
 @Slf4j
@@ -32,17 +29,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
         DataLoader.class
 })
 public class VetRepositoryTest {
-    private static final Vet TEST_VET = new Vet(
-            new PersonalData(
-                    "Testname",
-                    "Testsurname",
-                    new User(
-                            new Role("VET"),
-                            "testuser",
-                            "testpassword")
-            )
-    );
-
     @Autowired
     VetRepository vetRepository;
 

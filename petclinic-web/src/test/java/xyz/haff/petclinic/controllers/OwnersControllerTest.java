@@ -45,8 +45,9 @@ class OwnersControllerTest {
                 .expectStatus().isOk()
                 .expectBody(String.class)
                 .returnResult()
+                .getResponseBody()
                 ;
 
-        assertThat(htmlResult.getResponseBody()).contains("<td>asd asdf</td>");
+        assertThat(htmlResult).contains("<td>asd asdf</td>");
     }
 }

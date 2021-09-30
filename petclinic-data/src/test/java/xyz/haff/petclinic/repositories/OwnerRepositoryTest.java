@@ -16,6 +16,7 @@ import xyz.haff.petclinic.models.PersonalData;
 import xyz.haff.petclinic.models.User;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static xyz.haff.petclinic.testing.TestData.TEST_OWNER;
 
 @ExtendWith(SpringExtension.class)
 @Slf4j
@@ -35,14 +36,11 @@ class OwnerRepositoryTest {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    @Autowired
-    private DataLoader dataLoader;
-
     // TODO: Test with some find by ID
 
     @Test
     void saveAndRead() {
-        var savedOwner = ownerRepository.save(dataLoader.TEST_OWNER).block();
+        var savedOwner = ownerRepository.save(TEST_OWNER).block();
 
         assertThat(savedOwner).isNotNull();
         StepVerifier.create(ownerRepository.findAll())

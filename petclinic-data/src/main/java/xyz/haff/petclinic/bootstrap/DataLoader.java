@@ -17,18 +17,6 @@ public class DataLoader  {
     private final VetRepository vetRepository;
     private final RoleRepository roleRepository;
 
-    public final Owner TEST_OWNER = new Owner(
-            new PersonalData(
-                    "Testname",
-                    "Testsurname",
-                    new User(
-                            new Role("OWNER"), // TODO: Get these roles from some loaded property?
-                            "testuser",
-                            "testpassword")
-            )
-    );
-
-
     public void load() {
         // TODO: These should be somewhere else that always get inserted since they are valid for both demo, test and production
         roleRepository.save(new Role("OWNER")).block();
