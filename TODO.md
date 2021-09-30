@@ -8,3 +8,4 @@
 * Append `ID` to all foreign key columns
 * Look into using coroutines in kotlin?
 * `r2dbc` queries induce much suffering, try `jOOQ`?
+* Use the maven spring kotlin plugin
