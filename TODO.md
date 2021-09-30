@@ -7,3 +7,4 @@
 * Test every repository with custom logic
 * Should I ensure that all versions are at least 1 when an object is saved?
 * An abstract base entity class?
+* Append `ID` to all foreign key columns
