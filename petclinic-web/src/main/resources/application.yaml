@@ -1,30 +1,3 @@
 spring:
   profiles:
     active: demo
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings.trace: true
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  jpa: # TODO: Any use for these?
-    show-sql: true
-    hibernate.ddl-auto: update
-    properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
-
-
-logging:
-  level:
-    org.springframework.web: DEBUG
-    org.springframework.security: DEBUG # TODO: Only for demo
-    org.hibernate: ERROR
-    io.r2dbc.h2.QUERY: DEBUG
-    io.r2dbc.h2.PARAM: DEBUG
-  pattern.console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
-
-xyz.haff.petclinic:
-  h2-console-port: 8081
