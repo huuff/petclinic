@@ -22,11 +22,12 @@ public class DataLoader  {
                     "Testname",
                     "Testsurname",
                     new User(
-                            new Role("OWNER"),
+                            new Role("OWNER"), // TODO: Get these roles from some loaded property?
                             "testuser",
                             "testpassword")
             )
     );
+
 
     public void load() {
         // TODO: These should be somewhere else that always get inserted since they are valid for both demo, test and production
