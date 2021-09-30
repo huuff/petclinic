@@ -40,7 +40,7 @@ open class PersonalDataRepository(
             .one()
     }
 
-    fun save(personalData: PersonalData): Mono<PersonalData> {
+    open fun save(personalData: PersonalData): Mono<PersonalData> {
         return userRepository.save(personalData.user)
             .flatMap { user ->
                 when (personalData.version) {

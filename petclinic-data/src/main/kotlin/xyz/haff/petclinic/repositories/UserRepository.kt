@@ -15,7 +15,7 @@ open class UserRepository(
     private val userReadConverter: UserReadConverter
 ) {
 
-    fun findByUsername(username: String): Mono<User> {
+    open fun findByUsername(username: String): Mono<User> {
        return dbClient.sql("""
         SELECT
             u.id as U_ID,
@@ -27,13 +27,13 @@ open class UserRepository(
             r.name as R_NAME
         FROM user as u 
         JOIN role as r on u.role_id = r.id
-        WHERE u.username = ?1
+        WHERE u.username = :username
     """)
-           .bind(1, username)
+           .bind("username", username)
            .map { row -> userReadConverter.convert(row) }.first()
     }
 
-    fun save(user: User): Mono<User> {
+    open fun save(user: User): Mono<User> {
         return roleRepository.save(user.role)
             .flatMap { role ->
                 when (user.version) {

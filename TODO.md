@@ -8,4 +8,5 @@
 * Append `ID` to all foreign key columns
 * Look into using coroutines in kotlin?
 * `r2dbc` queries induce much suffering, try `jOOQ`?
-* Use the maven spring kotlin plugin
+* Use the maven spring kotlin plugin. Really important since otherwise I'm getting NPEs all around
+* Set transaction on save methods
