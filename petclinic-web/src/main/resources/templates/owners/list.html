@@ -10,5 +10,7 @@
 <ul>
   <li th:each="owner : ${owners}" th:text="${owner.personalData.fullName}">Full name</li>
 </ul>
+
+<a th:text="#{add_new}" th:href="@{/owners/create}"></a>
 </body>
 </html>
