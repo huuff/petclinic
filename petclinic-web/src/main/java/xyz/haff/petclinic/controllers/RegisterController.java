@@ -40,7 +40,7 @@ public class RegisterController {
     @PostMapping
     public String register(@ModelAttribute RegistrationForm registrationForm, BindingResult bindingResult) {
         if (userRepository.existsByUsername(registrationForm.getUsername())) {
-            bindingResult.rejectValue("username", "duplicate");
+            bindingResult.rejectValue("username", "duplicate", new Object[]{registrationForm.getUsername()}, "");
             return TEMPLATE;
         }
 
