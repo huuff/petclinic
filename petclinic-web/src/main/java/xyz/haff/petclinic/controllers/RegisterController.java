@@ -15,6 +15,7 @@ import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Role;
 import xyz.haff.petclinic.models.forms.RegistrationForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
 
 @Controller
@@ -26,6 +27,7 @@ public class RegisterController {
     private final LoginService loginService;
     private final OwnerRepository ownerRepository;
     private final UserRepository userRepository;
+    private final PersonalDataRepository personalDataRepository;
     private final Converter<RegistrationForm, Owner> registrationFormOwner;
 
     @GetMapping
@@ -35,14 +37,21 @@ public class RegisterController {
         return TEMPLATE;
     }
 
-    // TODO: Deal with first name and last name duplicates
     @PreAuthorize("permitAll()")
     @PostMapping
     public String register(@ModelAttribute RegistrationForm registrationForm, BindingResult bindingResult) {
-        if (userRepository.existsByUsername(registrationForm.getUsername())) {
+        personalDataRepository.findByFirstNameAndLastName(
+                registrationForm.getFirstName(),
+                registrationForm.getLastName()
+        ).ifPresent((personalData) -> {
+            bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, "");
+        });
+
+        if (userRepository.existsByUsername(registrationForm.getUsername()))
             bindingResult.rejectValue("username", "duplicate", new Object[]{registrationForm.getUsername()}, "");
+
+        if (bindingResult.hasErrors())
             return TEMPLATE;
-        }
 
         var owner = registrationFormOwner.convert(registrationForm);
 

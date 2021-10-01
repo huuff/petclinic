@@ -29,6 +29,7 @@
   <div>
     <input type="submit" th:value="#{submit}"/>
   </div>
+  <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
 </form>
 
 </body>
