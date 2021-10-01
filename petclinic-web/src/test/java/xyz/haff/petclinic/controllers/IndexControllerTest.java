@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import xyz.haff.petclinic.bootstrap.TestData;
+import xyz.haff.petclinic.data.TestData;
 import xyz.haff.petclinic.models.PersonalData;
 import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;

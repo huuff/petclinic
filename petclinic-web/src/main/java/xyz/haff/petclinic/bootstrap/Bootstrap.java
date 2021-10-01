@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import xyz.haff.petclinic.data.TestData;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.VetRepository;
 

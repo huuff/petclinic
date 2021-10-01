@@ -1,9 +1,7 @@
-package xyz.haff.petclinic.bootstrap;
+package xyz.haff.petclinic.data;
 
 import lombok.experimental.UtilityClass;
 import xyz.haff.petclinic.models.*;
-
-// TODO: This in petclinic-data?
 
 @UtilityClass
 public class TestData {
