@@ -19,6 +19,7 @@
   <div>
     <label for="username" th:text="#{username}">Username</label>
     <input type="text" id="username" th:field="*{username}"/>
+    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
   </div>
   <div>
     <!-- TODO: Password type, repeat password -->

@@ -7,3 +7,4 @@
 * Add language switcher
 * Fix `CSRF`
 * Unique usernames on DB
+* Constant paths in controllers
