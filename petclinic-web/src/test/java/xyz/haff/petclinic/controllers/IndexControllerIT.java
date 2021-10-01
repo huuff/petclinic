@@ -21,12 +21,11 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// TODO: An integration test with failsafe?
 // TODO: Look into HtmlUnit?
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = IndexController.class)
-class IndexControllerTest {
+class IndexControllerIT {
     private static final PersonalData TEST_PERSON = TestData.TEST_OWNER.getPersonalData();
     private static final UserDetails TEST_USER_DETAILS = new UserDetailsAdapter(TEST_PERSON.getUser());
 
