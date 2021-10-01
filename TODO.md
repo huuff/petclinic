@@ -5,6 +5,5 @@
 * Show 404 on 403 on `production` profile
 * Get autoreload with devtools working
 * Add language switcher
-* Fix `CSRF`
 * Unique usernames on DB
 * Constant paths in controllers

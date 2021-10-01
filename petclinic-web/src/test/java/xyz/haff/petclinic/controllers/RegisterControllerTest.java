@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,6 +55,7 @@ class RegisterControllerTest {
         final var password = "PASSWORD";
 
         mockMvc.perform(post("/register")
+                .with(csrf())
                 .param("firstName", "FIRST_NAME")
                 .param("lastName", "LAST_NAME")
                 .param("username", username)
