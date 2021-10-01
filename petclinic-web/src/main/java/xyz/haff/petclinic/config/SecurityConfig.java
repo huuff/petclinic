@@ -9,8 +9,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import xyz.haff.petclinic.repositories.UserRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
+
+import java.util.HashMap;
 
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -41,5 +47,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        var defaultEncoder = "bcrypt";
+        var encodersMap = new HashMap<String, PasswordEncoder>() {{
+            put(defaultEncoder, new BCryptPasswordEncoder());
+            put("noop", NoOpPasswordEncoder.getInstance()); // Relax, it's just for demoing
+        }};
+
+        return new DelegatingPasswordEncoder(defaultEncoder, encodersMap);
     }
 }

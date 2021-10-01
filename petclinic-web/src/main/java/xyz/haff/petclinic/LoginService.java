@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import xyz.haff.petclinic.models.Person;
+import xyz.haff.petclinic.repositories.UserRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
 @Service
@@ -14,10 +15,11 @@ import xyz.haff.petclinic.security.UserDetailsAdapter;
 @RequiredArgsConstructor
 public class LoginService {
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
-    public void loginPerson(Person person) {
-        var user = new UserDetailsAdapter(person.getPersonalData().getUser());
-        var loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.passwordWithoutScheme(),  user.getAuthorities());
+    public void loginPerson(String username, String password) {
+        var user = new UserDetailsAdapter(userRepository.findByUsername(username));
+        var loginToken = new UsernamePasswordAuthenticationToken(username, password,  user.getAuthorities());
         loginToken.setDetails(user);
         var authenticatedUser = authenticationManager.authenticate(loginToken);
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
