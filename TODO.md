@@ -5,4 +5,3 @@
 * Show 404 on 403 on `production` profile
 * Get autoreload with devtools working
 * Add language switcher
-* Unique usernames on DB

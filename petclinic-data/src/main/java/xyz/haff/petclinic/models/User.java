@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,6 +18,7 @@ import javax.persistence.Enumerated;
 @Setter
 @SuperBuilder
 public class User extends AbstractBaseEntity {
+    @Column(unique = true)
     private String username;
     private String password;
     @Enumerated(EnumType.STRING)
