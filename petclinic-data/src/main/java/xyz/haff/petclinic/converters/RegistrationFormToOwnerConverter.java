@@ -12,8 +12,6 @@ import xyz.haff.petclinic.models.forms.RegistrationForm;
 import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
-// TODO: Test
-
 @Component
 @RequiredArgsConstructor
 public class RegistrationFormToOwnerConverter implements Converter<RegistrationForm, Owner> {
