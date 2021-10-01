@@ -14,5 +14,4 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SuperBuilder
 public class Owner extends Person {
-
 }

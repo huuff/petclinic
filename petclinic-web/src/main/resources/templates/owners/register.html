@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <!-- TODO: Translate this -->
+    <title>New owner</title>
+</head>
+<body>
+<h1>New Owner</h1> <!-- TODO: Translate -->
+
+<form th:object="${owner}" method="post">
+  <div>
+    <label for="firstName" th:text="#{first_name}">First name</label>
+    <input type="text" id="firstName" th:field="*{personalData.firstName}"/>
+  </div>
+  <div>
+    <label for="lastName" th:text="#{last_name}">Last name</label>
+    <input type="text" id="lastName" th:field="*{personalData.lastName}"/>
+  </div>
+  <div>
+    <label for="username">Username</label> <!-- TODO: Translate -->
+    <input type="text" id="username" th:field="*{personalData.user.username}"/>
+  </div>
+  <div>
+    <!-- TODO: Password type, repeat password -->
+    <label for="password">Password</label> <!-- TODO: Translate -->
+    <input type="text" id="password" th:field="*{personalData.user.password}"/>
+  </div>
+  <div>
+    <label for="submit" th:text="#{submit}">Submit</label> <!-- TODO: Translate -->
+    <input type="submit"/>
+  </div>
+</form>
+
+</body>
+</html>

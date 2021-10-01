@@ -48,4 +48,9 @@ public class UserDetailsAdapter implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    // TODO: VERY temporary! Remove it when I use a form object and actually encode the password
+    public String passwordWithoutScheme() {
+        return getPassword().replaceAll("\\{.*\\}", "");
+    }
 }

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,8 +17,8 @@ import javax.persistence.Enumerated;
 @Setter
 @SuperBuilder
 public class User extends AbstractBaseEntity {
-    @NonNull private String username;
-    @NonNull private String password;
+    private String username;
+    private String password;
     @Enumerated(EnumType.STRING)
-    @NonNull private Role role;
+    private Role role;
 }
