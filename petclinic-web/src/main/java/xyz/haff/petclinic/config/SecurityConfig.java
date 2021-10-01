@@ -21,6 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin().permitAll()
                 .and()
+                    .logout().logoutSuccessUrl("/")
+                .and()
                     .authorizeRequests().anyRequest().permitAll() // Use method authentication exclusively
                 ;
     }
