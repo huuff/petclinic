@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import xyz.haff.petclinic.LoginService;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
 
 import static java.util.function.Predicate.isEqual;
@@ -29,6 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class RegisterControllerTest {
     @MockBean
     OwnerRepository ownerRepository;
+    @MockBean
+    PersonalDataRepository personalDataRepository;
     @MockBean
     UserRepository userRepository;
     @MockBean
