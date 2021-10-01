@@ -7,8 +7,8 @@
 <body>
 <h1 th:text="${name} ? |#{welcome}, ${name}| : #{welcome}"></h1>
 <ul>
-    <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
-    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+    <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" th:text="#{login}">Login</a></li>
+    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
 </ul>
 </body>
 </html>
