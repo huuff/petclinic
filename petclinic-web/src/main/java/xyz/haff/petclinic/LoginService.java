@@ -17,7 +17,7 @@ public class LoginService {
     private final UserRepository userRepository;
 
     public void loginPerson(String username, String password) {
-        var user = new UserDetailsAdapter(userRepository.findByUsername(username));
+        var user = new UserDetailsAdapter(userRepository.findByUsername(username).orElseThrow());
         var loginToken = new UsernamePasswordAuthenticationToken(username, password,  user.getAuthorities());
         loginToken.setDetails(user);
         var authenticatedUser = authenticationManager.authenticate(loginToken);

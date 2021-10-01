@@ -15,6 +15,8 @@ import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -39,7 +41,7 @@ class IndexControllerIT {
     @BeforeEach
     void setUp() {
         when(personalDataRepository.findByUserId(TEST_PERSON.getUser().getId())).thenReturn(TEST_PERSON);
-        when(userRepository.findByUsername(TEST_PERSON.getUser().getUsername())).thenReturn(TEST_PERSON.getUser());
+        when(userRepository.findByUsername(TEST_PERSON.getUser().getUsername())).thenReturn(Optional.of(TEST_PERSON.getUser()));
     }
 
     @Test
