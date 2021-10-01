@@ -60,6 +60,7 @@ class RegisterControllerTest {
                 .param("lastName", "LAST_NAME")
                 .param("username", username)
                 .param("password", password)
+                .param("repeatPassword", password)
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));

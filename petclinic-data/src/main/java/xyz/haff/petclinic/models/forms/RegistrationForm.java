@@ -23,4 +23,11 @@ public class RegistrationForm {
     @NotNull
     @NotEmpty
     private String password;
+    @NotNull
+    @NotEmpty
+    private String repeatPassword;
+
+    public boolean passwordEqualsRepeatPassword() {
+        return password.equals(repeatPassword);
+    }
 }

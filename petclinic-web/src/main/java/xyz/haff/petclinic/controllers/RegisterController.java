@@ -50,6 +50,9 @@ public class RegisterController {
             bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, "");
         });
 
+        if (!registrationForm.passwordEqualsRepeatPassword())
+            bindingResult.reject("repeat_password_error");
+
         if (userRepository.existsByUsername(registrationForm.getUsername()))
             bindingResult.rejectValue("username", "duplicate", new Object[]{registrationForm.getUsername()}, "");
 

@@ -15,7 +15,7 @@ class RegistrationFormToOwnerConverterTest {
         final var USERNAME = "USERNAME";
         final var PASSWORD = "PASSWORD";
 
-        var registrationForm = new RegistrationForm(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD);
+        var registrationForm = new RegistrationForm(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD, PASSWORD);
         var owner = new RegistrationFormToOwnerConverter(x -> x).convert(registrationForm);
 
         assertThat(owner).isNotNull();

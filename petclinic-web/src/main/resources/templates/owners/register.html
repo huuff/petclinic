@@ -26,11 +26,14 @@
     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
   </div>
   <div>
-    <!-- TODO: Password type, repeat password -->
     <label for="password" th:text="#{password}">Password</label>
-    <input type="text" id="password" th:field="*{password}"/>
+    <input type="password" id="password" th:field="*{password}"/>
     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-
+  </div>
+  <div>
+    <label for="repeatPassword" th:text="#{repeat_password}">Repeat Password</label>
+    <input type="password" id="repeatPassword" th:field="*{repeatPassword}"/>
+    <p th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></p>
   </div>
   <div>
     <input type="submit" th:value="#{submit}"/>
