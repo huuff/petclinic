@@ -17,6 +17,7 @@ import xyz.haff.petclinic.repositories.UserRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -58,5 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }};
 
         return new DelegatingPasswordEncoder(defaultEncoder, encodersMap);
+    }
+
+    @Bean
+    public Function<String, String> passwordEncodingFunction(PasswordEncoder passwordEncoder) {
+        return passwordEncoder::encode;
     }
 }
