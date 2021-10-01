@@ -3,8 +3,18 @@ package xyz.haff.petclinic.bootstrap;
 import lombok.experimental.UtilityClass;
 import xyz.haff.petclinic.models.*;
 
+// TODO: This in petclinic-data?
+
 @UtilityClass
 public class TestData {
+    public static final Owner TEST_OWNER = Owner.builder()
+            .personalData(PersonalData.builder()
+                    .firstName("Testname")
+                    .lastName("Testsurname")
+                    .user(User.builder().username("testuser").password("{noop}testpassword").role(Role.OWNER).build())
+                    .build()
+            ).build();
+
     public static final Owner joeSmith = Owner.builder()
             .personalData(PersonalData.builder()
                     .firstName("Joe")
