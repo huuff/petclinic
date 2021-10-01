@@ -13,9 +13,6 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @SuperBuilder
-public class Owner extends AbstractBaseEntity {
-    @NonNull
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    @JoinColumn(name = "personal_data_id", referencedColumnName = "id")
-    private PersonalData personalData;
+public class Owner extends Person {
+
 }

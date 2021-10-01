@@ -7,14 +7,18 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@MappedSuperclass
 @SuperBuilder
-public class Vet extends Person {
+public abstract class Person extends AbstractBaseEntity {
+    @NonNull
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinColumn(name = "personal_data_id", referencedColumnName = "id")
+    private PersonalData personalData;
 }
