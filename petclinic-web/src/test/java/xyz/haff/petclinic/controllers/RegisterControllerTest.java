@@ -2,27 +2,27 @@ package xyz.haff.petclinic.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.hamcrest.MockitoHamcrest;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import xyz.haff.petclinic.LoginService;
+import xyz.haff.petclinic.services.OwnerService;
+import xyz.haff.petclinic.services.RegisterService;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
 
-import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -30,13 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(RegisterController.class)
 class RegisterControllerTest {
     @MockBean
-    OwnerRepository ownerRepository;
+    RegisterService registerService;
     @MockBean
-    PersonalDataRepository personalDataRepository;
+    OwnerService ownerService;
     @MockBean
     UserRepository userRepository;
-    @MockBean
-    LoginService loginService;
     @Autowired
     MockMvc mockMvc;
 
@@ -49,28 +47,17 @@ class RegisterControllerTest {
         ;
     }
 
+    // With this amount of mocking... is anything here tested at all?
     @Test
     void registrationSavesUser() throws Exception {
-        final var username = "USERNAME";
-        final var password = "PASSWORD";
+        when(ownerService.hasErrors(any(), any())).thenReturn(false);
 
         mockMvc.perform(post(RegisterController.PATH)
-                .with(csrf())
-                .param("firstName", "FIRST_NAME")
-                .param("lastName", "LAST_NAME")
-                .param("username", username)
-                .param("password", password)
-                .param("repeatPassword", password)
-        )
+                .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
-        verify(ownerRepository)
-                .save(argThat(
-                        hasProperty("personalData",
-                                hasProperty("user",
-                                        hasProperty("username", is(username))
-                                )
-                        )));
+        verify(registerService).registerOwner(any());
+        verify(registerService).login(any());
     }
 }
