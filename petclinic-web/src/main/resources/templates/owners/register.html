@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-  <!-- TODO: Translate this -->
-    <title>New owner</title>
+    <title th:text="#{new_owner}">New owner</title>
 </head>
 <body>
-<h1>New Owner</h1> <!-- TODO: Translate -->
+<h1 th:text="#{new_owner}">New Owner</h1>
 
 <form th:object="${registrationForm}" method="post">
   <div>
