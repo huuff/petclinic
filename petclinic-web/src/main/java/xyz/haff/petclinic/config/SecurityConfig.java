@@ -19,11 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .formLogin().permitAll()
+                .authorizeRequests().anyRequest().permitAll() // Use method authentication exclusively
+                .and()
+                    .formLogin().permitAll()
                 .and()
                     .logout().logoutSuccessUrl("/")
-                .and()
-                    .authorizeRequests().anyRequest().permitAll() // Use method authentication exclusively
                 ;
     }
 
