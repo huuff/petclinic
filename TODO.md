@@ -8,4 +8,4 @@
 * Fix `CSRF`
 * Link to view owners on index for vets
 * Link to register on index for unauthenticated
-* Test user registration
+* Unique usernames
