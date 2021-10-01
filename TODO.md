@@ -6,6 +6,4 @@
 * Get autoreload with devtools working
 * Add language switcher
 * Fix `CSRF`
-* Link to view owners on index for vets
-* Link to register on index for unauthenticated
-* Unique usernames
+* Unique usernames on DB
