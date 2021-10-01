@@ -6,7 +6,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import xyz.haff.petclinic.models.Person;
 import xyz.haff.petclinic.repositories.UserRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 

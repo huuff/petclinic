@@ -6,4 +6,3 @@
 * Get autoreload with devtools working
 * Add language switcher
 * Unique usernames on DB
-* Constant paths in controllers

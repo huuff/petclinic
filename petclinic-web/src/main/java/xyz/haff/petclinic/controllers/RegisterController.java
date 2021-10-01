@@ -20,8 +20,9 @@ import xyz.haff.petclinic.repositories.UserRepository;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/register")
+@RequestMapping(RegisterController.PATH)
 public class RegisterController {
+    public static final String PATH = "/register";
     private static final String TEMPLATE = "owners/register";
 
     private final LoginService loginService;

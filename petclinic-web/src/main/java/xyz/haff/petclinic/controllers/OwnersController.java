@@ -10,8 +10,10 @@ import xyz.haff.petclinic.repositories.OwnerRepository;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/owners")
+@RequestMapping(OwnersController.PATH)
 public class OwnersController {
+    public static final String PATH = "/owners";
+
     private final OwnerRepository ownerRepository;
 
     @GetMapping

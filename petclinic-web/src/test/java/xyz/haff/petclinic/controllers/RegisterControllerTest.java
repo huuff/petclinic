@@ -42,7 +42,7 @@ class RegisterControllerTest {
 
     @Test
     void registrationFormIsShown() throws Exception {
-        mockMvc.perform(get("/register"))
+        mockMvc.perform(get(RegisterController.PATH))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("registrationForm"))
                 .andExpect(view().name("owners/register"))
@@ -54,7 +54,7 @@ class RegisterControllerTest {
         final var username = "USERNAME";
         final var password = "PASSWORD";
 
-        mockMvc.perform(post("/register")
+        mockMvc.perform(post(RegisterController.PATH)
                 .with(csrf())
                 .param("firstName", "FIRST_NAME")
                 .param("lastName", "LAST_NAME")

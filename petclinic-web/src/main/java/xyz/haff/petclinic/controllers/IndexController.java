@@ -14,8 +14,10 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/")
+@RequestMapping(IndexController.PATH)
 public class IndexController {
+    public static final String PATH = "/";
+
     private final PersonalDataRepository personalDataRepository;
 
     @GetMapping

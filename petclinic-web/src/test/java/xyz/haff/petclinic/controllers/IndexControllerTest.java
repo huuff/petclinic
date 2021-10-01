@@ -45,7 +45,7 @@ class IndexControllerTest {
 
     @Test
     void nameAppearsWhenAuthenticated() throws Exception {
-        mockMvc.perform(get("/").with(user(TEST_USER_DETAILS)))
+        mockMvc.perform(get(IndexController.PATH).with(user(TEST_USER_DETAILS)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("<h1>Welcome, " + TEST_PERSON.getFirstName() + "</h1>")))
                 .andExpect(view().name("index"))
@@ -54,7 +54,7 @@ class IndexControllerTest {
 
     @Test
     void onlyWelcomeAppearsWhenUnauthenticated() throws Exception {
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get(IndexController.PATH))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("<h1>Welcome</h1>")))
                 .andExpect(view().name("index"))
@@ -63,7 +63,7 @@ class IndexControllerTest {
 
     @Test
     void logoutLinkAppearsWhenAuthenticated() throws Exception {
-        mockMvc.perform(get("/").with(user(TEST_USER_DETAILS)))
+        mockMvc.perform(get(IndexController.PATH).with(user(TEST_USER_DETAILS)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("<a href=\"/logout\">Logout</a>")))
                 .andExpect(view().name("index"))
@@ -72,7 +72,7 @@ class IndexControllerTest {
 
     @Test
     void loginLinkAppearsWhenUnauthenticated() throws Exception {
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get(IndexController.PATH))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("<a href=\"/login\">Login</a>")))
                 .andExpect(view().name("index"))
