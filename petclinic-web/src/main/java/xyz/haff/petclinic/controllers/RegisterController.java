@@ -18,6 +18,8 @@ import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
 
+import javax.validation.Valid;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(RegisterController.PATH)
@@ -40,7 +42,7 @@ public class RegisterController {
 
     @PreAuthorize("permitAll()")
     @PostMapping
-    public String register(@ModelAttribute RegistrationForm registrationForm, BindingResult bindingResult) {
+    public String register(@ModelAttribute @Valid RegistrationForm registrationForm, BindingResult bindingResult) {
         personalDataRepository.findByFirstNameAndLastName(
                 registrationForm.getFirstName(),
                 registrationForm.getLastName()
