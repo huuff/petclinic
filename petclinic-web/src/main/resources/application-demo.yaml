@@ -1,4 +1,4 @@
 logging:
   level:
-    org.springframework.security: DEBUG # TODO: Only for demo
+    org.springframework.security: DEBUG
     org.springframework.web: DEBUG
