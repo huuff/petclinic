@@ -7,9 +7,17 @@
 <body>
 <h1 th:text="#{owners}">Owners</h1>
 
-<ul>
-  <li th:each="owner : ${owners}" th:text="${owner.personalData.fullName}">Full name</li>
-</ul>
+<table>
+    <thead>
+        <th th:text="#{name}">Name</th> <!-- TODO: FullName translation? -->
+        <th>Delete</th> <!-- TODO: Delete translation? -->
+    </thead>
+    <tr th:each="owner : ${owners}">
+        <td th:text="${owner.personalData.fullName}">Full name</td>
+        <td><a th:href="@{|/owners/${owner.id}/delete|}">Delete</a></td>
+    </tr>
+</table>
+
 
 <a th:text="#{add_new}" th:href="@{/owners/create}"></a>
 </body>

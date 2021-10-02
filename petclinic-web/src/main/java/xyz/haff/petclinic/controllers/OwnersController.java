@@ -5,16 +5,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.models.forms.RegistrationForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.services.OwnerService;
 import xyz.haff.petclinic.services.RegisterService;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +20,7 @@ import javax.validation.Valid;
 public class OwnersController {
     public static final String BASE_PATH = "/owners";
     public static final String CREATE = "/create";
+    public static final String DELETE = "/{ownerId}/delete";
 
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
@@ -49,6 +48,14 @@ public class OwnersController {
             return "owners/register";
 
         registerService.registerOwner(registrationForm);
+
+        return "redirect:" + BASE_PATH;
+    }
+
+    @GetMapping(DELETE)
+    @PreAuthorize("hasAuthority('VET')")
+    public String delete(@PathVariable UUID ownerId) {
+        ownerRepository.deleteById(ownerId);
 
         return "redirect:" + BASE_PATH;
     }
