@@ -7,6 +7,7 @@ import xyz.haff.petclinic.exceptions.NotFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandlerController {
 
+    // TODO: Log exceptions?
     @ExceptionHandler(NotFoundException.class)
     public String notFound() {
         return "errors/404";

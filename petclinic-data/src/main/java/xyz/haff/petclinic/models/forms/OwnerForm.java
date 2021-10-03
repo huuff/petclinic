@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistrationForm {
+public class OwnerForm {
     @NotNull
     @NotEmpty
     private String firstName;
@@ -20,14 +20,12 @@ public class RegistrationForm {
     @NotNull
     @NotEmpty
     private String username;
-    @NotNull
-    @NotEmpty
+
+    // TODO: Do something to validate these, but if I add @NotNull and @NotEmpty they get applied at update, which I don't want
     private String password;
-    @NotNull
-    @NotEmpty
     private String repeatPassword;
 
     public boolean passwordEqualsRepeatPassword() {
-        return password.equals(repeatPassword);
+        return (password == null && repeatPassword == null) || password.equals(repeatPassword);
     }
 }

@@ -1,5 +1,4 @@
 # Tasks
-* U on `/owners`
 * Cute page on 403
 * Show 404 on 403 on `production` profile
 * Get autoreload with devtools working

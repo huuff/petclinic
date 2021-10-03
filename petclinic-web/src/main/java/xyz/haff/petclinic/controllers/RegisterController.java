@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.haff.petclinic.services.RegisterService;
-import xyz.haff.petclinic.models.forms.RegistrationForm;
+import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.services.OwnerService;
 
 import javax.validation.Valid;
@@ -28,18 +28,18 @@ public class RegisterController {
 
     @GetMapping
     public String showForm(Model model) {
-        model.addAttribute("registrationForm", new RegistrationForm());
+        model.addAttribute("registrationForm", new OwnerForm());
 
         return TEMPLATE;
     }
 
     @PreAuthorize("permitAll()")
     @PostMapping
-    public String register(@ModelAttribute @Valid RegistrationForm registrationForm, BindingResult bindingResult) {
-        if (ownerService.hasErrors(registrationForm, bindingResult))
+    public String register(@ModelAttribute @Valid OwnerForm ownerForm, BindingResult bindingResult) {
+        if (ownerService.hasErrors(ownerForm, bindingResult))
             return TEMPLATE;
 
-        registerService.login(registerService.registerOwner(registrationForm));
+        registerService.login(registerService.registerOwner(ownerForm));
 
         return "redirect:/";
     }

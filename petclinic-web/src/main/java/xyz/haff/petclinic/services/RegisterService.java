@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Role;
-import xyz.haff.petclinic.models.forms.RegistrationForm;
+import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
@@ -17,10 +17,10 @@ import xyz.haff.petclinic.security.UserDetailsAdapter;
 @RequiredArgsConstructor
 public class RegisterService {
     private final OwnerRepository ownerRepository;
-    private final Converter<RegistrationForm, Owner> registrationFormOwner;
+    private final Converter<OwnerForm, Owner> registrationFormOwner;
 
-    public Owner registerOwner(RegistrationForm registrationForm) {
-        var owner = registrationFormOwner.convert(registrationForm);
+    public Owner registerOwner(OwnerForm ownerForm) {
+        var owner = registrationFormOwner.convert(ownerForm);
         owner.getPersonalData().getUser().setRole(Role.OWNER);
         return ownerRepository.save(owner);
     }

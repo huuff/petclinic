@@ -1,12 +1,11 @@
 package xyz.haff.petclinic.converters;
 
 import org.junit.jupiter.api.Test;
-import xyz.haff.petclinic.models.forms.RegistrationForm;
+import xyz.haff.petclinic.models.forms.OwnerForm;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-class RegistrationFormToOwnerConverterTest {
+class OwnerFormToOwnerConverterTest {
 
     @Test
     void convert() {
@@ -15,8 +14,8 @@ class RegistrationFormToOwnerConverterTest {
         final var USERNAME = "USERNAME";
         final var PASSWORD = "PASSWORD";
 
-        var registrationForm = new RegistrationForm(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD, PASSWORD);
-        var owner = new RegistrationFormToOwnerConverter(x -> x).convert(registrationForm);
+        var registrationForm = new OwnerForm(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD, PASSWORD);
+        var owner = new OwnerFormToOwnerConverter(x -> x).convert(registrationForm);
 
         assertThat(owner).isNotNull();
         assertThat(owner.getPersonalData().getFirstName()).isEqualTo(FIRST_NAME);
