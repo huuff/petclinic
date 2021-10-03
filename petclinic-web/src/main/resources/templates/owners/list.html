@@ -9,12 +9,14 @@
 
 <table>
     <thead>
-        <th th:text="#{name}">Name</th> <!-- TODO: FullName translation? -->
+        <th th:text="#{name}">Name</th>>
         <th>Delete</th> <!-- TODO: Delete translation? -->
+        <th th:text="#{view}"></th>
     </thead>
     <tr th:each="owner : ${owners}">
         <td th:text="${owner.personalData.fullName}">Full name</td>
-        <td><a th:href="@{|/owners/${owner.id}/delete|}">Delete</a></td>
+        <td><a th:href="@{|/owners/${owner.id}/delete|}">Delete</a></td> <!-- TODO: FA icon pencil -->
+        <td><a th:href="@{|/owners/${owner.id}|}" th:text="#{view}"></a></td> <!-- TODO: FA icon eye -->
     </tr>
 </table>
 

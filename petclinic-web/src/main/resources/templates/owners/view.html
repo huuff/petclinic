@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${owner.personalData.fullName()}">Name</title>
+</head>
+<body>
+<h1 th:text="${owner.personalData.fullName()}">Name</h1>
+
+<div>
+  <div>
+    <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
+  </div>
+</div>
+</body>
+</html>

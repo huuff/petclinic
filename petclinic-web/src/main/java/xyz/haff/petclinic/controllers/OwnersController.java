@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.forms.RegistrationForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.services.OwnerService;
@@ -58,5 +59,13 @@ public class OwnersController {
         ownerRepository.deleteById(ownerId);
 
         return "redirect:" + BASE_PATH;
+    }
+
+    // TODO: Multi-tenancy
+    @GetMapping("/{ownerId}")
+    public String view(@PathVariable UUID ownerId, Model model) {
+        model.addAttribute("owner", ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
+
+        return "owners/view";
     }
 }
