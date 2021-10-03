@@ -23,6 +23,8 @@ public class OwnersController {
     public static final String CREATE = "/create";
     public static final String DELETE = "/{ownerId}/delete";
 
+    private static final String EDIT_VIEW = "owners/register";
+
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
     private final RegisterService registerService;
@@ -40,13 +42,13 @@ public class OwnersController {
     public String showCreateForm(Model model) {
         model.addAttribute("registrationForm", new RegistrationForm());
 
-        return "owners/register"; // TODO: Maybe some static constants for the view location? or properties?
+        return EDIT_VIEW;
     }
     @PostMapping(CREATE)
     @PreAuthorize("hasAuthority('VET')")
     public String create(@Valid @ModelAttribute RegistrationForm registrationForm, BindingResult bindingResult) {
         if (ownerService.hasErrors(registrationForm, bindingResult))
-            return "owners/register";
+            return EDIT_VIEW;
 
         registerService.registerOwner(registrationForm);
 
