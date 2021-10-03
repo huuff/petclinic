@@ -61,8 +61,9 @@ public class OwnersController {
         return "redirect:" + BASE_PATH;
     }
 
-    // TODO: Multi-tenancy
+    // TODO: This multi-tenancy is actually useless, but I'm leaving around for when I implement the post (Update)
     @GetMapping("/{ownerId}")
+    @PreAuthorize("hasAuthority('VET') OR @userAuthenticationManager.ownerUserMatches(authentication, #ownerId)")
     public String view(@PathVariable UUID ownerId, Model model) {
         model.addAttribute("owner", ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
 
