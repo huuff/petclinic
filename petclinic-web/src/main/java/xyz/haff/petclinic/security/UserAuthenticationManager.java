@@ -3,6 +3,7 @@ package xyz.haff.petclinic.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.User;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 
@@ -20,7 +21,8 @@ public class UserAuthenticationManager {
     }
 
     public boolean ownerUserMatches(Authentication authentication, UUID ownerId) {
-        // TODO: Custom exception
-        return userMatches(authentication, ownerRepository.findById(ownerId).orElseThrow().getPersonalData().getUser().getId());
+        var userId = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new).getPersonalData().getUser().getId();
+
+        return userMatches(authentication, userId);
     }
 }

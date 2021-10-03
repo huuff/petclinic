@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
@@ -22,8 +23,7 @@ public class ProfileController {
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public String view(@AuthenticationPrincipal UserDetailsAdapter userDetails, Model model) {
-        model.addAttribute("owner", ownerRepository.findByUserId(userDetails.getUser().getId()).orElseThrow()); // TODO: Custom exception
-
+        model.addAttribute("owner", ownerRepository.findByUserId(userDetails.getUser().getId()).orElseThrow(NotFoundException::new));
         return "owners/view";
     }
 }
