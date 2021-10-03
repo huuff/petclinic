@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @RequestMapping(RegisterController.PATH)
 public class RegisterController {
     public static final String PATH = "/register";
-    private static final String TEMPLATE = "owners/register";
+    private static final String TEMPLATE = "owners/edit";
 
     private final RegisterService registerService;
     private final OwnerService ownerService;
@@ -28,7 +28,7 @@ public class RegisterController {
 
     @GetMapping
     public String showForm(Model model) {
-        model.addAttribute("registrationForm", new OwnerForm());
+        model.addAttribute("ownerForm", new OwnerForm());
 
         return TEMPLATE;
     }

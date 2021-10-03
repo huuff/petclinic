@@ -42,8 +42,8 @@ class RegisterControllerTest {
     void registrationFormIsShown() throws Exception {
         mockMvc.perform(get(RegisterController.PATH))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("registrationForm"))
-                .andExpect(view().name("owners/register"))
+                .andExpect(model().attributeExists("ownerForm"))
+                .andExpect(view().name("owners/edit"))
         ;
     }
 
