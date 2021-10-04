@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:text="${owner.personalData.fullName()}">Name</title>
@@ -11,6 +11,11 @@
   <div>
     <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
   </div>
+    <!-- Terrible? Thymeleaf forced me! -->
+    <a th:if="${#authentication.getPrincipal().getUsername() == owner.personalData.user.username}
+    OR ${#authentication.getAuthorities().toArray()[0].getAuthority().equals('VET')}"
+       th:text="#{edit}"
+       th:href="@{|/owners/${owner.id}/update|}"></a>
 </div>
 </body>
 </html>
