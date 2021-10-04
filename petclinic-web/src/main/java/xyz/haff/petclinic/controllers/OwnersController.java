@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import xyz.haff.petclinic.annotations.EditOwner;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
@@ -72,7 +73,7 @@ public class OwnersController {
     }
 
     @GetMapping(UPDATE)
-    @PreAuthorize("hasAuthority('VET') OR @userAuthenticationManager.ownerUserMatches(authentication, #ownerId)")
+    @EditOwner
     public String showEditForm(@PathVariable UUID ownerId, Model model) {
         model.addAttribute("ownerForm", ownerService.createOwnerForm(ownerId));
 
@@ -80,7 +81,7 @@ public class OwnersController {
     }
 
     @PostMapping(UPDATE)
-    @PreAuthorize("hasAuthority('VET') OR @userAuthenticationManager.ownerUserMatches(authentication, #ownerId)") // TODO: Make an annotation for this?
+    @EditOwner
     public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult) {
         // TODO: Validate somehow
         //if (ownerService.hasErrors(ownerForm, bindingResult))
