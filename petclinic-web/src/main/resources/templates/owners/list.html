@@ -12,13 +12,13 @@
         <th th:text="#{name}">Name</th>
         <th th:text="#{delete}">Delete</th>
         <th th:text="#{view}">View</th>
-        <th>Edit</th> <!-- TODO: Edit translation -->
+        <th th:text="#{edit}">Edit</th>
     </thead>
     <tr th:each="owner : ${owners}">
         <td th:text="${owner.personalData.fullName}">Full name</td>
         <td><a th:href="@{|/owners/${owner.id}/delete|}" th:text="#{delete}">Delete</a></td> <!-- TODO: FA icon pencil -->
         <td><a th:href="@{|/owners/${owner.id}|}" th:text="#{view}">View</a></td> <!-- TODO: FA icon eye -->
-        <td><a th:href="@{|/owners/${owner.id}/update|}">Edit</a></td> <!-- TODO: Translation -->
+        <td><a th:href="@{|/owners/${owner.id}/update|}" th:text="#{edit}">Edit</a></td>
     </tr>
 </table>
 
