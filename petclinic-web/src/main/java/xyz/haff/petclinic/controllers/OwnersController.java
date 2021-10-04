@@ -41,7 +41,7 @@ public class OwnersController {
     @GetMapping(CREATE)
     @PreAuthorize("hasAuthority('VET')")
     public String showCreateForm(Model model) {
-        model.addAttribute("registrationForm", new OwnerForm()); // TODO: Rename to ownerForm
+        model.addAttribute("ownerForm", new OwnerForm());
 
         return EDIT_VIEW;
     }
