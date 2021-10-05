@@ -1,6 +1,7 @@
 package xyz.haff.petclinic.services;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import xyz.haff.petclinic.converters.OwnerToOwnerFormConverter;
@@ -21,7 +22,7 @@ public class OwnerService {
     private final OwnerRepository ownerRepository;
     private final OwnerToOwnerFormConverter ownerToOwnerFormConverter;
 
-    public boolean hasErrors(OwnerForm ownerForm, BindingResult bindingResult) {
+    public boolean checkIsValid(OwnerForm ownerForm, BindingResult bindingResult) {
         personalDataRepository.findByFirstNameAndLastName(
                 ownerForm.getFirstName(),
                 ownerForm.getLastName()
@@ -29,13 +30,20 @@ public class OwnerService {
             bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, "");
         });
 
-        if (!ownerForm.passwordEqualsRepeatPassword())
-            bindingResult.reject("repeat_password_error");
+        checkPasswordsMatch(ownerForm, bindingResult);
 
         if (userRepository.existsByUsername(ownerForm.getUsername()))
             bindingResult.rejectValue("username", "duplicate", new Object[]{ownerForm.getUsername()}, "");
 
-        return bindingResult.hasErrors();
+        return !bindingResult.hasErrors();
+    }
+
+    public boolean checkPasswordsMatch(OwnerForm ownerForm, BindingResult bindingResult) {
+        if (!ownerForm.passwordEqualsRepeatPassword()) {
+            bindingResult.reject("repeat_password_error");
+            return false;
+        }
+        return true;
     }
 
     public OwnerForm createOwnerForm(UUID ownerId) {
@@ -46,11 +54,16 @@ public class OwnerService {
         var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
         var personalData = owner.getPersonalData();
 
-        personalData.setFirstName(ownerForm.getFirstName());
-        personalData.setLastName(ownerForm.getLastName());
-        personalData.getUser().setUsername(ownerForm.getUsername());
+        if (!Strings.isEmpty(ownerForm.getFirstName()))
+            personalData.setFirstName(ownerForm.getFirstName());
 
-        if (ownerForm.getPassword() != null && !ownerForm.getPassword().equals(""))
+        if (!Strings.isEmpty(ownerForm.getLastName()))
+            personalData.setLastName(ownerForm.getLastName());
+
+        if (!Strings.isEmpty(ownerForm.getUsername()))
+            personalData.getUser().setUsername(ownerForm.getUsername());
+
+        if (!Strings.isEmpty(ownerForm.getPassword()) && ownerForm.passwordEqualsRepeatPassword())
             personalData.getUser().setPassword(ownerForm.getPassword());
 
         return ownerRepository.save(owner);

@@ -9,8 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import xyz.haff.petclinic.services.OwnerService;
 import xyz.haff.petclinic.services.RegisterService;
-import xyz.haff.petclinic.repositories.OwnerRepository;
-import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
 
 import static org.hamcrest.Matchers.hasProperty;
@@ -19,7 +17,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -50,7 +47,7 @@ class RegisterControllerTest {
     // With this amount of mocking... is anything here tested at all?
     @Test
     void registrationSavesUser() throws Exception {
-        when(ownerService.hasErrors(any(), any())).thenReturn(false);
+        when(ownerService.checkIsValid(any(), any())).thenReturn(true);
 
         mockMvc.perform(post(RegisterController.PATH)
                 .with(csrf()))

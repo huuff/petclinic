@@ -5,7 +5,7 @@
     <title th:text="#{new_owner}">New owner</title>
 </head>
 <body>
-<h1 th:text="#{new_owner}">New Owner</h1>
+<h1 th:text="#{new_owner}">New Owner</h1> <!-- TODO: Shouldn't say new owner on edit -->
 
 <form th:object="${ownerForm}" method="post">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.annotations.EditOwner;
 import xyz.haff.petclinic.exceptions.NotFoundException;
@@ -48,8 +49,8 @@ public class OwnersController {
     }
     @PostMapping(CREATE)
     @PreAuthorize("hasAuthority('VET')")
-    public String create(@Valid @ModelAttribute OwnerForm ownerForm, BindingResult bindingResult) {
-        if (ownerService.hasErrors(ownerForm, bindingResult))
+    public String create(@Validated(OwnerForm.NewOwnerConstraintGroup.class) @ModelAttribute OwnerForm ownerForm, BindingResult bindingResult) {
+        if (!ownerService.checkIsValid(ownerForm, bindingResult))
             return EDIT_VIEW;
 
         registerService.registerOwner(ownerForm);
@@ -80,12 +81,12 @@ public class OwnersController {
         return EDIT_VIEW;
     }
 
+    // TODO: Check for duplicates, but should also take into consideration that it cannot be a duplicate of itself
     @PostMapping(UPDATE)
     @EditOwner
     public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult) {
-        // TODO: Validate somehow
-        //if (ownerService.hasErrors(ownerForm, bindingResult))
-        //    return EDIT_VIEW;
+        if (!ownerService.checkPasswordsMatch(ownerForm, bindingResult))
+            return EDIT_VIEW;
 
         ownerService.updateOwner(ownerId, ownerForm);
 

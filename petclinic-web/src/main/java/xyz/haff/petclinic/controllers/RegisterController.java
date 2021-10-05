@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.haff.petclinic.services.RegisterService;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.services.OwnerService;
-
-import javax.validation.Valid;
 
 // TODO: This is the exact same to OwnersController.create()
 
@@ -37,8 +36,8 @@ public class RegisterController {
 
     @PreAuthorize("permitAll()")
     @PostMapping
-    public String register(@ModelAttribute @Valid OwnerForm ownerForm, BindingResult bindingResult) {
-        if (ownerService.hasErrors(ownerForm, bindingResult))
+    public String register(@Validated(OwnerForm.NewOwnerConstraintGroup.class) @ModelAttribute OwnerForm ownerForm, BindingResult bindingResult) {
+        if (!ownerService.checkIsValid(ownerForm, bindingResult))
             return TEMPLATE;
 
         registerService.login(registerService.registerOwner(ownerForm));

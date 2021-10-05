@@ -6,26 +6,32 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OwnerForm {
-    @NotNull
-    @NotEmpty
+    @NotNull(groups=NewOwnerConstraintGroup.class)
+    @NotEmpty(groups=NewOwnerConstraintGroup.class)
     private String firstName;
-    @NotNull
-    @NotEmpty
+    @NotNull(groups=NewOwnerConstraintGroup.class)
+    @NotEmpty(groups=NewOwnerConstraintGroup.class)
     private String lastName;
-    @NotNull
-    @NotEmpty
+    @NotNull(groups=NewOwnerConstraintGroup.class)
+    @NotEmpty(groups=NewOwnerConstraintGroup.class)
     private String username;
 
-    // TODO: Do something to validate these, but if I add @NotNull and @NotEmpty they get applied at update, which I don't want
+    @NotNull(groups=NewOwnerConstraintGroup.class)
+    @NotEmpty(groups=NewOwnerConstraintGroup.class)
     private String password;
+    @NotNull(groups=NewOwnerConstraintGroup.class)
+    @NotEmpty(groups=NewOwnerConstraintGroup.class)
     private String repeatPassword;
 
     public boolean passwordEqualsRepeatPassword() {
-        return (password == null && repeatPassword == null) || password.equals(repeatPassword);
+        return Objects.equals(password, repeatPassword);
     }
+
+    public interface NewOwnerConstraintGroup {}
 }
