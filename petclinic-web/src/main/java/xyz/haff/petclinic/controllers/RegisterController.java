@@ -14,7 +14,7 @@ import xyz.haff.petclinic.services.RegisterService;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.services.OwnerService;
 
-// TODO: This is the exact same to OwnersController.create()
+// TODO: This is the exact same as OwnersController.create()
 
 @Controller
 @RequiredArgsConstructor
@@ -37,7 +37,7 @@ public class RegisterController {
     @PreAuthorize("permitAll()")
     @PostMapping
     public String register(@Validated(OwnerForm.NewOwnerConstraintGroup.class) @ModelAttribute OwnerForm ownerForm, BindingResult bindingResult) {
-        if (!ownerService.checkIsValid(ownerForm, bindingResult))
+        if (!ownerService.checkNewIsValid(ownerForm, bindingResult))
             return TEMPLATE;
 
         registerService.login(registerService.registerOwner(ownerForm));

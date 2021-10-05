@@ -47,7 +47,7 @@ class RegisterControllerTest {
     // With this amount of mocking... is anything here tested at all?
     @Test
     void registrationSavesUser() throws Exception {
-        when(ownerService.checkIsValid(any(), any())).thenReturn(true);
+        when(ownerService.checkNewIsValid(any(), any())).thenReturn(true);
 
         mockMvc.perform(post(RegisterController.PATH)
                 .with(csrf()))

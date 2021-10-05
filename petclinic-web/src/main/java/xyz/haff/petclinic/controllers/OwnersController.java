@@ -50,7 +50,7 @@ public class OwnersController {
     @PostMapping(CREATE)
     @PreAuthorize("hasAuthority('VET')")
     public String create(@Validated(OwnerForm.NewOwnerConstraintGroup.class) @ModelAttribute OwnerForm ownerForm, BindingResult bindingResult) {
-        if (!ownerService.checkIsValid(ownerForm, bindingResult))
+        if (!ownerService.checkNewIsValid(ownerForm, bindingResult))
             return EDIT_VIEW;
 
         registerService.registerOwner(ownerForm);
@@ -81,11 +81,12 @@ public class OwnersController {
         return EDIT_VIEW;
     }
 
-    // TODO: Check for duplicates, but should also take into consideration that it cannot be a duplicate of itself
     @PostMapping(UPDATE)
     @EditOwner
     public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult) {
-        if (!ownerService.checkPasswordsMatch(ownerForm, bindingResult))
+        ownerService.checkEditIsValid(ownerId, ownerForm, bindingResult);
+
+        if (bindingResult.hasErrors())
             return EDIT_VIEW;
 
         ownerService.updateOwner(ownerId, ownerForm);

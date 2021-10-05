@@ -22,35 +22,48 @@ public class OwnerService {
     private final OwnerRepository ownerRepository;
     private final OwnerToOwnerFormConverter ownerToOwnerFormConverter;
 
-    public boolean checkIsValid(OwnerForm ownerForm, BindingResult bindingResult) {
-        personalDataRepository.findByFirstNameAndLastName(
-                ownerForm.getFirstName(),
-                ownerForm.getLastName()
-        ).ifPresent((personalData) -> {
-            bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, "");
-        });
-
+    public boolean checkNewIsValid(OwnerForm ownerForm, BindingResult bindingResult) {
+        checkFullNameIsNotDuplicated(ownerForm, bindingResult);
         checkPasswordsMatch(ownerForm, bindingResult);
-
-        if (userRepository.existsByUsername(ownerForm.getUsername()))
-            bindingResult.rejectValue("username", "duplicate", new Object[]{ownerForm.getUsername()}, "");
+        checkUsernameIsNotDuplicated(ownerForm, bindingResult);
 
         return !bindingResult.hasErrors();
     }
 
-    public boolean checkPasswordsMatch(OwnerForm ownerForm, BindingResult bindingResult) {
-        if (!ownerForm.passwordEqualsRepeatPassword()) {
+    public void checkEditIsValid(UUID id, OwnerForm ownerForm, BindingResult bindingResult) {
+        var editingOwner = ownerRepository.findById(id).orElseThrow(NotFoundException::new);
+
+        checkPasswordsMatch(ownerForm, bindingResult);
+        if (!editingOwner.getPersonalData().getFirstName().equals(ownerForm.getFirstName()))
+            checkFullNameIsNotDuplicated(ownerForm, bindingResult);
+
+        if (!editingOwner.getPersonalData().getUser().getUsername().equals(ownerForm.getUsername()))
+            checkUsernameIsNotDuplicated(ownerForm, bindingResult);
+    }
+
+    public void checkFullNameIsNotDuplicated(OwnerForm ownerForm, BindingResult bindingResult) {
+        var existingDuplicate = personalDataRepository.findByFirstNameAndLastName(
+                ownerForm.getFirstName(),
+                ownerForm.getLastName()
+        );
+        existingDuplicate.ifPresent(personalData -> bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, ""));
+    }
+
+    public void checkUsernameIsNotDuplicated(OwnerForm ownerForm, BindingResult bindingResult) {
+        if (userRepository.existsByUsername(ownerForm.getUsername()))
+            bindingResult.rejectValue("username", "duplicate", new Object[]{ownerForm.getUsername()}, "");
+    }
+
+    public void checkPasswordsMatch(OwnerForm ownerForm, BindingResult bindingResult) {
+        if (!ownerForm.passwordEqualsRepeatPassword())
             bindingResult.reject("repeat_password_error");
-            return false;
-        }
-        return true;
     }
 
     public OwnerForm createOwnerForm(UUID ownerId) {
         return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
     }
 
-    public Owner updateOwner(UUID ownerId, OwnerForm ownerForm) {
+    public void updateOwner(UUID ownerId, OwnerForm ownerForm) {
         var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
         var personalData = owner.getPersonalData();
 
@@ -66,6 +79,6 @@ public class OwnerService {
         if (!Strings.isEmpty(ownerForm.getPassword()) && ownerForm.passwordEqualsRepeatPassword())
             personalData.getUser().setPassword(ownerForm.getPassword());
 
-        return ownerRepository.save(owner);
+        ownerRepository.save(owner);
     }
 }
