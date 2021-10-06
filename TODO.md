@@ -6,3 +6,4 @@
 * Probably need a custom page on 400 errors, check for example `/owners/test`
 * At least 70% coverage
 * CUD for vets
+* Show some info regarding what wasn't found on 404
