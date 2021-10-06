@@ -5,4 +5,4 @@
 * Add language switcher
 * Probably need a custom page on 400 errors, check for example `/owners/test`
 * At least 70% coverage
-* CRUD for vets
+* CUD for vets
