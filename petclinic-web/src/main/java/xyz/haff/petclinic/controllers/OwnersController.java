@@ -2,6 +2,7 @@ package xyz.haff.petclinic.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,7 @@ import xyz.haff.petclinic.annotations.EditOwner;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.OwnerService;
 import xyz.haff.petclinic.services.RegisterService;
 
@@ -41,21 +43,30 @@ public class OwnersController {
     }
 
     @GetMapping(CREATE)
-    @PreAuthorize("hasAuthority('VET')")
+    @PreAuthorize("!hasAuthority('OWNER')")
     public String showCreateForm(Model model) {
         model.addAttribute("ownerForm", new OwnerForm());
 
         return EDIT_VIEW;
     }
     @PostMapping(CREATE)
-    @PreAuthorize("hasAuthority('VET')")
-    public String create(@Validated(OwnerForm.NewOwnerConstraintGroup.class) @ModelAttribute OwnerForm ownerForm, BindingResult bindingResult) {
+    @PreAuthorize("!hasAuthority('OWNER')")
+    public String create(
+            @AuthenticationPrincipal UserDetailsAdapter user,
+            @Validated(OwnerForm.NewOwnerConstraintGroup.class) @ModelAttribute OwnerForm ownerForm,
+            BindingResult bindingResult
+    ) {
         if (!ownerService.checkNewIsValid(ownerForm, bindingResult))
             return EDIT_VIEW;
 
-        registerService.registerOwner(ownerForm);
+        var newOwner = registerService.registerOwner(ownerForm);
 
-        return "redirect:" + BASE_PATH;
+        if (user == null) {// not authenticated, so it's a registration, redirect to home
+            registerService.login(newOwner);
+            return "redirect:/";
+        } else { // must be a vet creating an owner, redirect to owners list
+            return "redirect:" + BASE_PATH;
+        }
     }
 
     @GetMapping(DELETE)
