@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
 @Controller
@@ -18,12 +19,19 @@ public class ProfileController {
     public static final String PATH = "/profile";
 
     private final OwnerRepository ownerRepository;
+    private final VetRepository vetRepository;
 
-    // TODO: This for vets
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public String view(@AuthenticationPrincipal UserDetailsAdapter userDetails, Model model) {
-        model.addAttribute("owner", ownerRepository.findByUserId(userDetails.getUser().getId()).orElseThrow(NotFoundException::new));
-        return "owners/view";
+        if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("OWNER"))) {
+            model.addAttribute("owner", ownerRepository.findByUserId(userDetails.getUser().getId()).orElseThrow(NotFoundException::new));
+            return "owners/view";
+        } else if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("VET"))) {
+            model.addAttribute("vet", vetRepository.findByUserId(userDetails.getUser().getId()).orElseThrow(NotFoundException::new));
+            return "vets/view";
+        } else {
+            throw new NotFoundException();
+        }
     }
 }

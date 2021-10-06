@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${vet.personalData.fullName()}">Name</title>
+</head>
+<body>
+<h1 th:text="${vet.personalData.fullName()}">Name</h1>
+
+<div>
+  <div>
+    <p th:text="|#{username}: ${vet.personalData.user.username}|">Username</p>
+  </div>
+    <a sec:authorize="hasAuthority('VET')"
+       th:text="#{edit}"
+       th:href="@{|/vets/${vet.id}/update|}"></a>
+</div>
+</body>
+</html>
