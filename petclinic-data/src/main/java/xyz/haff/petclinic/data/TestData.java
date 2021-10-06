@@ -30,6 +30,7 @@ public class TestData {
             ).build();
 
     public static final Vet kennyWiggins = Vet.builder()
+            .specialty(Specialty.OPHTHALMOLOGY)
             .personalData(PersonalData.builder()
                     .firstName("Kenny")
                     .lastName("Wiggins")
