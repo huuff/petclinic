@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 
-// TODO: Test
 @Component
 public class OwnerToOwnerFormConverter implements Converter<Owner, OwnerForm> {
 
