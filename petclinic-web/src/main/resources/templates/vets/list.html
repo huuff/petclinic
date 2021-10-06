@@ -15,6 +15,7 @@
         <th th:text="#{view}">View</th>
         <th th:text="#{edit}">Edit</th>
     </thead>
+    <!-- TODO: Prevent deleting self? -->
     <tr th:each="vet : ${vets}">
         <td th:text="${vet.personalData.fullName}">Full name</td>
         <td th:text="${vet.specialty}">Specialty</td>

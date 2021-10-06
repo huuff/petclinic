@@ -17,6 +17,7 @@ import java.util.UUID;
 @RequestMapping(VetController.BASE_PATH)
 public class VetController {
     public static final String BASE_PATH = "/vets";
+    public static final String DELETE_PATH = "/{vetId}/delete";
     public static final String LIST_VIEW = "vets/list";
     public static final String READ_VIEW = "vets/view";
 
@@ -36,5 +37,13 @@ public class VetController {
         model.addAttribute("vet", vetRepository.findById(vetId).orElseThrow(NotFoundException::new));
 
         return READ_VIEW;
+    }
+
+    @GetMapping(DELETE_PATH)
+    @PreAuthorize("hasAuthority('VET')")
+    public String delete(@PathVariable UUID vetId) {
+        vetRepository.deleteById(vetId);
+
+        return "redirect:" + BASE_PATH;
     }
 }
