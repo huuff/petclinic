@@ -10,6 +10,7 @@
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" th:text="#{login}">Login</a></li>
     <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
     <li sec:authorize="hasAuthority('VET')"><a th:href="@{/owners}" th:text="#{owners}">Owners</a></li>
+    <li sec:authorize="hasAuthority('VET')"><a th:href="@{/vets}" th:text="#{vets}">Vets</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/owners/create}" th:text="#{sign_up}">Sign up</a></li>
     <li sec:authorize="hasAuthority('OWNER')"><a th:href="@{/profile}" th:text="#{your_profile}">Your profile</a></li>
 </ul>
