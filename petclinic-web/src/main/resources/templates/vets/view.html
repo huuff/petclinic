@@ -8,9 +8,10 @@
 <h1 th:text="${vet.personalData.fullName()}">Name</h1>
 
 <div>
-  <div>
-    <p th:text="|#{username}: ${vet.personalData.user.username}|">Username</p>
-  </div>
+    <div>
+        <p th:text="|#{username}: ${vet.personalData.user.username}|">Username</p>
+        <p th:text="|#{specialty}: ${vet.specialty}|">Specialty</p>
+    </div>
     <a sec:authorize="hasAuthority('VET')"
        th:text="#{edit}"
        th:href="@{|/vets/${vet.id}/update|}"></a>

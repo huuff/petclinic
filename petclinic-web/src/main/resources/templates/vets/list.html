@@ -10,12 +10,14 @@
 <table>
     <thead>
         <th th:text="#{name}">Name</th>
+        <th th:text="#{specialty}">Specialty</th>
         <th th:text="#{delete}">Delete</th>
         <th th:text="#{view}">View</th>
         <th th:text="#{edit}">Edit</th>
     </thead>
     <tr th:each="vet : ${vets}">
         <td th:text="${vet.personalData.fullName}">Full name</td>
+        <td th:text="${vet.specialty}">Specialty</td>
         <td><a th:href="@{|/vets/${vet.id}/delete|}" th:text="#{delete}">Delete</a></td> <!-- TODO: FA icon pencil -->
         <td><a th:href="@{|/vets/${vet.id}|}" th:text="#{view}">View</a></td> <!-- TODO: FA icon eye -->
         <td><a th:href="@{|/vets/${vet.id}/update|}" th:text="#{edit}">Edit</a></td>
