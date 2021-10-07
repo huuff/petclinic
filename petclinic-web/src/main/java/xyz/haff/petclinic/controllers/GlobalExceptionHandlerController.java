@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 
+import java.nio.file.AccessDeniedException;
+
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandlerController {
@@ -13,5 +15,11 @@ public class GlobalExceptionHandlerController {
     public String notFound(Exception exception) {
         log.error(exception.getMessage());
         return "errors/404";
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public String accessDenied(Exception exception) {
+        log.error(exception.getMessage());
+        return "errors/403";
     }
 }
