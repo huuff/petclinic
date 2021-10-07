@@ -8,26 +8,20 @@ import xyz.haff.petclinic.models.PersonalData;
 import xyz.haff.petclinic.models.Role;
 import xyz.haff.petclinic.models.User;
 import xyz.haff.petclinic.models.forms.OwnerForm;
+import xyz.haff.petclinic.models.forms.PersonForm;
 
 import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
 public class OwnerFormToOwnerConverter implements Converter<OwnerForm, Owner> {
-    private final Function<String, String> passwordEncodingFunction;
+    private final Converter<PersonForm, PersonalData> personFormToPersonalData;
 
     @Override
     public Owner convert(OwnerForm ownerForm) {
-        return Owner.builder()
-                .personalData(PersonalData.builder()
-                        .firstName(ownerForm.getFirstName())
-                        .lastName(ownerForm.getLastName())
-                        .user(User.builder()
-                                .username(ownerForm.getUsername())
-                                .password(passwordEncodingFunction.apply(ownerForm.getPassword()))
-                                .role(Role.OWNER)
-                                .build()
-                        ).build()
-                ).build();
+        var personalData = personFormToPersonalData.convert(ownerForm);
+        personalData.getUser().setRole(Role.OWNER);
+
+        return Owner.builder().personalData(personalData).build();
     }
 }
