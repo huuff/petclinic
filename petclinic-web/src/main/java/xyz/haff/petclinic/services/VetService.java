@@ -12,48 +12,24 @@ import xyz.haff.petclinic.repositories.VetRepository;
 import java.util.UUID;
 
 // TODO: Mostly copy-pasted from the OwnerService, so I have to find a way to DRY them
+// UPDATE, better now, but try to merge the checkEditIsValid
 
 @RequiredArgsConstructor
 @Service
 public class VetService {
-    private final UserRepository userRepository;
-    private final PersonalDataRepository personalDataRepository;
+    private final PersonFormValidationService personFormValidationService;
     private final VetRepository vetRepository;
 
-    public boolean checkNewIsValid(VetForm vetForm, BindingResult bindingResult) {
-        checkFullNameIsNotDuplicated(vetForm, bindingResult);
-        checkPasswordsMatch(vetForm, bindingResult);
-        checkUsernameIsNotDuplicated(vetForm, bindingResult);
-
-        return !bindingResult.hasErrors();
-    }
 
     public void checkEditIsValid(UUID id, VetForm vetForm, BindingResult bindingResult) {
         var editingVet = vetRepository.findById(id).orElseThrow(NotFoundException::new);
 
-        checkPasswordsMatch(vetForm, bindingResult);
+        personFormValidationService.checkPasswordsMatch(vetForm, bindingResult);
         if (!editingVet.getPersonalData().getFirstName().equals(vetForm.getFirstName()))
-            checkFullNameIsNotDuplicated(vetForm, bindingResult);
+            personFormValidationService.checkFullNameIsNotDuplicated(vetForm, bindingResult);
 
         if (!editingVet.getPersonalData().getUser().getUsername().equals(vetForm.getUsername()))
-            checkUsernameIsNotDuplicated(vetForm, bindingResult);
+            personFormValidationService.checkUsernameIsNotDuplicated(vetForm, bindingResult);
     }
 
-    public void checkFullNameIsNotDuplicated(VetForm vetForm, BindingResult bindingResult) {
-        var existingDuplicate = personalDataRepository.findByFirstNameAndLastName(
-                vetForm.getFirstName(),
-                vetForm.getLastName()
-        );
-        existingDuplicate.ifPresent(personalData -> bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, ""));
-    }
-
-    public void checkUsernameIsNotDuplicated(VetForm vetForm, BindingResult bindingResult) {
-        if (userRepository.existsByUsername(vetForm.getUsername()))
-            bindingResult.rejectValue("username", "duplicate", new Object[]{vetForm.getUsername()}, "");
-    }
-
-    public void checkPasswordsMatch(VetForm vetForm, BindingResult bindingResult) {
-        if (!vetForm.passwordEqualsRepeatPassword())
-            bindingResult.reject("repeat_password_error");
-    }
 }

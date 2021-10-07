@@ -17,46 +17,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class OwnerService {
-    private final UserRepository userRepository;
-    private final PersonalDataRepository personalDataRepository;
+    private final PersonFormValidationService personFormValidationService;
     private final OwnerRepository ownerRepository;
     private final OwnerToOwnerFormConverter ownerToOwnerFormConverter;
-
-    public boolean checkNewIsValid(OwnerForm ownerForm, BindingResult bindingResult) {
-        checkFullNameIsNotDuplicated(ownerForm, bindingResult);
-        checkPasswordsMatch(ownerForm, bindingResult);
-        checkUsernameIsNotDuplicated(ownerForm, bindingResult);
-
-        return !bindingResult.hasErrors();
-    }
 
     public void checkEditIsValid(UUID id, OwnerForm ownerForm, BindingResult bindingResult) {
         var editingOwner = ownerRepository.findById(id).orElseThrow(NotFoundException::new);
 
-        checkPasswordsMatch(ownerForm, bindingResult);
+        personFormValidationService.checkPasswordsMatch(ownerForm, bindingResult);
         if (!editingOwner.getPersonalData().getFirstName().equals(ownerForm.getFirstName()))
-            checkFullNameIsNotDuplicated(ownerForm, bindingResult);
+            personFormValidationService.checkFullNameIsNotDuplicated(ownerForm, bindingResult);
 
         if (!editingOwner.getPersonalData().getUser().getUsername().equals(ownerForm.getUsername()))
-            checkUsernameIsNotDuplicated(ownerForm, bindingResult);
-    }
-
-    public void checkFullNameIsNotDuplicated(OwnerForm ownerForm, BindingResult bindingResult) {
-        var existingDuplicate = personalDataRepository.findByFirstNameAndLastName(
-                ownerForm.getFirstName(),
-                ownerForm.getLastName()
-        );
-        existingDuplicate.ifPresent(personalData -> bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, ""));
-    }
-
-    public void checkUsernameIsNotDuplicated(OwnerForm ownerForm, BindingResult bindingResult) {
-        if (userRepository.existsByUsername(ownerForm.getUsername()))
-            bindingResult.rejectValue("username", "duplicate", new Object[]{ownerForm.getUsername()}, "");
-    }
-
-    public void checkPasswordsMatch(OwnerForm ownerForm, BindingResult bindingResult) {
-        if (!ownerForm.passwordEqualsRepeatPassword())
-            bindingResult.reject("repeat_password_error");
+            personFormValidationService.checkUsernameIsNotDuplicated(ownerForm, bindingResult);
     }
 
     public OwnerForm createOwnerForm(UUID ownerId) {
@@ -81,4 +54,6 @@ public class OwnerService {
 
         ownerRepository.save(owner);
     }
+
+
 }

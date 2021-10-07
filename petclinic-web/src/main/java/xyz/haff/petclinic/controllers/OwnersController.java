@@ -15,6 +15,7 @@ import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.OwnerService;
+import xyz.haff.petclinic.services.PersonFormValidationService;
 import xyz.haff.petclinic.services.RegisterService;
 
 import javax.validation.Valid;
@@ -34,6 +35,7 @@ public class OwnersController {
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
     private final RegisterService registerService;
+    private final PersonFormValidationService personFormValidationService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('VET')")
@@ -57,7 +59,7 @@ public class OwnersController {
             @Validated(PersonForm.CreationConstraintGroup.class) @ModelAttribute OwnerForm ownerForm,
             BindingResult bindingResult
     ) {
-        if (!ownerService.checkNewIsValid(ownerForm, bindingResult))
+        if (!personFormValidationService.checkNewIsValid(ownerForm, bindingResult))
             return EDIT_VIEW;
 
         var newOwner = registerService.registerOwner(ownerForm);

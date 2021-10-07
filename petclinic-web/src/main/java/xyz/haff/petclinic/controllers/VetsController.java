@@ -11,6 +11,7 @@ import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.VetRepository;
+import xyz.haff.petclinic.services.PersonFormValidationService;
 import xyz.haff.petclinic.services.RegisterService;
 import xyz.haff.petclinic.services.VetService;
 
@@ -30,6 +31,7 @@ public class VetsController {
     private final VetRepository vetRepository;
     private final VetService vetService;
     private final RegisterService registerService;
+    private final PersonFormValidationService personFormValidationService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('VET')")
@@ -66,7 +68,7 @@ public class VetsController {
     @PostMapping(CREATE_PATH)
     @PreAuthorize("hasAuthority('VET')")
     public String create(@Validated(PersonForm.CreationConstraintGroup.class) @ModelAttribute VetForm vetForm, BindingResult bindingResult) {
-        if (!vetService.checkNewIsValid(vetForm, bindingResult))
+        if (!personFormValidationService.checkNewIsValid(vetForm, bindingResult))
             return EDIT_VIEW;
 
         registerService.registerVet(vetForm);
