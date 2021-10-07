@@ -8,8 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.Role;
+import xyz.haff.petclinic.models.Vet;
 import xyz.haff.petclinic.models.forms.OwnerForm;
+import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
 @Service
@@ -17,12 +20,21 @@ import xyz.haff.petclinic.security.UserDetailsAdapter;
 @RequiredArgsConstructor
 public class RegisterService {
     private final OwnerRepository ownerRepository;
-    private final Converter<OwnerForm, Owner> registrationFormOwner;
+    private final VetRepository vetRepository;
+    private final Converter<OwnerForm, Owner> ownerFormToOwner;
+    private final Converter<VetForm, Vet> vetFormToVet;
 
+    // TODO: Maybe these methods should be in their respective services?
     public Owner registerOwner(OwnerForm ownerForm) {
-        var owner = registrationFormOwner.convert(ownerForm);
+        var owner = ownerFormToOwner.convert(ownerForm);
         owner.getPersonalData().getUser().setRole(Role.OWNER);
         return ownerRepository.save(owner);
+    }
+
+    public Vet registerVet(VetForm vetForm) {
+        var vet = vetFormToVet.convert(vetForm);
+        vet.getPersonalData().getUser().setRole(Role.VET);
+        return vetRepository.save(vet);
     }
 
     public void login(Owner owner) {

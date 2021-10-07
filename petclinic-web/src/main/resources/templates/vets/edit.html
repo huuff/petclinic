@@ -2,12 +2,13 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{new_owner}">New owner</title> <!-- TODO: Same treatment as in header -->
+    <title th:text="#{new_vet}">New Vet</title> <!-- TODO: Same treatment as in header -->
 </head>
 <body>
-<h1 th:text="${ownerForm.firstName == null} ? #{new_owner} : |${ownerForm.firstName} ${ownerForm.lastName}|">Edit Owner</h1>
+<h1 th:text="${vetForm.firstName == null} ? #{new_vet} : |${vetForm.firstName} ${vetForm.lastName}|">Edit Vet</h1>
 
-<form th:object="${ownerForm}" method="post">
+<!-- TODO: This is more or less the same as the owner edit form, see if I can dry them -->
+<form th:object="${vetForm}" method="post">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
   <div>
@@ -24,6 +25,16 @@
     <label for="username" th:text="#{username}">Username</label>
     <input type="text" id="username" th:field="*{username}"/>
     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+  </div>
+  <div>
+    <label for="specialty" th:text="#{specialty}">Specialty</label>
+    <select th:field="*{specialty}" id="specialty">
+      <option th:text="#{selector}" th:value="null" th:selected="${vetForm.firstName == null}"></option>
+      <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}"
+              th:value="${specialty.name()}"
+              th:text="${specialty}"
+      >Specialty</option>  <!-- TODO: Translate these? such a chore... -->
+    </select>
   </div>
   <div>
     <label for="password" th:text="#{password}">Password</label>
