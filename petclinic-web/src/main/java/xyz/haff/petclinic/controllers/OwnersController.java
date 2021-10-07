@@ -78,9 +78,8 @@ public class OwnersController {
         return "redirect:" + BASE_PATH;
     }
 
-    // TODO: None of these is secured!
-
     @GetMapping("/{ownerId}")
+    @EditOwner
     public String view(@PathVariable UUID ownerId, Model model) {
         model.addAttribute("owner", ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
 
