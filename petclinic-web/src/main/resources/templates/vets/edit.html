@@ -35,6 +35,7 @@
               th:text="${specialty}"
       >Specialty</option>  <!-- TODO: Translate these? such a chore... -->
     </select>
+    <p th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></p>
   </div>
   <div>
     <label for="password" th:text="#{password}">Password</label>
