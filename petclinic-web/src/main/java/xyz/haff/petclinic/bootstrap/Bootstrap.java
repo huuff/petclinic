@@ -20,5 +20,6 @@ public class Bootstrap implements CommandLineRunner {
         ownerRepository.save(TestData.joeSmith);
         ownerRepository.save(TestData.michaelWeston);
         vetRepository.save(TestData.kennyWiggins);
+        vetRepository.save(TestData.williamGogler);
     }
 }

@@ -37,4 +37,13 @@ public class TestData {
                     .user(User.builder().username("ken").password("{noop}wiggins").role(Role.VET).build())
                     .build()
             ).build();
+
+    public static final Vet williamGogler = Vet.builder()
+            .specialty(Specialty.SURGERY)
+            .personalData(PersonalData.builder()
+                    .firstName("William")
+                    .lastName("Gogler")
+                    .user(User.builder().username("willy").password("{noop}gog").role(Role.VET).build())
+                    .build()
+            ).build();
 }
