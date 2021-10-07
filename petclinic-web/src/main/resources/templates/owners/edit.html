@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:with="title=${ownerForm.firstName == null} ? #{new_owner} : |${ownerForm.firstName} ${ownerForm.lastName}|">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{new_owner}">New owner</title> <!-- TODO: Same treatment as in header -->
+    <title th:text="${title}">New owner</title>
 </head>
 <body>
-<h1 th:text="${ownerForm.firstName == null} ? #{new_owner} : |${ownerForm.firstName} ${ownerForm.lastName}|">Edit Owner</h1>
+<h1 th:text="${title}">Edit Owner</h1>
 
 <form th:object="${ownerForm}" method="post">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

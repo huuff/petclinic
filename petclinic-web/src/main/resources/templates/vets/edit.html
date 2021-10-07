@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+                th:with="title=${vetForm.firstName == null} ? #{new_vet} : |${vetForm.firstName} ${vetForm.lastName}|">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{new_vet}">New Vet</title> <!-- TODO: Same treatment as in header -->
+    <title th:text="${title}">New Vet</title>
 </head>
 <body>
-<h1 th:text="${vetForm.firstName == null} ? #{new_vet} : |${vetForm.firstName} ${vetForm.lastName}|">Edit Vet</h1>
+<h1 th:text="${title}">Edit Vet</h1>
 
 <!-- TODO: This is more or less the same as the owner edit form, see if I can dry them -->
 <form th:object="${vetForm}" method="post">
