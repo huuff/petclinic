@@ -14,8 +14,15 @@ class OwnerFormToOwnerConverterTest {
         final var USERNAME = "USERNAME";
         final var PASSWORD = "PASSWORD";
 
-        var registrationForm = new OwnerForm(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD, PASSWORD);
-        var owner = new OwnerFormToOwnerConverter(x -> x).convert(registrationForm);
+        var ownerForm = OwnerForm.builder()
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .username(USERNAME)
+                .password(PASSWORD)
+                .repeatPassword(PASSWORD)
+                .build()
+                ;
+        var owner = new OwnerFormToOwnerConverter(x -> x).convert(ownerForm);
 
         assertThat(owner).isNotNull();
         assertThat(owner.getPersonalData().getFirstName()).isEqualTo(FIRST_NAME);

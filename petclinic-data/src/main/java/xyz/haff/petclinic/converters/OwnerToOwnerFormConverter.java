@@ -10,12 +10,14 @@ public class OwnerToOwnerFormConverter implements Converter<Owner, OwnerForm> {
 
     @Override
     public OwnerForm convert(Owner owner) {
-        return new OwnerForm(
-                owner.getPersonalData().getFirstName(),
-                owner.getPersonalData().getLastName(),
-                owner.getPersonalData().getUser().getUsername(),
-                "",
-                ""
-        );
+        var personalData = owner.getPersonalData();
+
+        return OwnerForm.builder()
+                .firstName(personalData.getFirstName())
+                .lastName(personalData.getLastName())
+                .username(personalData.getUser().getUsername())
+                .password("")
+                .repeatPassword("")
+                .build();
     }
 }

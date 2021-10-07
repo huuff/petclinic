@@ -2,6 +2,7 @@ package xyz.haff.petclinic.repositories;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import xyz.haff.petclinic.models.Vet;
 
 import java.util.Optional;
@@ -13,5 +14,5 @@ public interface VetRepository extends CrudRepository<Vet, UUID> {
             "JOIN PersonalData pd ON pd.id=v.personalData " +
             "JOIN User u ON u.id=pd.user " +
             "WHERE u.id=:userId")
-    Optional<Vet> findByUserId(UUID userId);
+    Optional<Vet> findByUserId(@Param("userId") UUID userId);
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.annotations.EditOwner;
 import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.forms.OwnerForm;
+import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.OwnerService;
@@ -53,7 +54,7 @@ public class OwnersController {
     @PreAuthorize("!hasAuthority('OWNER')")
     public String create(
             @AuthenticationPrincipal UserDetailsAdapter user,
-            @Validated(OwnerForm.NewOwnerConstraintGroup.class) @ModelAttribute OwnerForm ownerForm,
+            @Validated(PersonForm.CreationConstraintGroup.class) @ModelAttribute OwnerForm ownerForm,
             BindingResult bindingResult
     ) {
         if (!ownerService.checkNewIsValid(ownerForm, bindingResult))
