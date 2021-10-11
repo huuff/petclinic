@@ -27,13 +27,11 @@ public class RegisterService {
     // TODO: Maybe these methods should be in their respective services?
     public Owner registerOwner(OwnerForm ownerForm) {
         var owner = ownerFormToOwner.convert(ownerForm);
-        owner.getPersonalData().getUser().setRole(Role.OWNER); // TODO: Not actually needed since I put it in the coverter
         return ownerRepository.save(owner);
     }
 
     public Vet registerVet(VetForm vetForm) {
         var vet = vetFormToVet.convert(vetForm);
-        vet.getPersonalData().getUser().setRole(Role.VET); // TODO: Not actually needed since I put it in the coverter
         return vetRepository.save(vet);
     }
 
