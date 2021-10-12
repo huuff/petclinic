@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head> <!-- TODO: Merging this with the generic one -->
+    <meta charset="UTF-8">
+    <title th:text="#{not_found}">Not Found</title>
+</head>
+<body>
+<h1 th:text="#{not_found}">Not found</h1>
+<p th:text="#{${exception.type}(${exception.object})}">Not found</p>
+</body>
+</html>

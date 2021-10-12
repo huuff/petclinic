@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.annotations.EditOwner;
-import xyz.haff.petclinic.exceptions.NotFoundException;
+import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
@@ -83,7 +83,8 @@ public class OwnersController {
     @GetMapping("/{ownerId}")
     @EditOwner
     public String view(@PathVariable UUID ownerId, Model model) {
-        model.addAttribute("owner", ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
+        model.addAttribute("owner", ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString())));
 
         return "owners/view";
     }
@@ -99,7 +100,9 @@ public class OwnersController {
     @PostMapping(UPDATE)
     @EditOwner
     public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult) {
-        var editingPerson = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new).getPersonalData();
+        var editingPerson = ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString()))
+                .getPersonalData();
 
         personFormValidationService.checkEditIsValid(editingPerson, ownerForm, bindingResult);
 

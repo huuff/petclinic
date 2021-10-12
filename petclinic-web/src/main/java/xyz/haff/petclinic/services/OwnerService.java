@@ -4,14 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import xyz.haff.petclinic.converters.OwnerToOwnerFormConverter;
-import xyz.haff.petclinic.exceptions.NotFoundException;
+import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.Owner;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
-import xyz.haff.petclinic.repositories.PersonalDataRepository;
-import xyz.haff.petclinic.repositories.UserRepository;
 
 import java.util.UUID;
 
@@ -23,11 +20,14 @@ public class OwnerService {
     private final OwnerToOwnerFormConverter ownerToOwnerFormConverter;
 
     public OwnerForm createForm(UUID ownerId) {
-        return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
+        return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString())));
     }
 
+    // TODO: Some factory method for these exceptions? This is cumbersome
     public void updateOwner(UUID ownerId, OwnerForm ownerForm) {
-        var owner = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new);
+        var owner = ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString()));
         var personalData = owner.getPersonalData();
 
         if (!Strings.isEmpty(ownerForm.getFirstName()))

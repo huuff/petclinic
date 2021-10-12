@@ -3,13 +3,10 @@ package xyz.haff.petclinic.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import xyz.haff.petclinic.exceptions.NotFoundException;
 import xyz.haff.petclinic.models.PersonalData;
 import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

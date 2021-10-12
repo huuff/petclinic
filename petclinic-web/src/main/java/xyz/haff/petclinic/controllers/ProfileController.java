@@ -7,7 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import xyz.haff.petclinic.exceptions.NotFoundException;
+import xyz.haff.petclinic.exceptions.GenericNotFoundException;
+import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
@@ -25,13 +26,15 @@ public class ProfileController {
     @PreAuthorize("isAuthenticated()")
     public String view(@AuthenticationPrincipal UserDetailsAdapter userDetails, Model model) {
         if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("OWNER"))) {
-            model.addAttribute("owner", ownerRepository.findByUserId(userDetails.getUser().getId()).orElseThrow(NotFoundException::new));
+            model.addAttribute("owner", ownerRepository.findByUserId(userDetails.getUser().getId())
+                    .orElseThrow(() -> new SpecificNotFoundException("user_not_found", userDetails.getUser().getId().toString())));
             return "owners/view";
         } else if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("VET"))) {
-            model.addAttribute("vet", vetRepository.findByUserId(userDetails.getUser().getId()).orElseThrow(NotFoundException::new));
+            model.addAttribute("vet", vetRepository.findByUserId(userDetails.getUser().getId())
+                    .orElseThrow(() -> new SpecificNotFoundException("user_not_found", userDetails.getUser().getId().toString())));
             return "vets/view";
         } else {
-            throw new NotFoundException();
+            throw new GenericNotFoundException();
         }
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.haff.petclinic.exceptions.NotFoundException;
+import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.VetRepository;
@@ -42,7 +42,8 @@ public class VetsController {
     @GetMapping("/{vetId}")
     @PreAuthorize("hasAuthority('VET')")
     public String read(@PathVariable UUID vetId, Model model) {
-        model.addAttribute("vet", vetRepository.findById(vetId).orElseThrow(NotFoundException::new));
+        model.addAttribute("vet", vetRepository.findById(vetId)
+                .orElseThrow(() -> new SpecificNotFoundException("vet_not_found", vetId.toString())));
 
         return READ_VIEW;
     }
