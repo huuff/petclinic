@@ -18,6 +18,7 @@ public class OwnerService {
     private final Converter<OwnerForm, Owner> ownerFormToOwner;
     private final Converter<Owner, OwnerForm> ownerToOwnerFormConverter;
     private final OwnerRepository ownerRepository;
+    private final PersonalDataService personalDataService;
 
     public OwnerForm createForm(UUID ownerId) {
         return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId)
@@ -27,19 +28,7 @@ public class OwnerService {
     public void updateOwner(UUID ownerId, OwnerForm ownerForm) {
         var owner = ownerRepository.findById(ownerId)
                 .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
-        var personalData = owner.getPersonalData();
-
-        if (!Strings.isEmpty(ownerForm.getFirstName()))
-            personalData.setFirstName(ownerForm.getFirstName());
-
-        if (!Strings.isEmpty(ownerForm.getLastName()))
-            personalData.setLastName(ownerForm.getLastName());
-
-        if (!Strings.isEmpty(ownerForm.getUsername()))
-            personalData.getUser().setUsername(ownerForm.getUsername());
-
-        if (!Strings.isEmpty(ownerForm.getPassword()) && ownerForm.passwordEqualsRepeatPassword())
-            personalData.getUser().setPassword(ownerForm.getPassword());
+        owner.setPersonalData(personalDataService.getUpdated(owner.getPersonalData(), ownerForm));
 
         ownerRepository.save(owner);
     }

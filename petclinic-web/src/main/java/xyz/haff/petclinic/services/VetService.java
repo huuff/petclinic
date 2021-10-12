@@ -1,7 +1,6 @@
 package xyz.haff.petclinic.services;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
@@ -17,6 +16,7 @@ public class VetService {
     private final Converter<VetForm, Vet> vetFormToVet;
     private final Converter<Vet, VetForm> vetToVetForm;
     private final VetRepository vetRepository;
+    private final PersonalDataService personalDataService;
 
     public VetForm createForm(UUID vetId) {
         return vetToVetForm.convert(vetRepository.findById(vetId)
@@ -32,19 +32,7 @@ public class VetService {
     public void updateVet(UUID vetId, VetForm vetForm) {
         var vet = vetRepository.findById(vetId)
                 .orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId));
-        var personalData = vet.getPersonalData();
-
-        if (!Strings.isEmpty(vetForm.getFirstName()))
-            personalData.setFirstName(vetForm.getFirstName());
-
-        if (!Strings.isEmpty(vetForm.getLastName()))
-            personalData.setLastName(vetForm.getLastName());
-
-        if (!Strings.isEmpty(vetForm.getUsername()))
-            personalData.getUser().setUsername(vetForm.getUsername());
-
-        if (!Strings.isEmpty(vetForm.getPassword()) && vetForm.passwordEqualsRepeatPassword())
-            personalData.getUser().setPassword(vetForm.getPassword());
+        vet.setPersonalData(personalDataService.getUpdated(vet.getPersonalData(), vetForm));
 
         if (vetForm.getSpecialty() != null)
             vet.setSpecialty(vetForm.getSpecialty());
