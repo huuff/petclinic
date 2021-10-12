@@ -3,11 +3,13 @@ package xyz.haff.petclinic.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import xyz.haff.petclinic.models.Person;
+import xyz.haff.petclinic.exceptions.NotFoundException;
+import xyz.haff.petclinic.models.PersonalData;
 import xyz.haff.petclinic.models.forms.PersonForm;
-import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.repositories.UserRepository;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,20 @@ public class PersonFormValidationService {
         existingDuplicate.ifPresent(personalData -> bindingResult.reject("duplicate", new Object[]{personalData.fullName()}, ""));
     }
 
+    @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "UnusedReturnValue"})
+    public boolean checkEditIsValid(PersonalData editingPerson, PersonForm personForm, BindingResult bindingResult) {
+        checkPasswordsMatch(personForm, bindingResult);
+        if (!editingPerson.getFirstName().equals(personForm.getFirstName()))
+            checkFullNameIsNotDuplicated(personForm, bindingResult);
+
+        if (!editingPerson.getUser().getUsername().equals(personForm.getUsername()))
+            checkUsernameIsNotDuplicated(personForm, bindingResult);
+
+        return !bindingResult.hasErrors();
+    }
+
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean checkNewIsValid(PersonForm vetForm, BindingResult bindingResult) {
         checkFullNameIsNotDuplicated(vetForm, bindingResult);
         checkPasswordsMatch(vetForm, bindingResult);

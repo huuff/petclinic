@@ -11,25 +11,10 @@ import xyz.haff.petclinic.repositories.VetRepository;
 
 import java.util.UUID;
 
-// TODO: Mostly copy-pasted from the OwnerService, so I have to find a way to DRY them
-// UPDATE, better now, but try to merge the checkEditIsValid
+// TODO: This is empty
 
 @RequiredArgsConstructor
 @Service
 public class VetService {
-    private final PersonFormValidationService personFormValidationService;
-    private final VetRepository vetRepository;
-
-
-    public void checkEditIsValid(UUID id, VetForm vetForm, BindingResult bindingResult) {
-        var editingVet = vetRepository.findById(id).orElseThrow(NotFoundException::new);
-
-        personFormValidationService.checkPasswordsMatch(vetForm, bindingResult);
-        if (!editingVet.getPersonalData().getFirstName().equals(vetForm.getFirstName()))
-            personFormValidationService.checkFullNameIsNotDuplicated(vetForm, bindingResult);
-
-        if (!editingVet.getPersonalData().getUser().getUsername().equals(vetForm.getUsername()))
-            personFormValidationService.checkUsernameIsNotDuplicated(vetForm, bindingResult);
-    }
 
 }

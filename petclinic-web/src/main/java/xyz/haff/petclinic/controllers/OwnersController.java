@@ -99,7 +99,9 @@ public class OwnersController {
     @PostMapping(UPDATE)
     @EditOwner
     public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult) {
-        ownerService.checkEditIsValid(ownerId, ownerForm, bindingResult);
+        var editingPerson = ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new).getPersonalData();
+
+        personFormValidationService.checkEditIsValid(editingPerson, ownerForm, bindingResult);
 
         if (bindingResult.hasErrors())
             return EDIT_VIEW;

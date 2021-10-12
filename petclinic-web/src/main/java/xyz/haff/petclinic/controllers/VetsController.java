@@ -29,7 +29,6 @@ public class VetsController {
     public static final String EDIT_VIEW = "vets/edit";
 
     private final VetRepository vetRepository;
-    private final VetService vetService;
     private final RegisterService registerService;
     private final PersonFormValidationService personFormValidationService;
 

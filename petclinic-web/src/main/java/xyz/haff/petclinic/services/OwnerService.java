@@ -21,17 +21,6 @@ public class OwnerService {
     private final OwnerRepository ownerRepository;
     private final OwnerToOwnerFormConverter ownerToOwnerFormConverter;
 
-    public void checkEditIsValid(UUID id, OwnerForm ownerForm, BindingResult bindingResult) {
-        var editingOwner = ownerRepository.findById(id).orElseThrow(NotFoundException::new);
-
-        personFormValidationService.checkPasswordsMatch(ownerForm, bindingResult);
-        if (!editingOwner.getPersonalData().getFirstName().equals(ownerForm.getFirstName()))
-            personFormValidationService.checkFullNameIsNotDuplicated(ownerForm, bindingResult);
-
-        if (!editingOwner.getPersonalData().getUser().getUsername().equals(ownerForm.getUsername()))
-            personFormValidationService.checkUsernameIsNotDuplicated(ownerForm, bindingResult);
-    }
-
     public OwnerForm createOwnerForm(UUID ownerId) {
         return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
     }
