@@ -1,6 +1,7 @@
 package xyz.haff.petclinic.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,17 +10,19 @@ import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 
 @ControllerAdvice
 @Slf4j
-public class GlobalExceptionHandlerController {
+@Profile({"demo", "test"})
+public class DevGlobalExceptionHandlerController {
 
     @ExceptionHandler(SpecificNotFoundException.class)
     public String notFound(Model model, SpecificNotFoundException exception) {
         model.addAttribute("exception", exception);
-        exception.printStackTrace();
+        log.error("Exception", exception);
         return "errors/404-specific";
     }
 
     @ExceptionHandler(GenericNotFoundException.class)
     public String notFound(GenericNotFoundException exception) {
+        log.error("Exception", exception);
         return "errors/404-generic";
     }
 }
