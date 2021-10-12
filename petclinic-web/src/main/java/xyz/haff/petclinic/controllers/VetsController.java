@@ -12,7 +12,6 @@ import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.services.PersonFormValidationService;
-import xyz.haff.petclinic.services.RegisterService;
 import xyz.haff.petclinic.services.VetService;
 
 import java.util.UUID;
@@ -29,7 +28,7 @@ public class VetsController {
     public static final String EDIT_VIEW = "vets/edit";
 
     private final VetRepository vetRepository;
-    private final RegisterService registerService;
+    private final VetService vetService;
     private final PersonFormValidationService personFormValidationService;
 
     @GetMapping
@@ -70,7 +69,7 @@ public class VetsController {
         if (!personFormValidationService.checkNewIsValid(vetForm, bindingResult))
             return EDIT_VIEW;
 
-        registerService.registerVet(vetForm);
+        vetService.registerVet(vetForm);
 
         return "redirect:" + BASE_PATH;
     }

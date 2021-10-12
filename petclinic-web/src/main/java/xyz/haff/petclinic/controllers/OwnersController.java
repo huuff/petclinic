@@ -16,7 +16,7 @@ import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.OwnerService;
 import xyz.haff.petclinic.services.PersonFormValidationService;
-import xyz.haff.petclinic.services.RegisterService;
+import xyz.haff.petclinic.services.LoginService;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -34,7 +34,7 @@ public class OwnersController {
 
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
-    private final RegisterService registerService;
+    private final LoginService loginService;
     private final PersonFormValidationService personFormValidationService;
 
     @GetMapping
@@ -62,10 +62,10 @@ public class OwnersController {
         if (!personFormValidationService.checkNewIsValid(ownerForm, bindingResult))
             return EDIT_VIEW;
 
-        var newOwner = registerService.registerOwner(ownerForm);
+        var newOwner = ownerService.register(ownerForm);
 
         if (user == null) {// not authenticated, so it's a registration, redirect to home
-            registerService.login(newOwner);
+            loginService.login(newOwner);
             return "redirect:/";
         } else { // must be a vet creating an owner, redirect to owners list
             return "redirect:" + BASE_PATH;
@@ -91,7 +91,7 @@ public class OwnersController {
     @GetMapping(UPDATE)
     @EditOwner
     public String showEditForm(@PathVariable UUID ownerId, Model model) {
-        model.addAttribute("ownerForm", ownerService.createOwnerForm(ownerId));
+        model.addAttribute("ownerForm", ownerService.createForm(ownerId));
 
         return EDIT_VIEW;
     }

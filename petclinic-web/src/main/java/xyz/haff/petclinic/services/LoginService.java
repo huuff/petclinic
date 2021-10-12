@@ -18,22 +18,7 @@ import xyz.haff.petclinic.security.UserDetailsAdapter;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RegisterService {
-    private final OwnerRepository ownerRepository;
-    private final VetRepository vetRepository;
-    private final Converter<OwnerForm, Owner> ownerFormToOwner;
-    private final Converter<VetForm, Vet> vetFormToVet;
-
-    // TODO: Maybe these methods should be in their respective services?
-    public Owner registerOwner(OwnerForm ownerForm) {
-        var owner = ownerFormToOwner.convert(ownerForm);
-        return ownerRepository.save(owner);
-    }
-
-    public Vet registerVet(VetForm vetForm) {
-        var vet = vetFormToVet.convert(vetForm);
-        return vetRepository.save(vet);
-    }
+public class LoginService {
 
     public void login(Owner owner) {
         var user = new UserDetailsAdapter(owner.getPersonalData().getUser());

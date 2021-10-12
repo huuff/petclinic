@@ -2,6 +2,7 @@ package xyz.haff.petclinic.services;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import xyz.haff.petclinic.converters.OwnerToOwnerFormConverter;
@@ -17,11 +18,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class OwnerService {
-    private final PersonFormValidationService personFormValidationService;
+    private final Converter<OwnerForm, Owner> ownerFormToOwner;
     private final OwnerRepository ownerRepository;
     private final OwnerToOwnerFormConverter ownerToOwnerFormConverter;
 
-    public OwnerForm createOwnerForm(UUID ownerId) {
+    public OwnerForm createForm(UUID ownerId) {
         return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId).orElseThrow(NotFoundException::new));
     }
 
@@ -42,6 +43,11 @@ public class OwnerService {
             personalData.getUser().setPassword(ownerForm.getPassword());
 
         ownerRepository.save(owner);
+    }
+
+    public Owner register(OwnerForm ownerForm) {
+        var owner = ownerFormToOwner.convert(ownerForm);
+        return ownerRepository.save(owner);
     }
 
 
