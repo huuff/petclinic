@@ -14,6 +14,7 @@ import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.services.PersonFormValidationService;
 import xyz.haff.petclinic.services.VetService;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
@@ -21,8 +22,9 @@ import java.util.UUID;
 @RequestMapping(VetsController.BASE_PATH)
 public class VetsController {
     public static final String BASE_PATH = "/vets";
-    public static final String DELETE_PATH = "/{vetId}/delete";
     public static final String CREATE_PATH = "/create";
+    public static final String DELETE_PATH = "/{vetId}/delete";
+    public static final String UPDATE_PATH = "/{vetId}/update";
     public static final String LIST_VIEW = "vets/list";
     public static final String READ_VIEW = "vets/view";
     public static final String EDIT_VIEW = "vets/edit";
@@ -73,5 +75,30 @@ public class VetsController {
         vetService.registerVet(vetForm);
 
         return "redirect:" + BASE_PATH;
+    }
+
+    @GetMapping(UPDATE_PATH)
+    @PreAuthorize("hasAuthority('VET')")
+    public String showEditForm(@PathVariable UUID vetId, Model model) {
+        model.addAttribute("vetForm", vetService.createForm(vetId));
+
+        return EDIT_VIEW;
+    }
+
+    @PostMapping(UPDATE_PATH)
+    @PreAuthorize("hasAuthority('VET')")
+    public String edit(@PathVariable UUID vetId, @Valid VetForm vetForm, BindingResult bindingResult) {
+        var editingPerson = vetRepository.findById(vetId)
+                .orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId))
+                .getPersonalData();
+
+        personFormValidationService.checkEditIsValid(editingPerson, vetForm, bindingResult);
+
+        if (bindingResult.hasErrors())
+            return EDIT_VIEW;
+
+        vetService.updateVet(vetId, vetForm);
+
+        return "redirect:" + BASE_PATH + "/" + vetId;
     }
 }

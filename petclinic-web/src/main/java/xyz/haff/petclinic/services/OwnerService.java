@@ -16,8 +16,8 @@ import java.util.UUID;
 @Service
 public class OwnerService {
     private final Converter<OwnerForm, Owner> ownerFormToOwner;
+    private final Converter<Owner, OwnerForm> ownerToOwnerFormConverter;
     private final OwnerRepository ownerRepository;
-    private final OwnerToOwnerFormConverter ownerToOwnerFormConverter;
 
     public OwnerForm createForm(UUID ownerId) {
         return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId)
