@@ -43,7 +43,7 @@ public class VetsController {
     @PreAuthorize("hasAuthority('VET')")
     public String read(@PathVariable UUID vetId, Model model) {
         model.addAttribute("vet", vetRepository.findById(vetId)
-                .orElseThrow(() -> new SpecificNotFoundException("vet_not_found", vetId.toString())));
+                .orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId)));
 
         return READ_VIEW;
     }

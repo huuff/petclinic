@@ -27,11 +27,11 @@ public class ProfileController {
     public String view(@AuthenticationPrincipal UserDetailsAdapter userDetails, Model model) {
         if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("OWNER"))) {
             model.addAttribute("owner", ownerRepository.findByUserId(userDetails.getUser().getId())
-                    .orElseThrow(() -> new SpecificNotFoundException("user_not_found", userDetails.getUser().getId().toString())));
+                    .orElseThrow(() -> SpecificNotFoundException.fromUserId(userDetails.getUser().getId())));
             return "owners/view";
         } else if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("VET"))) {
             model.addAttribute("vet", vetRepository.findByUserId(userDetails.getUser().getId())
-                    .orElseThrow(() -> new SpecificNotFoundException("user_not_found", userDetails.getUser().getId().toString())));
+                    .orElseThrow(() -> SpecificNotFoundException.fromUserId(userDetails.getUser().getId())));
             return "vets/view";
         } else {
             throw new GenericNotFoundException();

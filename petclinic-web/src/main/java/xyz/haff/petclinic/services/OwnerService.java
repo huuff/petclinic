@@ -21,13 +21,12 @@ public class OwnerService {
 
     public OwnerForm createForm(UUID ownerId) {
         return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString())));
+                .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId)));
     }
 
-    // TODO: Some factory method for these exceptions? This is cumbersome
     public void updateOwner(UUID ownerId, OwnerForm ownerForm) {
         var owner = ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString()));
+                .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
         var personalData = owner.getPersonalData();
 
         if (!Strings.isEmpty(ownerForm.getFirstName()))

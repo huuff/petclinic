@@ -84,7 +84,7 @@ public class OwnersController {
     @EditOwner
     public String view(@PathVariable UUID ownerId, Model model) {
         model.addAttribute("owner", ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString())));
+                .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId)));
 
         return "owners/view";
     }
@@ -101,7 +101,7 @@ public class OwnersController {
     @EditOwner
     public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult) {
         var editingPerson = ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString()))
+                .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId))
                 .getPersonalData();
 
         personFormValidationService.checkEditIsValid(editingPerson, ownerForm, bindingResult);

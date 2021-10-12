@@ -22,7 +22,7 @@ public class UserAuthenticationManager {
 
     public boolean ownerUserMatches(Authentication authentication, UUID ownerId) {
         var userId = ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new SpecificNotFoundException("owner_not_found", ownerId.toString()))
+                .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId))
                 .getPersonalData().getUser().getId();
 
         return userMatches(authentication, userId);
