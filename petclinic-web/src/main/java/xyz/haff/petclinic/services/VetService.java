@@ -27,8 +27,7 @@ public class VetService {
         var vet = vetFormToVet.convert(vetForm);
         return vetRepository.save(vet);
     }
-
-    // TODO: Highly duplicated from updateOwner
+    
     public void updateVet(UUID vetId, VetForm vetForm) {
         var vet = vetRepository.findById(vetId)
                 .orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId));
