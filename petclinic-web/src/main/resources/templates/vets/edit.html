@@ -33,8 +33,8 @@
       <option th:text="#{selector}" th:value="null" th:selected="${vetForm.firstName == null}"></option>
       <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}"
               th:value="${specialty.name()}"
-              th:text="${specialty}"
-      >Specialty</option>  <!-- TODO: Translate these? such a chore... -->
+              th:text="#{${specialty.toMessageProperty()}}"
+      >Specialty</option>
     </select>
     <p th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></p>
   </div>

@@ -17,7 +17,7 @@
     </thead>
     <tr th:each="vet : ${vets}">
         <td th:text="${vet.personalData.fullName}">Full name</td>
-        <td th:text="${vet.specialty}">Specialty</td>
+        <td th:text="#{${vet.specialty.toMessageProperty()}}">Specialty</td>
         <td><a  th:if="${#authentication.getName() != vet.personalData.user.username}"
                 th:href="@{|/vets/${vet.id}/delete|}"
                 th:text="#{delete}"

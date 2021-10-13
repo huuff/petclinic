@@ -8,11 +8,8 @@ public enum Specialty {
     RADIOLOGY
     ;
 
-    /**
-     * Get the name as capitalized
-     * @return the capitalized name
-     */
-    public String toString() {
-        return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
+    // Just because I wanted my properties in lowercase
+    public String toMessageProperty() {
+        return name().toLowerCase();
     }
 }

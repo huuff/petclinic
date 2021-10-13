@@ -10,7 +10,7 @@
 <div>
     <div>
         <p th:text="|#{username}: ${vet.personalData.user.username}|">Username</p>
-        <p th:text="|#{specialty}: ${vet.specialty}|">Specialty</p>
+        <p th:text="|#{specialty}: #{${vet.specialty.toMessageProperty()}}|">Specialty</p>
     </div>
     <a sec:authorize="hasAuthority('VET')"
        th:text="#{edit}"
