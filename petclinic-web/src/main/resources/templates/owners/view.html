@@ -11,7 +11,7 @@
     <div>
         <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
     </div>
-    <!-- Terrible? Thymeleaf forced me! -->
+    <!-- Terrible? Thymeleaf forced me! --> <!-- TODO: Actually needed? Test if any other user can arrive here -->
     <a th:if="${#authentication.getPrincipal().getUsername() == owner.personalData.user.username}
     OR ${#authentication.getAuthorities().toArray()[0].getAuthority().equals('VET')}"
        th:text="#{edit}"
@@ -25,12 +25,14 @@
                 <th th:text="#{birthdate}">Birthdate</th>
                 <th th:text="#{type}">Type</th>
                 <th th:text="#{edit}">Edit</th>
+                <th th:text="#{delete}">Delete</th>
             </thead>
             <tr th:each="pet : ${owner.pets}">
                 <td th:text="${pet.name}">Name</td>
                 <td th:text="${pet.birthDate}">Birthdate</td>
                 <td th:text="${pet.type}">Type</td> <!-- TODO: Translate -->
                 <td th:text="#{edit}">Edit</td> <!-- TODO: Actual link -->
+                <td><a th:text="#{delete}" th:href="@{|/pets/${pet.id}/delete|}">Delete</a></td>
             </tr>
         </table>
         <a th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>

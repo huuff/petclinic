@@ -144,7 +144,7 @@ public class OwnersController {
         }
     }
 
-    private String redirectToOwnerView(UUID ownerId) {
+    public static String redirectToOwnerView(UUID ownerId) {
         return "redirect:" + BASE_PATH + "/" + ownerId;
     }
 

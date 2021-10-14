@@ -25,4 +25,8 @@ public class SpecificNotFoundException extends RuntimeException {
     public static SpecificNotFoundException fromVetId(UUID vetId) {
         return new SpecificNotFoundException("vet_not_found", vetId.toString());
     }
+
+    public static SpecificNotFoundException fromPetId(UUID petId) {
+        return new SpecificNotFoundException("pet_not_found", petId.toString());
+    }
 }
