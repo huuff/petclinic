@@ -6,3 +6,4 @@
 * Put some "Go back home" link in every page
 * CRUD for pets
 * Column names in every identity?
+* Use slugs for outgoing properties?
