@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @Entity
@@ -22,6 +23,7 @@ public class Pet extends AbstractBaseEntity {
     private String name;
 
     @Column(name = "birth_date")
+    @Past
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate birthDate;
 

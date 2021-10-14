@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:with="title=${petForm.name == null} ? #{new_pet} : ${petForm.name}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">New pet</title>
+</head>
+<body>
+  <h1 th:text="${title}">New pet</h1>
+
+  <form th:object="${petForm}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <div>
+      <label for="name" th:text="#{name}">Name</label>
+      <input type="text" id="name" th:field="*{name}">
+      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error description</p>
+    </div>
+
+    <div>
+      <label for="birthdate" th:text="#{birthdate}">Birthdate</label>
+      <input type="date" id="birthdate" th:field="*{birthDate}">
+      <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Error description</p>
+    </div>
+
+    <div>
+      <label for="type" th:text="#{type}">Type</label>
+      <select th:field="*{type}" id="type">
+        <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one</option>
+        <option th:each="petType : ${T(xyz.haff.petclinic.models.PetType).values()}"
+                th:value="${petType.name()}"
+                th:text="${petType.name()}"
+        ></option> <!-- TODO: translations for pet types and do as with specialties in vets -->
+      </select>
+      <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error description</p>
+    </div>
+
+    <input type="button" th:value="#{submit}">
+  </form>
+</body>
+</html>

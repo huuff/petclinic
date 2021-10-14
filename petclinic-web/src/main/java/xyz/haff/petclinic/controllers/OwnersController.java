@@ -12,11 +12,13 @@ import xyz.haff.petclinic.annotations.EditOwner;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.models.forms.PersonForm;
+import xyz.haff.petclinic.models.forms.PetForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.OwnerService;
 import xyz.haff.petclinic.services.PersonFormValidationService;
 import xyz.haff.petclinic.services.LoginService;
+import xyz.haff.petclinic.services.PetService;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -29,11 +31,14 @@ public class OwnersController {
     public static final String CREATE = "/create";
     public static final String UPDATE = "/{ownerId}/update";
     public static final String DELETE = "/{ownerId}/delete";
+    public static final String CREATE_PET_PATH = "/{ownerId}/pets/create";
 
     private static final String EDIT_VIEW = "owners/edit";
+    private static final String PET_EDIT_VIEW = "pets/edit"; // TODO: Maybe should be a variable in PetController?
 
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
+    private final PetService petService;
     private final LoginService loginService;
     private final PersonFormValidationService personFormValidationService;
 
@@ -111,6 +116,35 @@ public class OwnersController {
 
         ownerService.updateOwner(ownerId, ownerForm);
 
+        return redirectToOwnerView(ownerId);
+    }
+
+    @GetMapping(CREATE_PET_PATH)
+    @EditOwner
+    public String showCreatePetForm(@PathVariable UUID ownerId, Model model) {
+        if (!ownerRepository.existsById(ownerId))
+            throw SpecificNotFoundException.fromOwnerId(ownerId);
+
+        model.addAttribute("petForm", new PetForm());
+
+        return "pets/edit";
+    }
+
+    @PostMapping(CREATE_PET_PATH)
+    @EditOwner
+    public String createPet(@PathVariable UUID ownerId, @Valid PetForm petForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return PET_EDIT_VIEW;
+        else {
+            var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
+
+            petService.createPet(owner, petForm);
+
+            return redirectToOwnerView(ownerId); // TODO: Redirect to view of pet
+        }
+    }
+
+    private String redirectToOwnerView(UUID ownerId) {
         return "redirect:" + BASE_PATH + "/" + ownerId;
     }
 

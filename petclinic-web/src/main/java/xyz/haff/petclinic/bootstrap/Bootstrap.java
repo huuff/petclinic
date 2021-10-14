@@ -9,6 +9,8 @@ import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
 import xyz.haff.petclinic.repositories.VetRepository;
 
+// TODO: Log the saved entities here
+
 @Component
 @RequiredArgsConstructor
 @Profile("demo")

@@ -33,6 +33,7 @@
                 <td th:text="#{edit}">Edit</td> <!-- TODO: Actual link -->
             </tr>
         </table>
+        <a th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
     </section>
 </main>
 </body>

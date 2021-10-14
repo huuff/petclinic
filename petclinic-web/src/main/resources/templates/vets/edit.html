@@ -49,7 +49,7 @@
     <p th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></p>
   </div>
   <div>
-    <input type="submit" th:value="#{submit}"/>
+    <input type="button" th:value="#{submit}"/>
   </div>
   <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
 </form>
