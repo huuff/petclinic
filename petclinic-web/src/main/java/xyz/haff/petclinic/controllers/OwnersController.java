@@ -10,15 +10,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.annotations.EditOwner;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
+import xyz.haff.petclinic.models.forms.CreationConstraintGroup;
 import xyz.haff.petclinic.models.forms.OwnerForm;
 import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.models.forms.PetForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
-import xyz.haff.petclinic.services.OwnerService;
-import xyz.haff.petclinic.services.PersonFormValidationService;
-import xyz.haff.petclinic.services.LoginService;
-import xyz.haff.petclinic.services.PetService;
+import xyz.haff.petclinic.services.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -39,6 +37,7 @@ public class OwnersController {
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
     private final PetService petService;
+    private final PetFormValidationService petFormValidationService;
     private final LoginService loginService;
     private final PersonFormValidationService personFormValidationService;
 
@@ -61,7 +60,7 @@ public class OwnersController {
     @PreAuthorize("!hasAuthority('OWNER')")
     public String create(
             @AuthenticationPrincipal UserDetailsAdapter user,
-            @Validated(PersonForm.CreationConstraintGroup.class) @ModelAttribute OwnerForm ownerForm,
+            @Validated(CreationConstraintGroup.class) @ModelAttribute OwnerForm ownerForm,
             BindingResult bindingResult
     ) {
         if (!personFormValidationService.checkNewIsValid(ownerForm, bindingResult))
@@ -132,7 +131,9 @@ public class OwnersController {
 
     @PostMapping(CREATE_PET_PATH)
     @EditOwner
-    public String createPet(@PathVariable UUID ownerId, @Valid PetForm petForm, BindingResult bindingResult) {
+    public String createPet(@PathVariable UUID ownerId, @Validated(CreationConstraintGroup.class) PetForm petForm, BindingResult bindingResult) {
+        petFormValidationService.checkNameIsDuplicated(petForm, ownerId, bindingResult);
+
         if (bindingResult.hasErrors())
             return PET_EDIT_VIEW;
         else {

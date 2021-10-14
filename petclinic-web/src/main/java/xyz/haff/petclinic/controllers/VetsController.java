@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
+import xyz.haff.petclinic.models.forms.CreationConstraintGroup;
 import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.VetRepository;
@@ -68,7 +69,7 @@ public class VetsController {
 
     @PostMapping(CREATE_PATH)
     @PreAuthorize("hasAuthority('VET')")
-    public String create(@Validated(PersonForm.CreationConstraintGroup.class) @ModelAttribute VetForm vetForm, BindingResult bindingResult) {
+    public String create(@Validated(CreationConstraintGroup.class) @ModelAttribute VetForm vetForm, BindingResult bindingResult) {
         if (!personFormValidationService.checkNewIsValid(vetForm, bindingResult))
             return EDIT_VIEW;
 

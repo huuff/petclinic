@@ -20,23 +20,21 @@ import java.util.Objects;
 @NoArgsConstructor
 @SuperBuilder
 public abstract class PersonForm {
-    public interface CreationConstraintGroup {}
-
-    @NotNull(groups= PersonForm.CreationConstraintGroup.class)
-    @NotEmpty(groups= PersonForm.CreationConstraintGroup.class)
+    @NotNull(groups=CreationConstraintGroup.class)
+    @NotEmpty(groups=CreationConstraintGroup.class)
     private String firstName;
-    @NotNull(groups= PersonForm.CreationConstraintGroup.class)
-    @NotEmpty(groups= PersonForm.CreationConstraintGroup.class)
+    @NotNull(groups=CreationConstraintGroup.class)
+    @NotEmpty(groups=CreationConstraintGroup.class)
     private String lastName;
-    @NotNull(groups= PersonForm.CreationConstraintGroup.class)
-    @NotEmpty(groups= PersonForm.CreationConstraintGroup.class)
+    @NotNull(groups=CreationConstraintGroup.class)
+    @NotEmpty(groups=CreationConstraintGroup.class)
     private String username;
 
-    @NotNull(groups= PersonForm.CreationConstraintGroup.class)
-    @NotEmpty(groups= PersonForm.CreationConstraintGroup.class)
+    @NotNull(groups=CreationConstraintGroup.class)
+    @NotEmpty(groups=CreationConstraintGroup.class)
     private String password;
-    @NotNull(groups= PersonForm.CreationConstraintGroup.class)
-    @NotEmpty(groups= PersonForm.CreationConstraintGroup.class)
+    @NotNull(groups=CreationConstraintGroup.class)
+    @NotEmpty(groups=CreationConstraintGroup.class)
     private String repeatPassword;
 
     // TODO: I might be able to do some custom validation for this

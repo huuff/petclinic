@@ -18,15 +18,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PetForm {
 
-    @NotNull
-    @NotEmpty
+    @NotNull(groups = CreationConstraintGroup.class)
+    @NotEmpty(groups = CreationConstraintGroup.class)
     private String name;
 
-    @NotNull
+    @NotNull(groups = CreationConstraintGroup.class)
     @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
-    @NotNull
+    @NotNull(groups = CreationConstraintGroup.class)
     private PetType type;
 }

@@ -33,7 +33,7 @@
                 <td th:text="${pet.birthDate}">Birthdate</td>
                 <td th:text="${pet.type}">Type</td> <!-- TODO: Translate -->
                 <td><a th:text="#{view}" th:href="@{|/pets/${pet.id}|}">View</a></td>
-                <td th:text="#{edit}">Edit</td> <!-- TODO: Actual link -->
+                <td><a th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a></td>
                 <td><a th:text="#{delete}" th:href="@{|/pets/${pet.id}/delete|}">Delete</a></td>
             </tr>
         </table>

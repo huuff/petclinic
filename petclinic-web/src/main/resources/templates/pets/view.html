@@ -11,7 +11,6 @@
     <p th:text="|#{birthdate}: ${pet.birthDate}|">Birthdate</p>
     <p th:text="|#{type}: ${pet.type}|">Type</p>
 
-    <!-- TODO: actually link to edit here once it's done -->
-<!--    <a th:text="#{edit}" th:href="@{|/pets/${pet.id}|}">Edit</a>-->
+    <a th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
 </body>
 </html>

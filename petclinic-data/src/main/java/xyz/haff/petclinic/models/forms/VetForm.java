@@ -14,6 +14,6 @@ import java.util.Objects;
 public class VetForm extends PersonForm {
     @Getter
     @Setter
-    @NotNull(groups= PersonForm.CreationConstraintGroup.class)
+    @NotNull(groups= CreationConstraintGroup.class)
     private Specialty specialty;
 }
