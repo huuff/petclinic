@@ -5,3 +5,4 @@
 * Show some info regarding a 403 error
 * Put some "Go back home" link in every page
 * CRUD for pets
+* Column names in every identity?

@@ -7,9 +7,4 @@ public enum Specialty {
     DENTISTRY,
     RADIOLOGY
     ;
-
-    // Just because I wanted my properties in lowercase
-    public String toMessageProperty() {
-        return name().toLowerCase();
-    }
 }

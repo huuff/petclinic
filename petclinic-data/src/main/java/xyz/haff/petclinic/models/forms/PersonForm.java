@@ -13,6 +13,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+// MAYBE: Use kotlin with delegation so this is a component of owner and vet form instead of an abstract class?
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
