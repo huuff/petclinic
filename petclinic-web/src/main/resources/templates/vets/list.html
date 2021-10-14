@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{vets}">vets</title>
 </head>
 <body>
+<main layout:fragment="content">
 <h1 th:text="#{vets}">Vets</h1>
 <!-- TODO: This is more or less the same as the list owners view, see if I can dry them somehow -->
 <table>
@@ -29,7 +32,7 @@
     </tr>
 </table>
 
-
 <a th:text="#{add_new}" th:href="@{/vets/create}"></a>
+</main>
 </body>
 </html>

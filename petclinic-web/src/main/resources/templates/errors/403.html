@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+>
 <head>
     <meta charset="UTF-8">
     <title>Unauthorized</title>
 </head>
 <body>
-<h1 th:text="#{unauthorized}">Unauthorized</h1>
+<main layout:fragment="content">
+    <h1 th:text="#{unauthorized}">Unauthorized</h1>
+</main>
 </body>
 </html>
