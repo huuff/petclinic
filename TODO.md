@@ -4,7 +4,7 @@
 * At least 70% coverage
 * Show some info regarding a 403 error
 * Put some "Go back home" link in every page
-* Column names in every identity?
+* Column names on every entity?
 * Use slugs for outgoing properties?
 * Add wrap `th`s in `tr`s
 * Add HTML validations
