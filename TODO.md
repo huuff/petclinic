@@ -11,3 +11,4 @@
 * Building links in views with static methods like `OwnerController.redirectToOwnerView` (Or something similar)
 * What about updates (merging only properties that aren't null) directly in the models? This kills the anemic models antipattern
 * Some magic with lombok's `@ToString` to get better logged entities?
+* Add RememberMe, use full authentication for CUD
