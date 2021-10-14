@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pet.name}">Pet</title>
+</head>
+<body>
+    <h1 th:text="${pet.name}">Pet</h1>
+
+    <p th:text="|#{name}: ${pet.name}|">Name</p>
+    <p th:text="|#{birthdate}: ${pet.birthDate}|">Birthdate</p>
+    <p th:text="|#{type}: ${pet.type}|">Type</p>
+
+    <!-- TODO: actually link to edit here once it's done -->
+<!--    <a th:text="#{edit}" th:href="@{|/pets/${pet.id}|}">Edit</a>-->
+</body>
+</html>
