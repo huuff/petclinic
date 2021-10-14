@@ -11,11 +11,7 @@
     <div>
         <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
     </div>
-    <!-- Terrible? Thymeleaf forced me! --> <!-- TODO: Actually needed? Test if any other user can arrive here -->
-    <a th:if="${#authentication.getPrincipal().getUsername() == owner.personalData.user.username}
-    OR ${#authentication.getAuthorities().toArray()[0].getAuthority().equals('VET')}"
-       th:text="#{edit}"
-       th:href="@{|/owners/${owner.id}/update|}"></a>
+    <a th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 
     <section>
         <h2 th:text="#{pets}">Pets</h2>
