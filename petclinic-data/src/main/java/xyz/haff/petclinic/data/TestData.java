@@ -50,12 +50,14 @@ public class TestData {
             ).build();
 
     public static final Pet toby = Pet.builder()
+            .name("Toby")
             .birthDate(LocalDate.of(2013, 7, 3))
             .type(PetType.DOG)
             .owner(joeSmith)
             .build();
 
     public static final Pet mittens = Pet.builder()
+            .name("Mittens")
             .birthDate(LocalDate.of(2015, 2, 15))
             .type(PetType.CAT)
             .owner(joeSmith)

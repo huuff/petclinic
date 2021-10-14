@@ -7,15 +7,33 @@
 <body>
 <h1 th:text="${owner.personalData.fullName()}">Name</h1>
 
-<div>
-  <div>
-    <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
-  </div>
+<main>
+    <div>
+        <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
+    </div>
     <!-- Terrible? Thymeleaf forced me! -->
     <a th:if="${#authentication.getPrincipal().getUsername() == owner.personalData.user.username}
     OR ${#authentication.getAuthorities().toArray()[0].getAuthority().equals('VET')}"
        th:text="#{edit}"
        th:href="@{|/owners/${owner.id}/update|}"></a>
-</div>
+
+    <section>
+        <h2 th:text="#{pets}">Pets</h2>
+        <table>
+            <thead>
+                <th th:text="#{name}">Name</th>
+                <th th:text="#{birthdate}">Birthdate</th>
+                <th th:text="#{type}">Type</th>
+                <th th:text="#{edit}">Edit</th>
+            </thead>
+            <tr th:each="pet : ${owner.pets}">
+                <td th:text="${pet.name}">Name</td>
+                <td th:text="${pet.birthDate}">Birthdate</td>
+                <td th:text="${pet.type}">Type</td> <!-- TODO: Translate -->
+                <td th:text="#{edit}">Edit</td> <!-- TODO: Actual link -->
+            </tr>
+        </table>
+    </section>
+</main>
 </body>
 </html>
