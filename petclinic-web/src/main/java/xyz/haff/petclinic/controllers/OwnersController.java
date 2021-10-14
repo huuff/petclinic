@@ -33,7 +33,6 @@ public class OwnersController {
     public static final String CREATE_PET_PATH = "/{ownerId}/pets/create";
 
     private static final String EDIT_VIEW = "owners/edit";
-    private static final String PET_EDIT_VIEW = "pets/edit"; // TODO: Maybe should be a variable in PetController?
 
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
@@ -127,7 +126,7 @@ public class OwnersController {
 
         model.addAttribute("petForm", new PetForm());
 
-        return "pets/edit";
+        return PetController.EDIT_VIEW;
     }
 
     @PostMapping(CREATE_PET_PATH)
@@ -136,7 +135,7 @@ public class OwnersController {
         petFormValidationService.checkNameIsDuplicated(petForm, ownerId, bindingResult);
 
         if (bindingResult.hasErrors())
-            return PET_EDIT_VIEW;
+            return PetController.EDIT_VIEW;
         else {
             var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
             var savedPet = petService.createPet(owner, petForm);

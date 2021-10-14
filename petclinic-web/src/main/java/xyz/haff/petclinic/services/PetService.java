@@ -1,6 +1,7 @@
 package xyz.haff.petclinic.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +15,13 @@ import xyz.haff.petclinic.repositories.PetRepository;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PetService {
     private final PetFormToPetConverter petFormToPet;
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
 
-    // TODO: Log
     @Transactional
     public Pet createPet(Owner owner, PetForm petForm) {
         var pet = petFormToPet.convert(petForm);
@@ -28,6 +29,8 @@ public class PetService {
         pet.setOwner(owner);
         owner.getPets().add(pet);
         var savedPet = petRepository.save(pet);
+        log.info("Created " + savedPet);
+
         ownerRepository.save(owner);
 
         return savedPet;
