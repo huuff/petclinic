@@ -25,6 +25,6 @@ public class Pet extends AbstractBaseEntity {
     private PetType type;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner")
     private Owner owner;
 }

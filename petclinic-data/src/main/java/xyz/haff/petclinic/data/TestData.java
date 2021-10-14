@@ -3,6 +3,8 @@ package xyz.haff.petclinic.data;
 import lombok.experimental.UtilityClass;
 import xyz.haff.petclinic.models.*;
 
+import java.time.LocalDate;
+
 @UtilityClass
 public class TestData {
     public static final Owner TEST_OWNER = Owner.builder()
@@ -46,4 +48,16 @@ public class TestData {
                     .user(User.builder().username("willy").password("{noop}gog").role(Role.VET).build())
                     .build()
             ).build();
+
+    public static final Pet toby = Pet.builder()
+            .birthDate(LocalDate.of(2013, 7, 3))
+            .type(PetType.DOG)
+            .owner(joeSmith)
+            .build();
+
+    public static final Pet mittens = Pet.builder()
+            .birthDate(LocalDate.of(2015, 2, 15))
+            .type(PetType.CAT)
+            .owner(joeSmith)
+            .build();
 }

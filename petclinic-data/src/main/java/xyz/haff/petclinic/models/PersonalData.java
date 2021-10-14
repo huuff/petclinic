@@ -5,6 +5,8 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
+// TODO: Maybe add address here too
+
 @Entity
 @Getter
 @Setter
