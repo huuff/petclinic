@@ -12,7 +12,6 @@ import xyz.haff.petclinic.annotations.EditOwner;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.forms.CreationConstraintGroup;
 import xyz.haff.petclinic.models.forms.OwnerForm;
-import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.models.forms.PetForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
@@ -20,6 +19,8 @@ import xyz.haff.petclinic.services.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
+
+import static xyz.haff.petclinic.controllers.ControllerUtil.redirect;
 
 @Controller
 @RequiredArgsConstructor
@@ -138,10 +139,9 @@ public class OwnersController {
             return PET_EDIT_VIEW;
         else {
             var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
+            var savedPet = petService.createPet(owner, petForm);
 
-            petService.createPet(owner, petForm);
-
-            return redirectToOwnerView(ownerId); // TODO: Redirect to view of pet
+            return redirect(PetController.viewPetUrl(savedPet.getId()));
         }
     }
 

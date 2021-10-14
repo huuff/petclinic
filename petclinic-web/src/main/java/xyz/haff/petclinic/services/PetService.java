@@ -3,6 +3,7 @@ package xyz.haff.petclinic.services;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import xyz.haff.petclinic.converters.PetFormToPetConverter;
 import xyz.haff.petclinic.models.Owner;
@@ -20,12 +21,16 @@ public class PetService {
     private final OwnerRepository ownerRepository;
 
     // TODO: Log
-    public void createPet(Owner owner, PetForm petForm) {
+    @Transactional
+    public Pet createPet(Owner owner, PetForm petForm) {
         var pet = petFormToPet.convert(petForm);
         Assert.notNull(pet, "Converted pet cannot be null");
         pet.setOwner(owner);
         owner.getPets().add(pet);
+        var savedPet = petRepository.save(pet);
         ownerRepository.save(owner);
+
+        return savedPet;
     }
 
     public void updatePet(Pet editingPet, PetForm petForm) {
