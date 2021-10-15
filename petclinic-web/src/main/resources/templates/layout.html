@@ -17,10 +17,12 @@
             </div>
             <div class="col d-flex flex-row">
                 <a class="nav-link btn btn-outline-info text-secondary ms-2 text-nowrap"
+                   th:classappend="${route.name == 'OWNERS' ? 'active' : ''}"
                    sec:authorize="hasAuthority('VET')"
                    th:href="@{/owners}"
                    th:text="#{owners}">Owners</a>
                 <a class="nav-link btn btn-outline-info text-secondary ms-2 text-nowrap"
+                   th:classappend="${route.name == 'VETS' ? 'active' : ''}"
                    sec:authorize="hasAuthority('VET')"
                    th:href="@{/vets}"
                    th:text="#{vets}">Vets</a>
@@ -34,6 +36,7 @@
                    sec:authorize="!isAuthenticated()"
                    th:href="@{/login}" th:text="#{login}">Login</a>
                 <a class="nav-link btn btn-outline-info text-secondary ms-2 text-nowrap"
+                   th:classappend="${route.name == 'PROFILE' ? 'active' : ''}"
                    sec:authorize="isAuthenticated()"
                    th:href="@{/profile}"
                    th:text="#{your_profile}">Your profile</a>
