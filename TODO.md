@@ -11,6 +11,5 @@
 * Add RememberMe, use full authentication for CUD
 * All bodies in some container
 * Don't ask confirmation for logout
-* Admin links (owners, vets) look weird now, what to do?
-* Active buttons in navbar look weird, maybe a brighter color would do
-* Highlight more the home button, show that it can be clicked with a hover effect
+* Highlight more the home button, show that it can be clicked with a hover effect. UPDATE: Doing and underline but it looks ugly
+* Responsive navbar
