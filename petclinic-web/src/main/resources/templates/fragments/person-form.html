@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="personalData">
+    <div>
+        <label for="firstName" th:text="#{first_name}">First name</label>
+        <input type="text" id="firstName" th:field="*{firstName}"/>
+        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+    </div>
+    <div>
+        <label for="lastName" th:text="#{last_name}">Last name</label>
+        <input type="text" id="lastName" th:field="*{lastName}"/>
+        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+    </div>
+</div>
+<div th:fragment="userData">
+    <div>
+        <label for="username" th:text="#{username}">Username</label>
+        <input type="text" id="username" th:field="*{username}"/>
+        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+    </div>
+    <div>
+        <label for="password" th:text="#{password}">Password</label>
+        <input type="password" id="password" th:field="*{password}"/>
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+    </div>
+    <div>
+        <label for="repeatPassword" th:text="#{repeat_password}">Repeat Password</label>
+        <input type="password" id="repeatPassword" th:field="*{repeatPassword}"/>
+        <p th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></p>
+    </div>
+</div>
+</body>
+</html>
