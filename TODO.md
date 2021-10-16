@@ -11,3 +11,5 @@
 * Add RememberMe, use full authentication for CUD
 * Don't ask confirmation for logout
 * Responsive navbar
+* Unique username columns
+* Show role info on "your profile"
