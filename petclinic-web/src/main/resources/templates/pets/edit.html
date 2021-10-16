@@ -9,7 +9,7 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 th:text="${title}">New pet</h1>
+    <h1 class="display-4 text-center" th:text="${title}">New pet</h1>
 
     <form th:object="${petForm}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
