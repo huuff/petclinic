@@ -16,7 +16,7 @@
         </div>
         <a th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 
-        <section>
+        <section class="mt-3">
             <h2 th:text="#{pets}">Pets</h2>
             <table class="table">
                 <thead>
@@ -33,9 +33,9 @@
                     <td th:text="${pet.name}">Name</td>
                     <td th:text="${pet.birthDate}">Birthdate</td>
                     <td th:text="${pet.type}">Type</td> <!-- TODO: Translate -->
-                    <td><a th:text="#{view}" th:href="@{|/pets/${pet.id}|}">View</a></td>
-                    <td><a th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a></td>
-                    <td><a th:text="#{delete}" th:href="@{|/pets/${pet.id}/delete|}">Delete</a></td>
+                    <td><a th:href="@{|/pets/${pet.id}|}"><i class="fas fa-eye"></i></a></td>
+                    <td><a th:href="@{|/pets/${pet.id}/update|}"><i class="fas fa-pencil-alt"></i></a></td>
+                    <td><a th:href="@{|/pets/${pet.id}/delete|}"><i class="fas fa-times"></i></a></td>
                 </tr>
             </table>
             <a th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>

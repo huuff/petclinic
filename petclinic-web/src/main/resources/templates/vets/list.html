@@ -25,10 +25,9 @@
         <td th:text="#{${vet.specialty.name.toLowerCase()}}">Specialty</td>
         <td><a  th:if="${#authentication.getName() != vet.personalData.user.username}"
                 th:href="@{|/vets/${vet.id}/delete|}"
-                th:text="#{delete}"
-        >Delete</a></td> <!-- TODO: FA icon pencil -->
-        <td><a th:href="@{|/vets/${vet.id}|}" th:text="#{view}">View</a></td> <!-- TODO: FA icon eye -->
-        <td><a th:href="@{|/vets/${vet.id}/update|}" th:text="#{edit}">Edit</a></td>
+        ><i class="fas fa-times"></i></a></td>
+        <td><a th:href="@{|/vets/${vet.id}|}"><i class="fas fa-eye"></i></a></td>
+        <td><a th:href="@{|/vets/${vet.id}/update|}"><i class="fas fa-pencil-alt"></i></a></td>
     </tr>
 </table>
 
