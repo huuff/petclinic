@@ -13,3 +13,4 @@
 * Responsive navbar
 * Unique username columns
 * Show role info on "your profile"
+* See if I can use `mapstruct` for form converters
