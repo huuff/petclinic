@@ -9,6 +9,7 @@
     <title>Pet Clinic</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.2/css/bootstrap.min.css}">
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/flag-icon-css/3.5.0/css/flag-icon.min.css}">
     <link th:rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
@@ -57,6 +58,18 @@
                        sec:authorize="isAuthenticated()"
                        th:href="@{/profile}"
                        th:text="#{your_profile}">Your profile</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Language
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item active" href="#"><span class="flag-icon flag-icon-gb me-1"></span>English</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-es me-1"></span>Español</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-de me-1"></span>Deutsch</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-fr me-1"></span>François</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-eo me-1"></span>Esperanto</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-outline-info text-secondary ms-3 text-nowrap py-1 px-2"
