@@ -60,15 +60,22 @@
                        th:text="#{your_profile}">Your profile</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Language
+                    <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                    >
+                        <span th:replace="this :: __${lang}__"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item active" href="#"><span class="flag-icon flag-icon-gb me-1"></span>English</a></li>
-                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-es me-1"></span>Español</a></li>
-                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-de me-1"></span>Deutsch</a></li>
-                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-fr me-1"></span>François</a></li>
-                        <li><a class="dropdown-item" href="#"><span class="flag-icon flag-icon-eo me-1"></span>Esperanto</a></li>
+                        <li><a class="dropdown-item" href="?lang=en"><span th:replace="this :: en"></span></a></li>
+                        <li><a class="dropdown-item" href="?lang=es"><span th:replace="this :: es"></span></a></li>
+                        <li><a class="dropdown-item" href="?lang=de"><span th:replace="this :: de"></span></a></li>
+                        <li><a class="dropdown-item" href="?lang=fr"><span th:replace="this :: fr"></span></a></li>
+                        <li><a class="dropdown-item" href="?lang=eo"><span th:replace="this :: eo"></span></a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -96,6 +103,13 @@
     <main layout:fragment="content" class="d-flex flex-column align-items-center">
         <p>Page content goes here</p>
     </main>
+</div>
+<div th:remove="all">
+    <span th:fragment="en"><span class="flag-icon flag-icon-gb me-1"></span>English</span>
+    <span th:fragment="es"><span class="flag-icon flag-icon-es me-1"></span>Español</span>
+    <span th:fragment="de"><span class="flag-icon flag-icon-de me-1"></span>Deutsch</span>
+    <span th:fragment="fr"><span class="flag-icon flag-icon-fr me-1"></span>François</span>
+    <span th:fragment="eo"><span class="flag-icon flag-icon-eo me-1"></span>Esperanto</span>
 </div>
 <script th:src="@{/webjars/bootstrap/5.1.2/js/bootstrap.min.js}"></script>
 </body>

@@ -1,5 +1,4 @@
 # Tasks
-* Add language switcher
 * At least 70% coverage
 * Show some info regarding a 403 error
 * Column names on every entity?
