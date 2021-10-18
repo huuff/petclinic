@@ -34,6 +34,6 @@ public class Pet extends AbstractBaseEntity {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "owner_id")
     private Owner owner;
 }

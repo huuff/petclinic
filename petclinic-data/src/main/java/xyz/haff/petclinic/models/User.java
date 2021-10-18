@@ -18,9 +18,11 @@ import javax.persistence.Enumerated;
 @Setter
 @SuperBuilder
 public class User extends AbstractBaseEntity {
-    @Column(unique = true)
+    @Column(unique = true, name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 }
