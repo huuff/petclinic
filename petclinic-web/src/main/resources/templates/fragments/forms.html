@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="formSubmission">
+  <div class="mb-2">
+    <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
+  </div>
+  <div class="text-danger" th:if="${#fields.hasErrors('global')}">
+    <small th:errors="*{global}"></small>
+  </div>
+</div>
+</body>
+</html>

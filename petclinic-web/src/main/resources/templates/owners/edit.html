@@ -16,10 +16,8 @@
 
         <div th:insert="fragments/person-form.html :: personalData"></div>
         <div th:insert="fragments/person-form.html :: userData"></div>
-        <div class="mb-3">
-            <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
-        </div>
-        <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></div>
+
+        <div th:insert="fragments/forms.html :: formSubmission"></div>
     </form>
 </main>
 </body>

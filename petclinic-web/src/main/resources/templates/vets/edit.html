@@ -33,10 +33,7 @@
 
         <div th:include="fragments/person-form.html :: userData"></div>
 
-        <div>
-            <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
-        </div>
-        <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
+        <div th:insert="fragments/forms.html :: formSubmission"></div>
     </form>
 </main>
 </body>
