@@ -14,7 +14,7 @@
     <p th:text="|#{birthdate}: ${pet.birthDate}|">Birthdate</p>
     <p th:text="|#{type}: ${pet.type}|">Type</p>
 
-    <a th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
+    <a class="btn btn-primary" th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
 </main>
 </body>
 </html>

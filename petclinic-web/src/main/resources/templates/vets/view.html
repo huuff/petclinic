@@ -18,7 +18,8 @@
             <p th:text="|#{username}: ${vet.personalData.user.username}|">Username</p>
             <p th:text="|#{specialty}: #{${vet.specialty.name.toLowerCase}}|">Specialty</p>
         </div>
-        <a sec:authorize="hasAuthority('VET')"
+        <a class="btn btn-primary"
+           sec:authorize="hasAuthority('VET')"
            th:text="#{edit}"
            th:href="@{|/vets/${vet.id}/update|}"></a>
     </div>

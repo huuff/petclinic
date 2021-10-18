@@ -14,7 +14,7 @@
         <div>
             <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
         </div>
-        <a th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
+        <a class="btn btn-primary" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 
         <section class="mt-3">
             <h2 th:text="#{pets}">Pets</h2>
@@ -38,7 +38,7 @@
                     <td><a th:href="@{|/pets/${pet.id}/delete|}"><i class="fas fa-times"></i></a></td>
                 </tr>
             </table>
-            <a th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
+            <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
         </section>
     </div>
 </main>
