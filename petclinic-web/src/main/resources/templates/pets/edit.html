@@ -19,7 +19,7 @@
         <div th:insert="fragments/forms :: formInputAligned ('date', 'birthDate', 'birthdate')"></div>
 
         <div class="row mb-3">
-            <label class="col-sm-3" for="type" th:text="#{type}">Type</label>
+            <label class="col-sm-3 text-muted" for="type" th:text="#{type}">Type</label>
             <div class="col-sm-9">
                 <select class="form-select" th:field="*{type}" id="type" th:errorclass="is-invalid">
                     <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one

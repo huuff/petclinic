@@ -12,14 +12,14 @@
 
 <div th:fragment="formInputStacked (type, field, label)"> <!-- TODO: Convert to aligned under lg -->
     <div class="mb-3">
-        <label th:for="${field}" th:text="#{${label}}"></label>
+        <label class="text-muted" th:for="${field}" th:text="#{${label}}"></label>
         <div th:replace="this :: inputField(type=${type}, field=${field})"></div>
         <div th:replace="this :: feedback(${field})"></div>
     </div>
 </div>
 <div th:fragment="formInputAligned (type, field, label)">
     <div class="row mb-3 align-items-center">
-        <label class="col-sm-3 col-form-label" th:for="${field}" th:text="#{${label}}"></label>
+        <label class="col-sm-3 col-form-label text-muted" th:for="${field}" th:text="#{${label}}"></label>
         <div class="col-sm-9">
             <div th:replace="this :: inputField(type=${type}, field=${field})"></div>
             <div th:replace="this :: feedback(${field})"></div>
