@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div th:fragment="formInputStacked (type, field, label)"> <!-- TODO: Convert to aligned under lg -->
+<div th:fragment="formInputStacked (type, field, label)">
     <div class="mb-3">
         <label class="text-muted" th:for="${field}" th:text="#{${label}}"></label>
         <div th:replace="this :: inputField(type=${type}, field=${field})"></div>
