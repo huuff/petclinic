@@ -5,12 +5,30 @@
 </head>
 <body>
 <div th:fragment="formSubmission">
-  <div class="mb-2">
-    <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
-  </div>
-  <div class="text-danger" th:if="${#fields.hasErrors('global')}">
-    <small th:errors="*{global}"></small>
-  </div>
+    <div class="mb-2">
+        <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
+    </div>
+    <div class="text-danger" th:if="${#fields.hasErrors('global')}">
+        <small th:errors="*{global}"></small>
+    </div>
+</div>
+<div th:fragment="formInputStacked (type, field, label)"> <!-- TODO: Convert to aligned under lg -->
+    <div class="mb-3">
+        <label th:for="${field}" th:text="#{${label}}"></label>
+        <input th:type="${type}" class="form-control" th:id="${field}" th:field="*{__${field}__}"
+               th:errorclass="is-invalid">
+        <div class="invalid-feedback" th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}"></div>
+    </div>
+</div>
+<div th:fragment="formInputAligned (type, field, label)">
+    <div class="row mb-3 align-items-center">
+        <label class="col-sm-2 col-form-label" th:for="${field}" th:text="#{${label}}"></label>
+        <div class="col-sm-10">
+            <input th:type="${type}" class="form-control" th:id="${field}" th:field="*{__${field}__}"
+                   th:errorclass="is-invalid">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}"></div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

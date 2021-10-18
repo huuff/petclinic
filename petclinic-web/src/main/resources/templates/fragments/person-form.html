@@ -5,41 +5,21 @@
 </head>
 <body>
 <div th:fragment="personalData">
-    <div class="row mb-3">
+    <div class="row">
         <div class="col-lg-6">
-            <label for="firstName" th:text="#{first_name}">First name</label>
-            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" th:errorclass="is-invalid"/>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+            <div th:insert="fragments/forms :: formInputStacked ('text', 'firstName', 'first_name')"></div>
         </div>
         <div class="col-lg-6">
-            <label for="lastName" th:text="#{last_name}">Last name</label>
-            <input class="form-control" type="text" id="lastName" th:field="*{lastName}" th:errorclass="is-invalid"/>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            <div th:insert="fragments/forms :: formInputStacked ('text', 'lastName', 'last_name')"></div>
         </div>
     </div>
 </div>
 <div th:fragment="userData">
-    <div class="row mb-4">
-        <label class="col-sm-2 col-form-label" for="username" th:text="#{username}">Username</label>
-        <div class="col-sm-10">
-            <input class="form-control" type="text" id="username" th:field="*{username}" th:errorclass="is-invalid"/>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-        </div>
+    <div class="mb-4">
+        <div th:insert="fragments/forms :: formInputAligned ('text', 'username', 'username')"></div>
     </div>
-    <div class="row mb-1">
-        <label class="col-sm-2 col-form-label" for="password" th:text="#{password}">Password</label>
-        <div class="col-sm-10">
-            <input class="form-control" type="password" id="password" th:field="*{password}" th:errorclass="is-invalid"/>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-        </div>
-    </div>
-    <div class="row mb-3 align-items-center">
-        <label class="col-sm-2 col-form-label" for="repeatPassword" th:text="#{repeat_password}">Repeat Password</label>
-        <div class="col-sm-10">
-            <input class="form-control" type="password" id="repeatPassword" th:field="*{repeatPassword}" th:errorclass="is-invalid"/>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></div>
-        </div>
-    </div>
+    <div th:insert="fragments/forms :: formInputAligned ('text', 'password', 'password')"></div>
+    <div th:insert="fragments/forms :: formInputAligned ('text', 'repeatPassword', 'repeat_password')"></div>
 </div>
 </body>
 </html>
