@@ -13,12 +13,13 @@
 <main layout:fragment="content">
     <h1 class="display-4 text-center" th:text="${vet.personalData.fullName()}">Name</h1>
 
-    <div>
+    <div class="w-75">
         <div>
-            <p th:text="|#{username}: ${vet.personalData.user.username}|">Username</p>
-            <p th:text="|#{specialty}: #{${vet.specialty.name.toLowerCase}}|">Specialty</p>
+            <div th:replace="fragments/view-grid :: viewElement(#{username}, ${vet.personalData.user.username})">Username</div>
+            <div th:replace="fragments/view-grid :: viewElement(#{specialty}, #{${vet.specialty.name.toLowerCase}})">Specialty</div>
+            <div th:replace="fragments/view-grid :: viewElement('Role', ${vet.personalData.user.role})">Role</div>
         </div>
-        <a class="btn btn-primary"
+        <a class="btn btn-primary my-3"
            sec:authorize="hasAuthority('VET')"
            th:text="#{edit}"
            th:href="@{|/vets/${vet.id}/update|}"></a>

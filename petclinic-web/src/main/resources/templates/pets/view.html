@@ -10,11 +10,13 @@
 <main layout:fragment="content">
     <h1 class="display-4 text-center" th:text="${pet.name}">Pet</h1>
 
-    <p th:text="|#{name}: ${pet.name}|">Name</p>
-    <p th:text="|#{birthdate}: ${pet.birthDate}|">Birthdate</p>
-    <p th:text="|#{type}: ${pet.type}|">Type</p>
+    <div class="w-75">
+        <div th:replace="fragments/view-grid :: viewElement(#{name}, ${pet.name})">Name</div>
+        <div th:replace="fragments/view-grid :: viewElement(#{birthdate}, ${pet.birthDate})">Birthdate</div>
+        <div th:replace="fragments/view-grid :: viewElement(#{type}, ${pet.type})">Type</div> <!-- TODO: Translate -->
+    </div>
 
-    <a class="btn btn-primary" th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
+    <a class="btn btn-primary mt-3" th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
 </main>
 </body>
 </html>
