@@ -9,7 +9,7 @@
 * What about updates (merging only properties that aren't null) directly in the models? This kills the anemic models antipattern
 * Some magic with lombok's `@ToString` to get better logged entities?
 * Add RememberMe, use full authentication for CUD
-* Don't ask confirmation for logout
 * Unique username columns
 * The `view` pages are a bit hideous
 * See if I can use `mapstruct` for form converters
+* My own login form
