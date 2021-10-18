@@ -17,30 +17,30 @@
         <div class="row mb-3">
             <label class="col-sm-2" for="name" th:text="#{name}">Name</label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" id="name" th:field="*{name}">
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error description</p>
+                <input class="form-control" type="text" id="name" th:field="*{name}" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error description</div>
             </div>
         </div>
 
         <div class="row mb-3">
             <label class="col-sm-2" for="birthdate" th:text="#{birthdate}">Birthdate</label>
             <div class="col-sm-10">
-                <input class="form-control" type="date" id="birthdate" th:field="*{birthDate}">
-                <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Error description</p>
+                <input class="form-control" type="date" id="birthdate" th:field="*{birthDate}" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Error description</div>
             </div>
         </div>
 
         <div class="row mb-3">
             <label class="col-sm-2" for="type" th:text="#{type}">Type</label>
             <div class="col-sm-10">
-                <select class="form-select" th:field="*{type}" id="type">
+                <select class="form-select" th:field="*{type}" id="type" th:errorclass="is-invalid">
                     <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one
                     </option>
                     <option th:each="petType : ${T(xyz.haff.petclinic.models.PetType).values()}"
                             th:value="${petType.name()}"
                             th:text="${petType.name()}"
                     ></option> <!-- TODO: translations for pet types and do as with specialties in vets -->
-                    <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error description</p>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error description</div>
                 </select>
             </div>
         </div>

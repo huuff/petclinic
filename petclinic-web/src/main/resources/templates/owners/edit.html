@@ -16,10 +16,10 @@
 
         <div th:insert="fragments/person-form.html :: personalData"></div>
         <div th:insert="fragments/person-form.html :: userData"></div>
-        <div>
+        <div class="mb-3">
             <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
         </div>
-        <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
+        <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></div>
     </form>
 </main>
 </body>

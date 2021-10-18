@@ -19,7 +19,7 @@
         <div class="row mb-3">
             <label class="col-sm-2" for="specialty" th:text="#{specialty}">Specialty</label>
             <div class="col-sm-10">
-                <select class="form-select" th:field="*{specialty}" id="specialty">
+                <select class="form-select" th:field="*{specialty}" id="specialty" th:errorclass="is-invalid">
                     <option th:text="#{selector}" th:value="null" th:selected="${vetForm.firstName == null}"></option>
                     <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}"
                             th:value="${specialty.name()}"
@@ -27,8 +27,8 @@
                     >Specialty
                     </option>
                 </select>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></div>
             </div>
-            <p th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></p>
         </div>
 
         <div th:include="fragments/person-form.html :: userData"></div>
