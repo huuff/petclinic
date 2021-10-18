@@ -11,24 +11,24 @@
 <main layout:fragment="content">
     <h1 class="display-4 text-center" th:text="${title}">New pet</h1>
 
-    <form th:object="${petForm}" method="post">
+    <form class="col-lg-8 col-xl-6 mx-auto" th:object="${petForm}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
         <div>
             <label for="name" th:text="#{name}">Name</label>
-            <input type="text" id="name" th:field="*{name}">
+            <input class="form-control" type="text" id="name" th:field="*{name}">
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error description</p>
         </div>
 
         <div>
             <label for="birthdate" th:text="#{birthdate}">Birthdate</label>
-            <input type="date" id="birthdate" th:field="*{birthDate}">
+            <input class="form-control" type="date" id="birthdate" th:field="*{birthDate}">
             <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Error description</p>
         </div>
 
         <div>
             <label for="type" th:text="#{type}">Type</label>
-            <select th:field="*{type}" id="type">
+            <select class="form-select" th:field="*{type}" id="type">
                 <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one</option>
                 <option th:each="petType : ${T(xyz.haff.petclinic.models.PetType).values()}"
                         th:value="${petType.name()}"
@@ -38,7 +38,7 @@
             <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error description</p>
         </div>
 
-        <input type="submit" th:value="#{submit}">
+        <input class="btn btn-primary" type="submit" th:value="#{submit}">
     </form>
 </main>
 </body>
