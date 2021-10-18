@@ -9,33 +9,40 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 class="display-4 text-center" th:text="${title}">New pet</h1>
+    <h1 class="display-4 text-center mb-4" th:text="${title}">New pet</h1>
 
     <form class="col-lg-8 col-xl-6 mx-auto" th:object="${petForm}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-        <div>
-            <label for="name" th:text="#{name}">Name</label>
-            <input class="form-control" type="text" id="name" th:field="*{name}">
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error description</p>
+        <div class="row mb-3">
+            <label class="col-sm-2" for="name" th:text="#{name}">Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="name" th:field="*{name}">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error description</p>
+            </div>
         </div>
 
-        <div>
-            <label for="birthdate" th:text="#{birthdate}">Birthdate</label>
-            <input class="form-control" type="date" id="birthdate" th:field="*{birthDate}">
-            <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Error description</p>
+        <div class="row mb-3">
+            <label class="col-sm-2" for="birthdate" th:text="#{birthdate}">Birthdate</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="date" id="birthdate" th:field="*{birthDate}">
+                <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Error description</p>
+            </div>
         </div>
 
-        <div>
-            <label for="type" th:text="#{type}">Type</label>
-            <select class="form-select" th:field="*{type}" id="type">
-                <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one</option>
-                <option th:each="petType : ${T(xyz.haff.petclinic.models.PetType).values()}"
-                        th:value="${petType.name()}"
-                        th:text="${petType.name()}"
-                ></option> <!-- TODO: translations for pet types and do as with specialties in vets -->
-            </select>
-            <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error description</p>
+        <div class="row mb-3">
+            <label class="col-sm-2" for="type" th:text="#{type}">Type</label>
+            <div class="col-sm-10">
+                <select class="form-select" th:field="*{type}" id="type">
+                    <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one
+                    </option>
+                    <option th:each="petType : ${T(xyz.haff.petclinic.models.PetType).values()}"
+                            th:value="${petType.name()}"
+                            th:text="${petType.name()}"
+                    ></option> <!-- TODO: translations for pet types and do as with specialties in vets -->
+                    <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error description</p>
+                </select>
+            </div>
         </div>
 
         <input class="btn btn-primary" type="submit" th:value="#{submit}">

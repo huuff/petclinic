@@ -9,33 +9,35 @@
 </head>
 <body>
 <main layout:fragment="content">
-<h1 class="display-4 text-center" th:text="${title}">Edit Vet</h1>
+    <h1 class="display-4 text-center mb-4" th:text="${title}">Edit Vet</h1>
 
-<form class="col-lg-8 col-xl-6 mx-auto" th:object="${vetForm}" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <form class="col-lg-8 col-xl-6 mx-auto" th:object="${vetForm}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-    <div th:include="fragments/person-form.html :: personalData"></div>
+        <div th:include="fragments/person-form.html :: personalData"></div>
 
-    <div>
-        <label for="specialty" th:text="#{specialty}">Specialty</label>
-        <select class="form-select" th:field="*{specialty}" id="specialty">
-            <option th:text="#{selector}" th:value="null" th:selected="${vetForm.firstName == null}"></option>
-            <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}"
-                    th:value="${specialty.name()}"
-                    th:text="#{${specialty.name.toLowerCase()}}"
-            >Specialty
-            </option>
-        </select>
-        <p th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></p>
-    </div>
+        <div class="row mb-3">
+            <label class="col-sm-2" for="specialty" th:text="#{specialty}">Specialty</label>
+            <div class="col-sm-10">
+                <select class="form-select" th:field="*{specialty}" id="specialty">
+                    <option th:text="#{selector}" th:value="null" th:selected="${vetForm.firstName == null}"></option>
+                    <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}"
+                            th:value="${specialty.name()}"
+                            th:text="#{${specialty.name.toLowerCase()}}"
+                    >Specialty
+                    </option>
+                </select>
+            </div>
+            <p th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></p>
+        </div>
 
-    <div th:include="fragments/person-form.html :: userData"></div>
+        <div th:include="fragments/person-form.html :: userData"></div>
 
-    <div>
-        <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
-    </div>
-    <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
-</form>
+        <div>
+            <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
+        </div>
+        <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
+    </form>
 </main>
 </body>
 </html>
