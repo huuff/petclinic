@@ -12,40 +12,67 @@
     <link th:rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light mb-2">
     <div class="container-fluid">
         <div id="logo" class="d-inline-block">
-                <a class="navbar-brand" th:href="@{/}">Pet Clinic</a>
+            <a class="navbar-brand" th:href="@{/}">Pet Clinic</a>
         </div>
-        <div class="navbar-nav d-flex flex-row justify-content-end px-0">
-            <a class="nav-link"
-               th:classappend="${route.name == 'OWNERS' ? 'active' : ''}"
-               sec:authorize="hasAuthority('VET')"
-               th:href="@{/owners}"
-               th:text="#{owners}">Owners</a>
-            <a class="nav-link"
-               th:classappend="${route.name == 'VETS' ? 'active' : ''}"
-               sec:authorize="hasAuthority('VET')"
-               th:href="@{/vets}"
-               th:text="#{vets}">Vets</a>
-            <a class="nav-link"
-               sec:authorize="!isAuthenticated()"
-               th:href="@{/owners/create}"
-               th:text="#{sign_up}">Sign up</a>
-            <a class="nav-link"
-               th:classappend="${route.name == 'PROFILE' ? 'active' : ''}"
-               sec:authorize="isAuthenticated()"
-               th:href="@{/profile}"
-               th:text="#{your_profile}">Your profile</a>
-            <a class="nav-link btn btn-outline-info text-secondary ms-3 text-nowrap"
-               sec:authorize="!isAuthenticated()"
-               th:href="@{/login}"
-               th:text="#{login}">Login</a>
-            <a class="nav-link btn btn-outline-info text-secondary ms-3 text-nowrap"
-               sec:authorize="isAuthenticated()"
-               th:href="@{/logout}"
-               th:text="#{logout}">Logout</a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar-content"
+                aria-controls="navbar-content"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+                class="collapse navbar-collapse"
+                id="navbar-content">
+            <ul class="navbar-nav d-flex flex-col flex-lg-row align-items-end align-items-lg-baseline justify-content-end px-0 ms-auto me-2">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${route.name == 'OWNERS' ? 'active' : ''}"
+                       sec:authorize="hasAuthority('VET')"
+                       th:href="@{/owners}"
+                       th:text="#{owners}">Owners</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${route.name == 'VETS' ? 'active' : ''}"
+                       sec:authorize="hasAuthority('VET')"
+                       th:href="@{/vets}"
+                       th:text="#{vets}">Vets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       sec:authorize="!isAuthenticated()"
+                       th:href="@{/owners/create}"
+                       th:text="#{sign_up}">Sign up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${route.name == 'PROFILE' ? 'active' : ''}"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/profile}"
+                       th:text="#{your_profile}">Your profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-info text-secondary ms-3 text-nowrap py-1 px-2"
+                       sec:authorize="!isAuthenticated()"
+                       th:href="@{/login}"
+                       th:text="#{login}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-info text-secondary ms-3 text-nowrap py-1 px-2"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/logout}"
+                       th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
         </div>
+    </div>
     </div>
 </nav>
 <div class="container">

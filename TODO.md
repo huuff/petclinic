@@ -10,7 +10,6 @@
 * Some magic with lombok's `@ToString` to get better logged entities?
 * Add RememberMe, use full authentication for CUD
 * Don't ask confirmation for logout
-* Responsive navbar
 * Unique username columns
 * The `view` pages are a bit hideous
 * See if I can use `mapstruct` for form converters
