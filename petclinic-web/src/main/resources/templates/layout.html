@@ -13,7 +13,7 @@
     <link th:rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+<nav id="navbar" class="navbar navbar-expand-md navbar-light bg-light mb-2">
     <div class="container-fluid">
         <div id="logo" class="d-inline-block">
             <a class="navbar-brand" th:href="@{/}">Pet Clinic</a>
@@ -31,7 +31,10 @@
         <div
                 class="collapse navbar-collapse"
                 id="navbar-content">
-            <ul class="navbar-nav d-flex flex-col flex-lg-row align-items-end align-items-lg-center justify-content-end px-0 ms-auto me-2">
+            <ul
+                    class="navbar-nav d-flex flex-col flex-md-row align-items-end align-items-md-center justify-content-end px-0 ms-auto me-2"
+                    style="position: relative;"
+                 >
                 <li class="nav-item">
                     <a class="nav-link"
                        th:classappend="${route.name == 'OWNERS' ? 'active' : ''}"
@@ -70,7 +73,7 @@
                     >
                         <span th:replace="this :: __${lang}__"></span>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute;">
                         <li><a class="dropdown-item" href="?lang=en"><span th:replace="this :: en"></span></a></li>
                         <li><a class="dropdown-item" href="?lang=es"><span th:replace="this :: es"></span></a></li>
                         <li><a class="dropdown-item" href="?lang=de"><span th:replace="this :: de"></span></a></li>
