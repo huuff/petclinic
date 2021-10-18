@@ -10,7 +10,7 @@
 <main layout:fragment="content">
     <h1 class="display-4 text-center" th:text="${owner.personalData.fullName()}">Name</h1>
 
-    <div class="w-75">
+    <div class="d-inline-block col-sm-8 col-md-5 col-lg-3">
         <div th:replace="fragments/view-grid :: viewElement(#{username}, ${owner.personalData.user.username})">
             Username
         </div>
