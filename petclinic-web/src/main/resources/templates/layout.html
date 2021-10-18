@@ -100,9 +100,13 @@
     </div>
 </nav>
 <div class="container">
-    <main layout:fragment="content" class="d-flex flex-column align-items-center">
-        <p>Page content goes here</p>
-    </main>
+    <div class="row">
+        <div class="col-3"></div>
+        <main layout:fragment="content" class="col-6">
+            <p>Page content goes here</p>
+        </main>
+        <div class="col-3"></div>
+    </div>
 </div>
 <div th:remove="all">
     <span th:fragment="en"><span class="flag-icon flag-icon-gb me-1"></span>English</span>

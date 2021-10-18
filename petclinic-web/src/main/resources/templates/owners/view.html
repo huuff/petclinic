@@ -8,16 +8,11 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 class="display-4 text-center" th:text="${owner.personalData.fullName()}">Name</h1>
+    <h1 class="display-4" th:text="${owner.personalData.fullName()}">Name</h1>
 
-    <div class="d-inline-block col-sm-8 col-md-5 col-lg-4">
-        <div th:replace="fragments/view-grid :: viewElement(#{username}, ${owner.personalData.user.username})">
-            Username
-        </div>
-        <div th:replace="fragments/view-grid :: viewElement('Role', ${owner.personalData.user.role})">Role</div>
-
-        <a class="btn btn-primary my-3" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
-    </div>
+    <div th:replace="fragments/view-grid :: viewElement(#{username}, ${owner.personalData.user.username})">Username</div>
+    <div th:replace="fragments/view-grid :: viewElement('Role', ${owner.personalData.user.role})">Role</div>
+    <a class="btn btn-primary my-3" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 
     <h2 th:text="#{pets}">Pets</h2>
     <table class="table">

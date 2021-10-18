@@ -9,9 +9,9 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 class="display-4 text-center mb-4" th:text="${title}">New pet</h1>
+    <h1 class="display-4 mb-4" th:text="${title}">New pet</h1>
 
-    <form class="col-lg-8 col-xl-6 mx-auto" th:object="${petForm}" method="post">
+    <form th:object="${petForm}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
         <div th:insert="fragments/forms :: formInputAligned ('text', 'name', 'name')"></div>
@@ -19,8 +19,8 @@
         <div th:insert="fragments/forms :: formInputAligned ('date', 'birthDate', 'birthdate')"></div>
 
         <div class="row mb-3">
-            <label class="col-sm-2" for="type" th:text="#{type}">Type</label>
-            <div class="col-sm-10">
+            <label class="col-sm-3" for="type" th:text="#{type}">Type</label>
+            <div class="col-sm-9">
                 <select class="form-select" th:field="*{type}" id="type" th:errorclass="is-invalid">
                     <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one
                     </option>
