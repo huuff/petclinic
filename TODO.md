@@ -1,6 +1,5 @@
 # Tasks
 * At least 70% coverage
-* Show some info regarding a 403 error
 * Use slugs for outgoing properties?
 * Building links in views with static methods like `OwnerController.redirectToOwnerView` (Or something similar)
 * What about updates (merging only properties that aren't null) directly in the models? This kills the anemic models antipattern
