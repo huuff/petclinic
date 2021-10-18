@@ -13,6 +13,7 @@
     <div>
         <div>
             <p th:text="|#{username}: ${owner.personalData.user.username}|">Username</p>
+            <p th:text="|Role: ${owner.personalData.user.role}|">Role</p>
         </div>
         <a class="btn btn-primary" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 

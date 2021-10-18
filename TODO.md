@@ -12,5 +12,5 @@
 * Don't ask confirmation for logout
 * Responsive navbar
 * Unique username columns
-* Show role info on "your profile"
+* The `view` pages are a bit hideous
 * See if I can use `mapstruct` for form converters
