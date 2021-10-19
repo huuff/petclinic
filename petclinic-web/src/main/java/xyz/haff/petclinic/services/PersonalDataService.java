@@ -18,7 +18,7 @@ public class PersonalDataService {
         if (!Strings.isEmpty(personForm.getUsername()))
             personalData.getUser().setUsername(personForm.getUsername());
 
-        if (!Strings.isEmpty(personForm.getPassword()) && personForm.passwordEqualsRepeatPassword())
+        if (!Strings.isEmpty(personForm.getPassword()))
             personalData.getUser().setPassword(personForm.getPassword());
 
         return personalData;

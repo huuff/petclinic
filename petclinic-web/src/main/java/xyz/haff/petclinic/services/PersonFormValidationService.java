@@ -14,11 +14,6 @@ public class PersonFormValidationService {
     private final UserRepository userRepository;
     private final PersonalDataRepository personalDataRepository;
 
-    public void checkPasswordsMatch(PersonForm personForm, BindingResult bindingResult) {
-        if (!personForm.passwordEqualsRepeatPassword())
-            bindingResult.reject("repeat_password_error");
-    }
-
     public void checkUsernameIsNotDuplicated(PersonForm personForm, BindingResult bindingResult) {
         if (userRepository.existsByUsername(personForm.getUsername()))
             bindingResult.rejectValue("username", "duplicate", new Object[]{personForm.getUsername()}, "");
@@ -34,7 +29,6 @@ public class PersonFormValidationService {
 
     @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "UnusedReturnValue"})
     public boolean checkEditIsValid(PersonalData editingPerson, PersonForm personForm, BindingResult bindingResult) {
-        checkPasswordsMatch(personForm, bindingResult);
         if (!editingPerson.getFirstName().equals(personForm.getFirstName()))
             checkFullNameIsNotDuplicated(personForm, bindingResult);
 
@@ -48,7 +42,6 @@ public class PersonFormValidationService {
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean checkNewIsValid(PersonForm vetForm, BindingResult bindingResult) {
         checkFullNameIsNotDuplicated(vetForm, bindingResult);
-        checkPasswordsMatch(vetForm, bindingResult);
         checkUsernameIsNotDuplicated(vetForm, bindingResult);
 
         return !bindingResult.hasErrors();
