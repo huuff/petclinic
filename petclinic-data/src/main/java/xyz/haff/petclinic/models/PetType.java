@@ -4,6 +4,7 @@ public enum PetType {
     CAT,
     DOG,
     BIRD,
-    LIZARD
+    LIZARD,
+    TURTLE
   ;
 }
