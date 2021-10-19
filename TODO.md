@@ -9,3 +9,4 @@
 * Try to edit a vet and remove first name and last name, the result is an empty header. What do I do?
 * Modal for confirming deletions
 * Alert telling about form errors
+* Redirecting to `403.html` on auth errors

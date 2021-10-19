@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import xyz.haff.petclinic.annotations.EditPet;
 import xyz.haff.petclinic.converters.PetToPetFormConverter;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.forms.PetForm;
@@ -17,8 +18,6 @@ import xyz.haff.petclinic.services.PetFormValidationService;
 import xyz.haff.petclinic.services.PetService;
 
 import java.util.UUID;
-
-// TODO: Security: these endpoints only for the pet owners or a vet
 
 @Controller
 @RequiredArgsConstructor
@@ -38,6 +37,7 @@ public class PetController {
     private final PetService petService;
 
     @GetMapping(DELETE_PATH)
+    @EditPet
     public String delete(@PathVariable UUID petId) {
         var petToDelete = petRepository.findById(petId).orElseThrow(() -> SpecificNotFoundException.fromPetId(petId));
 
@@ -47,6 +47,7 @@ public class PetController {
     }
 
     @GetMapping(READ_PATH)
+    @EditPet
     public String read(@PathVariable UUID petId, Model model) {
         var pet = petRepository.findById(petId).orElseThrow(() -> SpecificNotFoundException.fromPetId(petId));
 
@@ -56,6 +57,7 @@ public class PetController {
     }
 
     @GetMapping(UPDATE_PATH)
+    @EditPet
     public String showUpdateForm(@PathVariable UUID petId, Model model) {
         var petToUpdate = petRepository.findById(petId).orElseThrow(() -> SpecificNotFoundException.fromPetId(petId));
 
@@ -65,6 +67,7 @@ public class PetController {
     }
 
     @PostMapping(UPDATE_PATH)
+    @EditPet
     public String update(@PathVariable UUID petId, @Validated PetForm petForm, BindingResult bindingResult) {
         var editingPet = petRepository.findById(petId).orElseThrow(() -> SpecificNotFoundException.fromPetId(petId));
         var owner = editingPet.getOwner();
