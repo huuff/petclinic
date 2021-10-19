@@ -1,9 +1,6 @@
 package xyz.haff.petclinic.models;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Id;
@@ -13,11 +10,14 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @MappedSuperclass
 @SuperBuilder
 public abstract class AbstractBaseEntity implements BaseEntity {
-    @Id @Builder.Default
+    @Id
+    @ToString.Include
+    @Builder.Default
     private UUID id = UUID.randomUUID();
     @Version
     private Integer version;
@@ -44,10 +44,5 @@ public abstract class AbstractBaseEntity implements BaseEntity {
         } else {
             return super.hashCode();
         }
-    }
-
-    public String toString() {
-        return this.getClass().getName()
-                + "[id=" + id + "]";
     }
 }

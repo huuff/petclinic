@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 @Setter
 @NoArgsConstructor
 @MappedSuperclass
+@ToString(callSuper = true)
 @SuperBuilder
 public abstract class Person extends AbstractBaseEntity {
     @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })

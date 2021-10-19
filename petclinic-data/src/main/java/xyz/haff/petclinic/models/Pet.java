@@ -3,6 +3,7 @@ package xyz.haff.petclinic.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,17 +17,21 @@ import java.time.LocalDate;
 @SuperBuilder
 @Getter
 @Setter
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 public class Pet extends AbstractBaseEntity {
 
+    @ToString.Include
     @Column(name = "name")
     @NotNull
     private String name;
 
+    @ToString.Include
     @Column(name = "birth_date")
     @Past
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate birthDate;
 
+    @ToString.Include
     @Column(name = "type")
     @NotNull
     @Enumerated(EnumType.STRING)

@@ -1,9 +1,6 @@
 package xyz.haff.petclinic.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,12 +13,15 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString(onlyExplicitlyIncluded = true)
 @SuperBuilder
 public class User extends AbstractBaseEntity {
     @Column(unique = true, name = "username")
+    @ToString.Include
     private String username;
     @Column(name = "password")
     private String password;
+    @ToString.Include
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;

@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @SuperBuilder
 public class PersonalData extends AbstractBaseEntity {
@@ -17,9 +18,11 @@ public class PersonalData extends AbstractBaseEntity {
     private String lastName;
 
     @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ToString.Include
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @Builder.Default private User user = User.builder().build();
 
+    @ToString.Include
     public String fullName() {
         return String.format("%s %s", firstName, lastName);
     }
