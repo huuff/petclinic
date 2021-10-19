@@ -13,6 +13,6 @@ public class ProdGlobalExceptionHandlerController {
     @ExceptionHandler(Exception.class)
     public String allExceptionsTo404(Exception exception) {
         log.error("Exception", exception);
-        return "errors/404-generic";
+        return "error/404";
     }
 }

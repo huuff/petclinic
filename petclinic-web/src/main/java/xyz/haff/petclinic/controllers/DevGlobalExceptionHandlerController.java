@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import xyz.haff.petclinic.exceptions.GenericNotFoundException;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 
-// TODO: Consider that this only handles my own exceptions, still going to /randomroute takes you to a random exception page
-
 @ControllerAdvice
 @Slf4j
 @Profile({"demo", "test"})
@@ -19,12 +17,12 @@ public class DevGlobalExceptionHandlerController {
     public String notFound(Model model, SpecificNotFoundException exception) {
         model.addAttribute("exception", exception);
         log.error("Exception", exception);
-        return "errors/404-specific";
+        return "error/404-specific";
     }
 
     @ExceptionHandler(GenericNotFoundException.class)
     public String notFound(GenericNotFoundException exception) {
         log.error("Exception", exception);
-        return "errors/404-generic";
+        return "error/404";
     }
 }

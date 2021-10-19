@@ -10,6 +10,6 @@ public class AuthErrorController {
 
     @RequestMapping("/unauth")
     public String redirectToErrorPage() {
-        return "errors/403";
+        return "error/403";
     }
 }
