@@ -9,7 +9,7 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 th:text="#{unauthorized}">Unauthorized</h1>
+    <h1 th:text="#{unauthorized(${#authentication.getPrincipal().getUser().getUsername()})}">Unauthorized</h1>
 </main>
 </body>
 </html>

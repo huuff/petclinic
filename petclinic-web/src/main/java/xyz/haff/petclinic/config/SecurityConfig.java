@@ -34,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin().permitAll()
                 .and()
                     .logout().logoutSuccessUrl("/")
+                .and()
+                    .exceptionHandling().accessDeniedPage("/unauth")
                 ;
     }
 
