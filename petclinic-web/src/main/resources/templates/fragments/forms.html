@@ -30,11 +30,20 @@
 <div
         th:fragment="errorAlert"
         th:if="${#fields.hasErrors('*')}"
-        class="alert alert-danger alert-dismissible position-fixed fixed-top col-md-8 col-lg-6 mx-auto text-center fade show"
+        class="alert alert-danger alert-dismissible position-fixed fixed-top col-md-8 col-lg-6 mx-auto text-center fade show pb-0"
         role="alert"
+        id="errorAlert"
 >
     <p th:text="#{form_error_alert}"></p>
     <button type="button" class="btn-close float-right" data-bs-dismiss="alert" aria-label="Close"></button>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            setTimeout(function() {
+                var alert = document.getElementById("errorAlert");
+                alert.style.opacity = 0;
+            }, 2500)
+        })
+    </script>
 </div>
 
 
