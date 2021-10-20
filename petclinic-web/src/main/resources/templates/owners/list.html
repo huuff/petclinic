@@ -24,9 +24,6 @@
         </thead>
         <tr th:each="owner : ${owners}">
             <td th:text="${owner.personalData.fullName}">Full name</td>
-<!--th:onclick="showModal([[${owner.personalData.fullName}]]);"
-            <td><a th:href="@{|/owners/${owner.id}/delete|}"><i class="fas fa-times"></i></a></td>
--->
             <td><a th:replace="fragments/actions :: delete(${owner.personalData.fullName()}, @{|/owners/${owner.id}/delete|})"></a></td>
             <td><a th:href="@{|/owners/${owner.id}|}"><i class="fas fa-eye"></i></a></td>
             <td><a th:href="@{|/owners/${owner.id}/update|}"><i class="fas fa-pencil-alt"></i></a></td>

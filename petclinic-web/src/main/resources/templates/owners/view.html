@@ -32,10 +32,12 @@
             <td th:text="#{${pet.type.name.toLowerCase()}}">Type</td>
             <td><a th:href="@{|/pets/${pet.id}|}"><i class="fas fa-eye"></i></a></td>
             <td><a th:href="@{|/pets/${pet.id}/update|}"><i class="fas fa-pencil-alt"></i></a></td>
-            <td><a th:href="@{|/pets/${pet.id}/delete|}"><i class="fas fa-times"></i></a></td>
+            <td><a th:replace="fragments/actions :: delete(${pet.name}, @{|/pets/${pet.id}/delete|})"></a></td>
         </tr>
     </table>
     <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
+
+    <div th:replace="fragments/actions :: deleteModal"></div>
 </main>
 </body>
 </html>

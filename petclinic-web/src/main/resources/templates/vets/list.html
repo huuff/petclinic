@@ -25,13 +25,16 @@
         <td th:text="#{${vet.specialty.name.toLowerCase()}}">Specialty</td>
         <td><a  th:if="${#authentication.getName() != vet.personalData.user.username}"
                 th:href="@{|/vets/${vet.id}/delete|}"
-        ><i class="fas fa-times"></i></a></td>
+                th:replace="fragments/actions :: delete(${vet.personalData.fullName}, @{|/vets/${vet.id}/delete|})"
+        ></a></td>
         <td><a th:href="@{|/vets/${vet.id}|}"><i class="fas fa-eye"></i></a></td>
         <td><a th:href="@{|/vets/${vet.id}/update|}"><i class="fas fa-pencil-alt"></i></a></td>
     </tr>
 </table>
 
 <a class="btn btn-primary" th:text="#{add_new}" th:href="@{/vets/create}"></a>
+
+    <div th:replace="fragments/actions :: deleteModal"></div>
 </main>
 </body>
 </html>
