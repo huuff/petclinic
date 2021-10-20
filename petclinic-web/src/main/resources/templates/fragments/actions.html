@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<a th:fragment="delete(name, uri)"
+   th:onclick="showModal([[${name}]], [[${uri}]])"
+   href="javascript:;"
+    ><i class="fas fa-times"></i></a>
+
+
+<div th:fragment="deleteModal" class="modal fade" tabindex="-1" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="h5 modal-title">Confirm delete</h1> <!-- TODO: Translate -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <span id="toDeleteName">placeholder</span>? <!-- TODO: Translate -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- TODO: Translate -->
+                <a class="btn btn-danger" role="button" th:text="#{delete}" id="modalDeleteButton">Delete</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function showModal(toDeleteName, deleteUri) {
+            document.getElementById("toDeleteName").textContent = toDeleteName;
+            document.getElementById("modalDeleteButton").href = deleteUri;
+            var modal = new bootstrap.Modal(document.getElementById("deleteModal"), {});
+            modal.toggle();
+        }
+    </script>
+</div>
+</body>
+</html>
