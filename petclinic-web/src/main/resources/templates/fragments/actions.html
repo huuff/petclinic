@@ -15,11 +15,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="h5 modal-title">Confirm delete</h1> <!-- TODO: Translate -->
+                <h1 class="h5 modal-title" th:text="#{confirm_delete}"></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete <span id="toDeleteName">placeholder</span>? <!-- TODO: Translate -->
+                <!-- This mess made my german order weird -->
+                <span th:text="#{confirm_delete_question}"></span> <span class="fw-bold" id="toDeleteName">placeholder</span>?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
