@@ -23,8 +23,7 @@
                 <span th:text="#{confirm_delete_question}"></span> <span class="fw-bold" id="toDeleteName">placeholder</span>?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- TODO: Translate -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{close}">Close</button>
                 <a class="btn btn-danger" role="button" th:text="#{delete}" id="modalDeleteButton">Delete</a>
             </div>
 
