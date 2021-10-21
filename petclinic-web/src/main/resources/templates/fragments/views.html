@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div th:fragment="showElement(key, value)" class="row">
-    <div class="col-sm-4 text-muted" th:text="|${key}:|"></div>
-    <div class="col-sm-8" th:text="${value}"></div>
+<div th:fragment="showElement(key, value)" class="row align-items-center">
+    <div class="col-sm-3 text-muted text-nowrap" th:text="|${key}:|"></div>
+    <div class="col-sm-9" th:text="${value}"></div>
 </div>
 </body>
 </html>

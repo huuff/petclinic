@@ -8,3 +8,9 @@
 * My own login form
 * Try to edit a vet and remove first name and last name, the result is an empty header. What do I do?
 * A "Your Pets" link on navbar for owners
+* Show next and previous visits for an owner and a vet in index page
+* Add the option to appoint a new visit for an owner in front page
+* Show different colors for visits in accordion depending on whether they are today, upcoming or passed.
+* Allow option for a vet to add a comment to a visit
+* Request vets to comment all past visits
+* Notify vets of new appointed visits

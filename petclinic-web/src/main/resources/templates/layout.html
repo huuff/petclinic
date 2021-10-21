@@ -71,7 +71,7 @@
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                     >
-                        <span th:replace="this :: __${lang}__"></span>
+                        <span th:replace="${lang != null} ? ~{this :: ${lang}} : ~{this :: en}"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute;">
                         <li><a class="dropdown-item" href="?lang=en"><span th:replace="this :: en"></span></a></li>

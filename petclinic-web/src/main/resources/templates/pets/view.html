@@ -16,6 +16,35 @@
         <a class="btn btn-primary mt-3" th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
     </div>
 
+    <h2 th:text="#{visits}" class="mt-4">Visits</h2>
+    <div class="accordion" id="visitsAccordion">
+        <div
+                th:each="visit, i : ${pet.visits}"
+                class="accordion-item"
+        >
+            <h2 class="accordion-header" th:id="'visitHeader-' + ${i.index}">
+                <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        aria-expanded="false"
+                        th:attr="data-bs-toggle='collapse', data-bs-target='#visitBody-' + ${i.index}, aria-controls='visitBody' + ${i.index}"
+                        >
+                    <span class="fw-bold" th:text="${visit.date}">Visit</span>
+                </button>
+            </h2>
+            <div
+                    th:id="'visitBody-' + ${i.index}"
+                    class="accordion-collapse collapse"
+                    th:attr="aria-labelledby=|visitHeader-${i.index}|"
+            >
+                <div class="accordion-body">
+                    <div th:replace="fragments/views :: showElement(#{vet}, ${visit.vet.personalData.fullName})"></div>
+                    <div th:replace="fragments/views :: showElement(#{reason}, ${visit.reason})"></div>
+                    <div th:replace="fragments/views :: showElement(#{comment}, ${visit.vetComment})"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
