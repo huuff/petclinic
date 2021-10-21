@@ -22,6 +22,8 @@ public class AddRouteControllerAdvice {
     }
 
     private Route getRoute(String uri) {
+        if (uri.contains("pets"))
+            return Route.PETS;
         if (uri.contains("owners"))
             return Route.OWNERS;
         else if (uri.contains("profile"))
