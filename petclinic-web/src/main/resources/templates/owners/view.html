@@ -28,9 +28,7 @@
             <td th:text="${pet.name}">Name</td>
             <td th:text="${pet.birthDate}">Birthdate</td>
             <td th:text="#{${pet.type.name.toLowerCase()}}">Type</td>
-            <td><a th:href="@{|/pets/${pet.id}|}"><i class="fas fa-eye"></i></a></td>
-            <td><a th:href="@{|/pets/${pet.id}/update|}"><i class="fas fa-pencil-alt"></i></a></td>
-            <td><a th:replace="fragments/actions :: delete(${pet.name}, @{|/pets/${pet.id}/delete|})"></a></td>
+            <td th:replace="fragments/actions :: actionCells(${pet.name}, 'pets', ${pet.id})">
         </tr>
     </table>
     <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
