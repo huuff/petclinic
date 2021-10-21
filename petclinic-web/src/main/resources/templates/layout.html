@@ -57,6 +57,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"
+                       sec:authorize="hasAuthority('OWNER')"
+                       th:href="@{/pets}"
+                       th:text="#{pets}">Pets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
                        th:classappend="${route.name == 'PROFILE' ? 'active' : ''}"
                        sec:authorize="isAuthenticated()"
                        th:href="@{/profile}"

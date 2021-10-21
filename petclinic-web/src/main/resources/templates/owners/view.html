@@ -15,22 +15,7 @@
     <a class="btn btn-primary my-3" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 
     <h2 th:text="#{pets}">Pets</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col" th:text="#{name}">Name</th>
-            <th scope="col" th:text="#{birthdate}">Birthdate</th>
-            <th scope="col" th:text="#{type}">Type</th>
-            <th th:replace="fragments/actions :: tableHeaders">
-        </tr>
-        </thead>
-        <tr th:each="pet : ${owner.pets}">
-            <td th:text="${pet.name}">Name</td>
-            <td th:text="${pet.birthDate}">Birthdate</td>
-            <td th:text="#{${pet.type.name.toLowerCase()}}">Type</td>
-            <td th:replace="fragments/actions :: actionCells(${pet.name}, 'pets', ${pet.id})">
-        </tr>
-    </table>
+    <table th:replace="fragments/tables :: petList(${owner.pets})"></table>
     <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
 
     <div th:replace="fragments/actions :: deleteModal"></div>

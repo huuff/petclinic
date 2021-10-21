@@ -43,6 +43,6 @@ public class Pet extends AbstractBaseEntity {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @OneToMany(mappedBy = "pet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
     private List<Visit> visits;
 }

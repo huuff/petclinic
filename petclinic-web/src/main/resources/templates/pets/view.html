@@ -17,7 +17,7 @@
     </div>
 
     <h2 th:text="#{visits}" class="mt-4">Visits</h2>
-    <div class="accordion" id="visitsAccordion">
+    <div class="accordion" id="visitsAccordion"> <!-- TODO: Extract as a fragment -->
         <div
                 th:each="visit, i : ${pet.visits}"
                 class="accordion-item"

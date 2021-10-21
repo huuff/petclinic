@@ -30,7 +30,8 @@ public class OwnersController {
     public static final String CREATE = "/create";
     public static final String UPDATE = "/{ownerId}/update";
     public static final String DELETE = "/{ownerId}/delete";
-    public static final String CREATE_PET_PATH = "/{ownerId}/pets/create";
+    public static final String PETS_PATH = "/{ownerId}/pets";
+    public static final String CREATE_PET_PATH = PETS_PATH + "/create";
 
     private static final String EDIT_VIEW = "owners/edit";
 
@@ -116,6 +117,16 @@ public class OwnersController {
         ownerService.updateOwner(ownerId, ownerForm);
 
         return redirectToOwnerView(ownerId);
+    }
+
+    @GetMapping(PETS_PATH)
+    @EditOwner
+    public String listPets(@PathVariable UUID ownerId, Model model) {
+        var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
+
+        model.addAttribute("owner", owner);
+
+        return "pets/list";
     }
 
     @GetMapping(CREATE_PET_PATH)

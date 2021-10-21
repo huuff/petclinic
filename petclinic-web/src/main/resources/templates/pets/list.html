@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+>
+<!-- TODO: Add owners name? as in `Owner's pets` -->
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{pets}">Pets</title>
+</head>
+<body>
+
+<main layout:fragment="content">
+    <h1 class="display-4 text-center" th:text="#{pets}">Pets</h1>
+
+    <table th:replace="fragments/tables :: petList(${owner.pets})"></table>
+    <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
+
+    <div th:replace="fragments/actions.html :: deleteModal"></div>
+</main>
+</body>
+</html>

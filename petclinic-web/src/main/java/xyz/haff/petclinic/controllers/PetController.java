@@ -1,6 +1,8 @@
 package xyz.haff.petclinic.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,9 @@ import xyz.haff.petclinic.annotations.EditPet;
 import xyz.haff.petclinic.converters.PetToPetFormConverter;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.forms.PetForm;
+import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
+import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.PetFormValidationService;
 import xyz.haff.petclinic.services.PetService;
 
@@ -35,6 +39,21 @@ public class PetController {
     private final PetToPetFormConverter petToPetForm;
     private final PetFormValidationService petFormValidationService;
     private final PetService petService;
+
+    private final OwnerRepository ownerRepository;
+
+    // TODO: This shows pets for an owner, add one that shows all pets for all owners for a vet
+    @GetMapping()
+    @PreAuthorize("hasAuthority('OWNER')")
+    public String viewPets(@AuthenticationPrincipal UserDetailsAdapter userDetails, Model model) {
+        System.out.println("test");
+        var userId = userDetails.getUser().getId();
+
+        var owner = ownerRepository.findByUserId(userId).orElseThrow(() -> SpecificNotFoundException.fromUserId(userId));
+        model.addAttribute("owner", owner);
+
+        return "pets/list";
+    }
 
     @GetMapping(DELETE_PATH)
     @EditPet
