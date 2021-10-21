@@ -11,8 +11,8 @@
     <h1 class="display-4" th:text="${pet.name}">Pet</h1>
 
     <div>
-        <div th:replace="fragments/view-grid :: viewElement(#{birthdate}, ${pet.birthDate})">Birthdate</div>
-        <div th:replace="fragments/view-grid :: viewElement(#{type}, #{${pet.type.name.toLowerCase()}})">Type</div>
+        <div th:replace="fragments/views :: showElement(#{birthdate}, ${pet.birthDate})">Birthdate</div>
+        <div th:replace="fragments/views :: showElement(#{type}, #{${pet.type.name.toLowerCase()}})">Type</div>
         <a class="btn btn-primary mt-3" th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
     </div>
 

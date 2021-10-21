@@ -15,8 +15,8 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <div th:replace="fragments/forms.html :: errorAlert"></div>
 
-        <div th:insert="fragments/person-form.html :: personalData"></div>
-        <div th:insert="fragments/person-form.html :: userData"></div>
+        <div th:insert="fragments/forms.html :: personalData"></div>
+        <div th:insert="fragments/forms.html :: userData"></div>
 
         <div th:insert="fragments/forms.html :: formSubmission"></div>
     </form>

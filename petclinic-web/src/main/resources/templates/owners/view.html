@@ -10,8 +10,8 @@
 <main layout:fragment="content">
     <h1 class="display-4" th:text="${owner.personalData.fullName()}">Name</h1>
 
-    <div th:replace="fragments/view-grid :: viewElement(#{username}, ${owner.personalData.user.username})">Username</div>
-    <div th:replace="fragments/view-grid :: viewElement('Role', ${owner.personalData.user.role})">Role</div>
+    <div th:replace="fragments/views :: showElement(#{username}, ${owner.personalData.user.username})">Username</div>
+    <div th:replace="fragments/views :: showElement('Role', ${owner.personalData.user.role})">Role</div>
     <a class="btn btn-primary my-3" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 
     <h2 th:text="#{pets}">Pets</h2>
