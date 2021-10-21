@@ -2,6 +2,7 @@ package xyz.haff.petclinic.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,9 +13,12 @@ import xyz.haff.petclinic.models.forms.CreationConstraintGroup;
 import xyz.haff.petclinic.models.forms.PersonForm;
 import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.VetRepository;
+import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.PersonFormValidationService;
 import xyz.haff.petclinic.services.VetService;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -53,8 +57,17 @@ public class VetsController {
 
     @GetMapping(DELETE_PATH)
     @PreAuthorize("hasAuthority('VET')")
-    public String delete(@PathVariable UUID vetId) {
+    public String delete(@AuthenticationPrincipal UserDetailsAdapter userDetails,
+                         @PathVariable UUID vetId,
+                         HttpServletRequest request) throws ServletException {
+        var vet = vetRepository.findById(vetId).orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId));
+
         vetRepository.deleteById(vetId);
+
+        if (vet.getPersonalData().getUser().getId().equals(userDetails.getUser().getId())) {
+            request.logout();
+            return "redirect:/";
+        }
 
         return "redirect:" + BASE_PATH;
     }
