@@ -15,12 +15,10 @@
 
     <table class="table">
         <thead>
-        <tr>
-            <th scope="col" th:text="#{name}">Name</th>
-            <th scope="col" th:text="#{delete}">Delete</th>
-            <th scope="col" th:text="#{view}">View</th>
-            <th scope="col" th:text="#{edit}">Edit</th>
-        </tr>
+            <tr>
+                <th scope="col" th:text="#{name}">Name</th>
+                <th th:replace="fragments/actions :: tableHeaders"></th>
+            </tr>
         </thead>
         <tr th:each="owner : ${owners}">
             <td th:text="${owner.personalData.fullName}">Full name</td>

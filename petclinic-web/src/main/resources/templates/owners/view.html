@@ -21,9 +21,7 @@
             <th scope="col" th:text="#{name}">Name</th>
             <th scope="col" th:text="#{birthdate}">Birthdate</th>
             <th scope="col" th:text="#{type}">Type</th>
-            <th scope="col" th:text="#{view}">View</th>
-            <th scope="col" th:text="#{edit}">Edit</th>
-            <th scope="col" th:text="#{delete}">Delete</th>
+            <th th:replace="fragments/actions :: tableHeaders">
         </tr>
         </thead>
         <tr th:each="pet : ${owner.pets}">

@@ -5,6 +5,12 @@
 </head>
 <body>
 
+<th:block th:fragment="tableHeaders">
+    <th scope="col" th:text="#{delete}">Delete</th>
+    <th scope="col" th:text="#{view}">View</th>
+    <th scope="col" th:text="#{edit}">Edit</th>
+</th:block>
+
 <a th:fragment="delete(name, uri)"
    th:onclick="showModal([[${name}]], [[${uri}]])"
    href="javascript:;"

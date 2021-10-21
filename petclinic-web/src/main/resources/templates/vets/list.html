@@ -9,15 +9,12 @@
 <body>
 <main layout:fragment="content">
 <h1 class="display-4 text-center" th:text="#{vets}">Vets</h1>
-<!-- TODO: This is more or less the same as the list owners view, see if I can dry them somehow -->
 <table class="table">
     <thead>
     <tr>
         <th scope="col" th:text="#{name}">Name</th>
         <th scope="col" th:text="#{specialty}">Specialty</th>
-        <th scope="col" th:text="#{delete}">Delete</th>
-        <th scope="col" th:text="#{view}">View</th>
-        <th scope="col" th:text="#{edit}">Edit</th>
+        <th th:replace="fragments/actions :: tableHeaders"></th>
     </tr>
     </thead>
     <tr th:each="vet : ${vets}">
