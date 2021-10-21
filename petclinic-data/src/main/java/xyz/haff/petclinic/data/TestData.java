@@ -62,4 +62,29 @@ public class TestData {
             .type(PetType.CAT)
             .owner(joeSmith)
             .build();
+
+    public static final Visit mittensVisit1 = Visit.builder()
+            .date(LocalDate.of(2019, 12, 3))
+            .pet(mittens)
+            .vet(kennyWiggins)
+            .reason("Sneezy kitty")
+            .vetComment("Suggestion: Keep cat out of fridge")
+            .build();
+
+    public static final Visit mittensVisit2 = Visit.builder()
+            .date(LocalDate.of(2019, 12, 4))
+            .pet(mittens)
+            .vet(kennyWiggins)
+            .reason("Too fluffy kitty")
+            .vetComment("Suggestion: Shave cat")
+            .build();
+
+    public static final Visit mittensVisit3 = Visit.builder()
+            .date(LocalDate.of(2019, 12, 5))
+            .pet(mittens)
+            .vet(kennyWiggins)
+            .reason("Bitty kitty")
+            .vetComment("Observation: Cat is actually a capybara")
+            .build()
+            ;
 }

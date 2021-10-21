@@ -7,3 +7,4 @@
 * See if I can use `mapstruct` for form converters
 * My own login form
 * Try to edit a vet and remove first name and last name, the result is an empty header. What do I do?
+* A "Your Pets" link on navbar for owners

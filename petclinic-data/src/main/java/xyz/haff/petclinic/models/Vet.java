@@ -1,26 +1,25 @@
 package xyz.haff.petclinic.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @SuperBuilder
 public class Vet extends Person {
     @Enumerated(EnumType.STRING)
     @Column(name = "specialty")
+    @ToString.Include
     @NotNull
     private Specialty specialty;
+
+    @OneToMany(mappedBy = "vet")
+    private List<Visit> visits;
 }

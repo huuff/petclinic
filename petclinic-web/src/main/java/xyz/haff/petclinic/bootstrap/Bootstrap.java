@@ -9,6 +9,7 @@ import xyz.haff.petclinic.data.TestData;
 import xyz.haff.petclinic.repositories.OwnerRepository;
 import xyz.haff.petclinic.repositories.PetRepository;
 import xyz.haff.petclinic.repositories.VetRepository;
+import xyz.haff.petclinic.repositories.VisitRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Bootstrap implements CommandLineRunner {
     private final OwnerRepository ownerRepository;
     private final VetRepository vetRepository;
     private final PetRepository petRepository;
+    private final VisitRepository visitRepository;
 
     @Override
     public void run(String... args) {
@@ -41,6 +43,15 @@ public class Bootstrap implements CommandLineRunner {
 
         var savedMittens = petRepository.save(TestData.mittens);
         logSaved(savedMittens);
+
+        var savedMittensVisit1 = visitRepository.save(TestData.mittensVisit1);
+        logSaved(savedMittensVisit1);
+
+        var savedMittensVisit2 = visitRepository.save(TestData.mittensVisit2);
+        logSaved(savedMittensVisit2);
+
+        var savedMittensVisit3 = visitRepository.save(TestData.mittensVisit3);
+        logSaved(savedMittensVisit3);
     }
 
     private void logSaved(Object object) {
