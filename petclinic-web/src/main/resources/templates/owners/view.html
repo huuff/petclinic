@@ -15,7 +15,7 @@
     <a class="btn btn-primary my-3" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>
 
     <h2 th:text="#{pets}">Pets</h2>
-    <table th:replace="fragments/tables :: petList(${owner.pets})"></table>
+    <table th:replace="fragments/lists :: petTable(${owner.pets})"></table>
     <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
 
     <div th:replace="fragments/actions :: deleteModal"></div>

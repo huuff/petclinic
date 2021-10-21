@@ -11,7 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -31,9 +31,9 @@ public class Visit extends AbstractBaseEntity {
     @JoinColumn(name = "vet_id")
     private Vet vet;
 
-    @Column(name = "date")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private LocalDate date;
+    @Column(name = "date_time")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    private LocalDateTime dateTime;
 
     @Column(name = "reason")
     @ToString.Include

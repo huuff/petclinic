@@ -14,7 +14,7 @@
 <main layout:fragment="content">
     <h1 class="display-4 text-center" th:text="#{pets}">Pets</h1>
 
-    <table th:replace="fragments/tables :: petList(${owner.pets})"></table>
+    <table th:replace="fragments/lists :: petTable(${owner.pets})"></table>
     <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
 
     <div th:replace="fragments/actions.html :: deleteModal"></div>

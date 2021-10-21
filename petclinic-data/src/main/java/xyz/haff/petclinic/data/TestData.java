@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 import xyz.haff.petclinic.models.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @UtilityClass
 public class TestData {
@@ -64,7 +65,7 @@ public class TestData {
             .build();
 
     public static final Visit mittensVisit1 = Visit.builder()
-            .date(LocalDate.of(2019, 12, 3))
+            .dateTime(LocalDateTime.of(2019, 12, 3, 12, 0))
             .pet(mittens)
             .vet(kennyWiggins)
             .reason("Sneezy kitty")
@@ -72,7 +73,7 @@ public class TestData {
             .build();
 
     public static final Visit mittensVisit2 = Visit.builder()
-            .date(LocalDate.of(2019, 12, 4))
+            .dateTime(LocalDateTime.of(2019, 12, 4, 12, 0))
             .pet(mittens)
             .vet(kennyWiggins)
             .reason("Too fluffy kitty")
@@ -80,7 +81,7 @@ public class TestData {
             .build();
 
     public static final Visit mittensVisit3 = Visit.builder()
-            .date(LocalDate.of(2019, 12, 5))
+            .dateTime(LocalDateTime.of(2019, 12, 5, 12, 0))
             .pet(mittens)
             .vet(kennyWiggins)
             .reason("Bitty kitty")
