@@ -18,6 +18,8 @@
     <div sec:authorize="hasAuthority('OWNER')">
         <div th:replace="fragments/lists :: visitsBlock(${@visitService.findAllOfOwner(authOwner.id)}, true)"></div>
     </div>
+
+    <p class="text-muted" sec:authorize="!isAuthenticated()" th:utext="#{sign_up_encouragement(@{/owners/create})}"></p>
 </main>
 </body>
 </html>
