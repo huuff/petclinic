@@ -17,3 +17,4 @@
 * Some way of telling an owner he doesn't have any pets and to add one
 * Sign up in index body instead of navbar?
 * Block login for an account on 3 password failures
+* It really looks like visits should be called appointments

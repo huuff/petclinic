@@ -22,6 +22,21 @@
     </tr>
 </table>
 
+<div
+        th:fragment="visitsBlock(visits)"
+        th:with="pastVisits = ${@visitService.filterPast(visits)}, upcomingVisits = ${@visitService.filterUpcoming(visits)}"
+        class="mt-4"
+>
+    <h2 th:text="#{visits}"></h2>
+    <hr>
+    <h3 class="h4" th:text="#{upcoming_visits}">Upcoming visits</h3>
+    <div th:replace="this :: visitAccordion(${upcomingVisits})"></div>
+    <p th:if="${#lists.isEmpty(upcomingVisits)}" class="text-muted" th:text="#{no_upcoming_visits}"></p>
+    <h3 class="h4" th:text="#{past_visits}">Past visits</h3>
+    <div th:replace="this :: visitAccordion(${pastVisits})"></div>
+
+</div>
+
 <div th:fragment="visitAccordion(visits)" class="accordion" id="visitsAccordion">
     <div
             th:each="visit, i : ${visits}"
