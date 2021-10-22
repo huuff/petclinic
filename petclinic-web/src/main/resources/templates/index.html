@@ -16,6 +16,10 @@
     <div sec:authorize="hasAuthority('VET')">
         <div th:replace="fragments/lists :: visitsBlock(${authVet.visits}, true)"></div>
     </div>
+
+    <div sec:authorize="hasAuthority('OWNER')">
+        <div th:replace="fragments/lists :: visitsBlock(${@visitService.findAllOfOwner(authOwner.id)}, true)"></div>
+    </div>
 </main>
 </body>
 </html>
