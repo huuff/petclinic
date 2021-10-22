@@ -42,6 +42,10 @@ public class TitleService {
         addTitle(model, getTranslationForLocale("new_pet", locale));
     }
 
+    public void newAppointment(Model model, Locale locale) {
+        addTitle(model, getTranslationForLocale("make_appointment", locale));
+    }
+
     public void person(Model model, PersonalData personalData) {
         addTitle(model, personalData.fullName());
     }

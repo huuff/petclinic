@@ -15,3 +15,4 @@
 * Block login for an account on 3 password failures
 * It really looks like visits should be called appointments
 * An awful lot of my accesses to repositories are followed by checking whether the object is present and throwing an execption if not. This is getting really old. Encapsulate them in services.
+* Selector fragment

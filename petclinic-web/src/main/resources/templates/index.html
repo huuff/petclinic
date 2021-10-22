@@ -16,6 +16,7 @@
     </div>
 
     <div sec:authorize="hasAuthority('OWNER')">
+        <a class="btn btn-primary btn-lg my-2 d-block" role="button" th:href="@{/visits/create}" th:text="#{make_appointment}">Make appointment</a>
         <div th:replace="fragments/lists :: visitsBlock(${@visitService.findAllOfOwner(authOwner.id)}, true)"></div>
     </div>
 
