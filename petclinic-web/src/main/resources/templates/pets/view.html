@@ -4,12 +4,9 @@
       layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${pet.name}">Pet</title>
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 class="display-4" th:text="${pet.name}">Pet</h1>
-
     <div>
         <div th:replace="fragments/views :: showElement(#{birthdate}, ${pet.birthDate})">Birthdate</div>
         <div th:replace="fragments/views :: showElement(#{type}, #{${pet.type.name.toLowerCase()}})">Type</div>

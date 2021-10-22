@@ -18,9 +18,12 @@ import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.*;
 
 import javax.validation.Valid;
+import java.util.Locale;
 import java.util.UUID;
 
 import static xyz.haff.petclinic.controllers.ControllerUtil.redirect;
+
+// TODO: This controller is getting really large, consider extracting services
 
 @Controller
 @RequiredArgsConstructor
@@ -41,10 +44,12 @@ public class OwnersController {
     private final PetFormValidationService petFormValidationService;
     private final LoginService loginService;
     private final PersonFormValidationService personFormValidationService;
+    private final TitleService titleService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('VET')")
-    public String list(Model model) {
+    public String list(Model model, Locale locale) {
+        titleService.listOwners(model, locale);
         model.addAttribute("owners", ownerRepository.findAll());
 
         return "owners/list";
@@ -52,8 +57,9 @@ public class OwnersController {
 
     @GetMapping(CREATE)
     @PreAuthorize("!hasAuthority('OWNER')")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model, Locale locale) {
         model.addAttribute("ownerForm", new OwnerForm());
+        titleService.newOwner(model, locale);
 
         return EDIT_VIEW;
     }
@@ -62,10 +68,14 @@ public class OwnersController {
     public String create(
             @AuthenticationPrincipal UserDetailsAdapter user,
             @Validated(CreationConstraintGroup.class) @ModelAttribute OwnerForm ownerForm,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            Model model,
+            Locale locale
     ) {
-        if (!personFormValidationService.checkNewIsValid(ownerForm, bindingResult))
+        if (!personFormValidationService.checkNewIsValid(ownerForm, bindingResult)) {
+            titleService.newOwner(model, locale);
             return EDIT_VIEW;
+        }
 
         var newOwner = ownerService.register(ownerForm);
 
@@ -88,8 +98,10 @@ public class OwnersController {
     @GetMapping("/{ownerId}")
     @EditOwner
     public String view(@PathVariable UUID ownerId, Model model) {
-        model.addAttribute("owner", ownerRepository.findById(ownerId)
-                .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId)));
+        var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
+
+        titleService.person(model, owner.getPersonalData());
+        model.addAttribute("owner", owner);
 
         return "owners/view";
     }
@@ -97,22 +109,27 @@ public class OwnersController {
     @GetMapping(UPDATE)
     @EditOwner
     public String showEditForm(@PathVariable UUID ownerId, Model model) {
-        model.addAttribute("ownerForm", ownerService.createForm(ownerId));
+        var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
+
+        model.addAttribute("title", owner.getPersonalData().fullName());
+        model.addAttribute("ownerForm", ownerService.createForm(owner));
 
         return EDIT_VIEW;
     }
 
     @PostMapping(UPDATE)
     @EditOwner
-    public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult) {
+    public String edit(@PathVariable UUID ownerId, @Valid OwnerForm ownerForm, BindingResult bindingResult, Model model) {
         var editingPerson = ownerRepository.findById(ownerId)
                 .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId))
                 .getPersonalData();
 
         personFormValidationService.checkEditIsValid(editingPerson, ownerForm, bindingResult);
 
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            titleService.person(model, editingPerson);
             return EDIT_VIEW;
+        }
 
         ownerService.updateOwner(ownerId, ownerForm);
 
@@ -121,9 +138,10 @@ public class OwnersController {
 
     @GetMapping(PETS_PATH)
     @EditOwner
-    public String listPets(@PathVariable UUID ownerId, Model model) {
+    public String listPets(@PathVariable UUID ownerId, Model model, Locale locale) {
         var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
 
+        titleService.listPets(model, locale);
         model.addAttribute("owner", owner);
 
         return "pets/list";
@@ -131,10 +149,11 @@ public class OwnersController {
 
     @GetMapping(CREATE_PET_PATH)
     @EditOwner
-    public String showCreatePetForm(@PathVariable UUID ownerId, Model model) {
+    public String showCreatePetForm(@PathVariable UUID ownerId, Model model, Locale locale) {
         if (!ownerRepository.existsById(ownerId))
             throw SpecificNotFoundException.fromOwnerId(ownerId);
 
+        titleService.newPet(model, locale);
         model.addAttribute("petForm", new PetForm());
 
         return PetController.EDIT_VIEW;
@@ -142,12 +161,19 @@ public class OwnersController {
 
     @PostMapping(CREATE_PET_PATH)
     @EditOwner
-    public String createPet(@PathVariable UUID ownerId, @Validated(CreationConstraintGroup.class) PetForm petForm, BindingResult bindingResult) {
+    public String createPet(
+            @PathVariable UUID ownerId,
+            @Validated(CreationConstraintGroup.class) PetForm petForm,
+            BindingResult bindingResult,
+            Model model,
+            Locale locale
+    ) {
         petFormValidationService.checkNameIsDuplicated(petForm, ownerId, bindingResult);
 
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            titleService.newPet(model, locale);
             return PetController.EDIT_VIEW;
-        else {
+        } else {
             var owner = ownerRepository.findById(ownerId).orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId));
             var savedPet = petService.createPet(owner, petForm);
 

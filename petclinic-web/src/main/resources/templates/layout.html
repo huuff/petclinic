@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Pet Clinic</title>
+    <title th:text="${title}">Pet Clinic</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.2/css/bootstrap.min.css}">
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css}">
     <link th:rel="stylesheet" th:href="@{/webjars/flag-icon-css/3.5.0/css/flag-icon.min.css}">
@@ -34,7 +34,7 @@
             <ul
                     class="navbar-nav d-flex flex-col flex-md-row align-items-end align-items-md-center justify-content-end px-0 ms-auto me-2"
                     style="position: relative;"
-                 >
+            >
                 <li class="nav-item">
                     <a class="nav-link"
                        th:classappend="${route.name == 'OWNERS' ? 'active' : ''}"
@@ -111,9 +111,12 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-0 col-lg-3"></div>
-        <main layout:fragment="content" class="col">
-            <p>Page content goes here</p>
-        </main>
+        <div class="col">
+            <h1 class="display-4 mb-4" th:text="${title}">Title</h1>
+            <main layout:fragment="content" class="col">
+                <p>Page content goes here</p>
+            </main>
+        </div>
         <div class="col-sm-0 col-lg-3"></div>
     </div>
 </div>

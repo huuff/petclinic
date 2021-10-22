@@ -15,11 +15,13 @@ import xyz.haff.petclinic.models.forms.VetForm;
 import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.PersonFormValidationService;
+import xyz.haff.petclinic.services.TitleService;
 import xyz.haff.petclinic.services.VetService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Locale;
 import java.util.UUID;
 
 @Controller
@@ -36,11 +38,13 @@ public class VetsController {
 
     private final VetRepository vetRepository;
     private final VetService vetService;
+    private final TitleService titleService;
     private final PersonFormValidationService personFormValidationService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('VET')")
-    public String list(Model model) {
+    public String list(Model model, Locale locale) {
+        titleService.listVets(model, locale);
         model.addAttribute("vets", vetRepository.findAll());
 
         return LIST_VIEW;
@@ -49,8 +53,10 @@ public class VetsController {
     @GetMapping("/{vetId}")
     @PreAuthorize("hasAuthority('VET')")
     public String read(@PathVariable UUID vetId, Model model) {
-        model.addAttribute("vet", vetRepository.findById(vetId)
-                .orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId)));
+        var vet = vetRepository.findById(vetId).orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId));
+        titleService.person(model, vet.getPersonalData());
+
+        model.addAttribute("vet", vet);
 
         return READ_VIEW;
     }
@@ -74,7 +80,8 @@ public class VetsController {
 
     @GetMapping(CREATE_PATH)
     @PreAuthorize("hasAuthority('VET')")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model, Locale locale) {
+        titleService.newVet(model, locale);
         model.addAttribute("vetForm", new VetForm());
 
         return EDIT_VIEW;
@@ -82,9 +89,16 @@ public class VetsController {
 
     @PostMapping(CREATE_PATH)
     @PreAuthorize("hasAuthority('VET')")
-    public String create(@Validated(CreationConstraintGroup.class) @ModelAttribute VetForm vetForm, BindingResult bindingResult) {
-        if (!personFormValidationService.checkNewIsValid(vetForm, bindingResult))
+    public String create(
+            @Validated(CreationConstraintGroup.class) @ModelAttribute VetForm vetForm,
+            BindingResult bindingResult,
+            Model model,
+            Locale locale
+    ) {
+        if (!personFormValidationService.checkNewIsValid(vetForm, bindingResult)) {
+            titleService.newVet(model, locale);
             return EDIT_VIEW;
+        }
 
         vetService.registerVet(vetForm);
 
@@ -94,22 +108,27 @@ public class VetsController {
     @GetMapping(UPDATE_PATH)
     @PreAuthorize("hasAuthority('VET')")
     public String showEditForm(@PathVariable UUID vetId, Model model) {
-        model.addAttribute("vetForm", vetService.createForm(vetId));
+        var vet = vetRepository.findById(vetId).orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId));
+
+        titleService.person(model, vet.getPersonalData());
+        model.addAttribute("vetForm", vetService.createForm(vet));
 
         return EDIT_VIEW;
     }
 
     @PostMapping(UPDATE_PATH)
     @PreAuthorize("hasAuthority('VET')")
-    public String edit(@PathVariable UUID vetId, @Valid VetForm vetForm, BindingResult bindingResult) {
+    public String edit(@PathVariable UUID vetId, @Valid VetForm vetForm, BindingResult bindingResult, Model model) {
         var editingPerson = vetRepository.findById(vetId)
                 .orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId))
                 .getPersonalData();
 
         personFormValidationService.checkEditIsValid(editingPerson, vetForm, bindingResult);
 
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            titleService.person(model, editingPerson);
             return EDIT_VIEW;
+        }
 
         vetService.updateVet(vetId, vetForm);
 

@@ -4,12 +4,9 @@
       layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${owner.personalData.fullName()}">Name</title>
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 class="display-4" th:text="${owner.personalData.fullName()}">Name</h1>
-
     <div th:replace="fragments/views :: showElement(#{username}, ${owner.personalData.user.username})">Username</div>
     <div th:replace="fragments/views :: showElement('Role', ${owner.personalData.user.role})">Role</div>
     <a class="btn btn-primary my-3" th:text="#{edit}" th:href="@{|/owners/${owner.id}/update|}"></a>

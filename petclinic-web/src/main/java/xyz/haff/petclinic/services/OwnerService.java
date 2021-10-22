@@ -19,8 +19,12 @@ public class OwnerService {
     private final PersonalDataService personalDataService;
 
     public OwnerForm createForm(UUID ownerId) {
-        return ownerToOwnerFormConverter.convert(ownerRepository.findById(ownerId)
+        return createForm(ownerRepository.findById(ownerId)
                 .orElseThrow(() -> SpecificNotFoundException.fromOwnerId(ownerId)));
+    }
+
+    public OwnerForm createForm(Owner owner) {
+        return ownerToOwnerFormConverter.convert(owner);
     }
 
     public void updateOwner(UUID ownerId, OwnerForm ownerForm) {

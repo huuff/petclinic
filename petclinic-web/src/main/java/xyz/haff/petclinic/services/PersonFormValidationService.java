@@ -2,6 +2,7 @@ package xyz.haff.petclinic.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import xyz.haff.petclinic.models.PersonalData;
 import xyz.haff.petclinic.models.forms.PersonForm;
@@ -37,7 +38,6 @@ public class PersonFormValidationService {
 
         return !bindingResult.hasErrors();
     }
-
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean checkNewIsValid(PersonForm vetForm, BindingResult bindingResult) {

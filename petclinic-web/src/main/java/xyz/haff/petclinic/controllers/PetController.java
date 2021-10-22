@@ -20,7 +20,9 @@ import xyz.haff.petclinic.repositories.PetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.PetFormValidationService;
 import xyz.haff.petclinic.services.PetService;
+import xyz.haff.petclinic.services.TitleService;
 
+import java.util.Locale;
 import java.util.UUID;
 
 @Controller
@@ -39,14 +41,15 @@ public class PetController {
     private final PetToPetFormConverter petToPetForm;
     private final PetFormValidationService petFormValidationService;
     private final PetService petService;
+    private final TitleService titleService;
 
     private final OwnerRepository ownerRepository;
 
     // TODO: This shows pets for an owner, add one that shows all pets for all owners for a vet
     @GetMapping()
     @PreAuthorize("hasAuthority('OWNER')")
-    public String viewPets(@AuthenticationPrincipal UserDetailsAdapter userDetails, Model model) {
-        System.out.println("test");
+    public String viewPets(@AuthenticationPrincipal UserDetailsAdapter userDetails, Model model, Locale locale) {
+        titleService.listPets(model, locale);
         var userId = userDetails.getUser().getId();
 
         var owner = ownerRepository.findByUserId(userId).orElseThrow(() -> SpecificNotFoundException.fromUserId(userId));
@@ -70,6 +73,7 @@ public class PetController {
     public String read(@PathVariable UUID petId, Model model) {
         var pet = petRepository.findById(petId).orElseThrow(() -> SpecificNotFoundException.fromPetId(petId));
 
+        titleService.pet(model, pet);
         model.addAttribute("pet", pet);
 
         return READ_VIEW;
@@ -80,6 +84,7 @@ public class PetController {
     public String showUpdateForm(@PathVariable UUID petId, Model model) {
         var petToUpdate = petRepository.findById(petId).orElseThrow(() -> SpecificNotFoundException.fromPetId(petId));
 
+        titleService.pet(model, petToUpdate);
         model.addAttribute("petForm", petToPetForm.convert(petToUpdate));
 
         return EDIT_VIEW;
@@ -87,16 +92,17 @@ public class PetController {
 
     @PostMapping(UPDATE_PATH)
     @EditPet
-    public String update(@PathVariable UUID petId, @Validated PetForm petForm, BindingResult bindingResult) {
+    public String update(@PathVariable UUID petId, @Validated PetForm petForm, BindingResult bindingResult, Model model) {
         var editingPet = petRepository.findById(petId).orElseThrow(() -> SpecificNotFoundException.fromPetId(petId));
         var owner = editingPet.getOwner();
 
         if (!editingPet.getName().equals(petForm.getName()))
             petFormValidationService.checkNameIsDuplicated(petForm, owner, bindingResult);
 
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            titleService.pet(model, editingPet);
             return EDIT_VIEW;
-        else {
+        } else {
             petService.updatePet(editingPet, petForm);
 
             return "redirect:" + viewPetUrl(petId);

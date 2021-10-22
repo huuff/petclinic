@@ -11,8 +11,6 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 class="display-4 text-center" th:text="${authPerson} ? |#{welcome}, ${authPerson.firstName}| : #{welcome}"></h1>
-
     <div sec:authorize="hasAuthority('VET')">
         <div th:replace="fragments/lists :: visitsBlock(${authVet.visits}, true)"></div>
     </div>

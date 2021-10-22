@@ -7,12 +7,9 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title th:text="${vet.personalData.fullName()}">Name</title>
 </head>
 <body>
 <main layout:fragment="content">
-    <h1 class="display-4" th:text="${vet.personalData.fullName()}">Name</h1>
-
     <div th:replace="fragments/views :: showElement(#{username}, ${vet.personalData.user.username})">Username</div>
     <div th:replace="fragments/views :: showElement(#{specialty}, #{${vet.specialty.name.toLowerCase}})">Specialty
     </div>

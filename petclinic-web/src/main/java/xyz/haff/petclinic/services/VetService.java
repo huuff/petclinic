@@ -19,10 +19,15 @@ public class VetService {
     private final PersonalDataService personalDataService;
 
     public VetForm createForm(UUID vetId) {
-        return vetToVetForm.convert(vetRepository.findById(vetId)
+        return createForm(vetRepository.findById(vetId)
         .orElseThrow(() -> SpecificNotFoundException.fromVetId(vetId)));
     }
 
+    public VetForm createForm(Vet vet) {
+        return vetToVetForm.convert(vet);
+    }
+
+    @SuppressWarnings("UnusedReturnValue")
     public Vet registerVet(VetForm vetForm) {
         var vet = vetFormToVet.convert(vetForm);
         return vetRepository.save(vet);

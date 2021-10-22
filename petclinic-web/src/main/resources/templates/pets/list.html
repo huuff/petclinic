@@ -7,13 +7,10 @@
 <!-- TODO: Add owners name? as in `Owner's pets` -->
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{pets}">Pets</title>
 </head>
 <body>
 
 <main layout:fragment="content">
-    <h1 class="display-4 text-center" th:text="#{pets}">Pets</h1>
-
     <table th:replace="fragments/lists :: petTable(${owner.pets})"></table>
     <a class="btn btn-primary" th:text="#{add_new}" th:href="@{|/owners/${owner.id}/pets/create|}">Add new</a>
 
