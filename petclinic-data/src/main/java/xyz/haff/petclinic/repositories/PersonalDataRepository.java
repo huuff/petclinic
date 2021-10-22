@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface PersonalDataRepository extends CrudRepository<PersonalData, UUID> {
 
-    PersonalData findByUserId(UUID userId);
+    Optional<PersonalData> findByUserId(UUID userId);
 
     Optional<PersonalData> findByFirstNameAndLastName(String firstName, String lastName);
 }

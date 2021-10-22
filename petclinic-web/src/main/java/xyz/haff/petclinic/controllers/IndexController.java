@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.repositories.PersonalDataRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 
@@ -23,10 +24,6 @@ public class IndexController {
     @GetMapping
     @PreAuthorize("permitAll()")
     public String index(Model model, @AuthenticationPrincipal UserDetailsAdapter userDetails) {
-        if (userDetails != null) {
-            model.addAttribute("name", personalDataRepository.findByUserId(userDetails.getUser().getId()).getFirstName());
-        }
-
         return "index";
     }
 

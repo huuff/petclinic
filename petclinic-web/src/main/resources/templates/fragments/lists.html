@@ -23,21 +23,25 @@
 </table>
 
 <div
-        th:fragment="visitsBlock(visits)"
+        th:fragment="visitsBlock(visits, showPetNames)"
         th:with="pastVisits = ${@visitService.filterPast(visits)}, upcomingVisits = ${@visitService.filterUpcoming(visits)}"
         class="mt-4"
 >
     <h2 th:text="#{visits}"></h2>
     <hr>
     <h3 class="h4" th:text="#{upcoming_visits}">Upcoming visits</h3>
-    <div th:replace="this :: visitAccordion(${upcomingVisits})"></div>
+    <div th:replace="this :: visitAccordion(${upcomingVisits}, ${showPetNames})"></div>
     <p th:if="${#lists.isEmpty(upcomingVisits)}" class="text-muted" th:text="#{no_upcoming_visits}"></p>
     <h3 class="h4" th:text="#{past_visits}">Past visits</h3>
-    <div th:replace="this :: visitAccordion(${pastVisits})"></div>
+    <div th:replace="this :: visitAccordion(${pastVisits}, ${showPetNames})"></div>
 
 </div>
 
-<div th:fragment="visitAccordion(visits)" class="accordion" id="visitsAccordion">
+<div
+        th:fragment="visitAccordion(visits, showPetName)"
+        class="accordion"
+        id="visitsAccordion"
+>
     <div
             th:each="visit, i : ${visits}"
             class="accordion-item"
@@ -49,9 +53,10 @@
                     aria-expanded="false"
                     th:attr="data-bs-toggle='collapse', data-bs-target='#visitBody-' + ${i.index}, aria-controls='visitBody' + ${i.index}"
             >
-                <div class="row">
-                    <div class="col fw-bold" th:text="${visit.getDateTime}">Visit</div>
-                    <div class="col" th:text="${visit.getReason}"></div>
+                <div class="row justify-content-between w-100">
+                    <div class="col-12 col-xl fw-bold" th:text="${visit.getDateTime}">Visit</div> <!-- TODO: This is not showing correctly -->
+                    <div class="col-12 col-xl" th:if="${showPetName}" th:text="${visit.pet.getName}">Pet</div>
+                    <div class="col-12 col-xl" th:text="${visit.getReason}">Reason</div>
                 </div>
             </button>
         </h2>

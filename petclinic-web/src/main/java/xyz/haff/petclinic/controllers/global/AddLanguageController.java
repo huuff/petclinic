@@ -1,4 +1,4 @@
-package xyz.haff.petclinic.controllers;
+package xyz.haff.petclinic.controllers.global;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class AddLanguageControllerAdvice {
+public class AddLanguageController {
 
     @ModelAttribute
     public void addRouteToModel(Model model, WebRequest webRequest) {

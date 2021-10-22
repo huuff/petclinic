@@ -1,10 +1,11 @@
-package xyz.haff.petclinic.controllers;
+package xyz.haff.petclinic.controllers.global;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import xyz.haff.petclinic.controllers.Route;
 
 /**
  * Controller advice to get the route and add it to the model for all controllers. This is used by the navbar to
@@ -12,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
  */
 
 @ControllerAdvice
-public class AddRouteControllerAdvice {
+public class AddRouteController {
 
     @ModelAttribute
     public void addRouteToModel(Model model, WebRequest webRequest) {

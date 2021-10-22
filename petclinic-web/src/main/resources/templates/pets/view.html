@@ -16,7 +16,7 @@
         <a class="btn btn-primary mt-3" th:text="#{edit}" th:href="@{|/pets/${pet.id}/update|}">Edit</a>
     </div>
 
-    <div th:replace="fragments/lists :: visitsBlock(${pet.visits})"></div>
+    <div th:replace="fragments/lists :: visitsBlock(${pet.visits}, false)"></div>
 
 
 </main>

@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class VisitService {
-    private final VisitRepository visitRepository;
-
     public List<Visit> filterPast(List<Visit> visits) {
         return visits.stream().filter(visit -> visit.getDateTime().isBefore(LocalDateTime.now())).collect(Collectors.toList());
     }

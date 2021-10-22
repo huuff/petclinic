@@ -1,4 +1,4 @@
-package xyz.haff.petclinic.controllers;
+package xyz.haff.petclinic.controllers.global;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;

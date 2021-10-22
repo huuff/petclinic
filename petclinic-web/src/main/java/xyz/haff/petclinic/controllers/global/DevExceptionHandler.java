@@ -1,4 +1,4 @@
-package xyz.haff.petclinic.controllers;
+package xyz.haff.petclinic.controllers.global;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -11,7 +11,7 @@ import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 @ControllerAdvice
 @Slf4j
 @Profile({"demo", "test"})
-public class DevGlobalExceptionHandlerController {
+public class DevExceptionHandler {
 
     @ExceptionHandler(SpecificNotFoundException.class)
     public String notFound(Model model, SpecificNotFoundException exception) {

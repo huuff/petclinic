@@ -1,4 +1,4 @@
-package xyz.haff.petclinic.controllers;
+package xyz.haff.petclinic.controllers.global;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @Slf4j
 @Profile("prod")
-public class ProdGlobalExceptionHandlerController {
+public class ProdExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String allExceptionsTo404(Exception exception) {
