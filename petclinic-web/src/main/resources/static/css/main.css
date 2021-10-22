@@ -9,3 +9,13 @@
     text-shadow: 2px 2px #BEBEBE;
     transition: transform 150ms ease-in-out, text-shadow 150ms ease-in-out;
 }
+
+textarea {
+    height: 150px !important;
+}
+
+@media screen and (max-width: 768px) {
+    textarea {
+        height: 50px !important;
+    }
+}
