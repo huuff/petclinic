@@ -1,8 +1,10 @@
 package xyz.haff.petclinic.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import xyz.haff.petclinic.models.Visit;
+import xyz.haff.petclinic.models.forms.VisitForm;
 import xyz.haff.petclinic.repositories.VisitRepository;
 
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VisitService {
     private final VisitRepository visitRepository;
+    private final Converter<VisitForm, Visit> visitFormToVisit;
 
     public List<Visit> filterPast(List<Visit> visits) {
         return visits.stream().filter(visit -> visit.getDateTime().isBefore(LocalDateTime.now())).collect(Collectors.toList());
@@ -25,5 +28,9 @@ public class VisitService {
 
     public List<Visit> findAllOfOwner(UUID ownerId) {
         return visitRepository.findByPet_OwnerId(ownerId);
+    }
+
+    public Visit saveVisit(VisitForm visitForm) {
+        return visitRepository.save(visitFormToVisit.convert(visitForm));
     }
 }

@@ -69,7 +69,7 @@ public class TestData {
             .pet(mittens)
             .vet(kennyWiggins)
             .reason("Sneezy kitty")
-            .vetComment("Suggestion: Keep cat out of fridge")
+            .vetComment("Suggested to keep cat out of fridge")
             .build();
 
     public static final Visit mittensVisit2 = Visit.builder()
@@ -77,7 +77,7 @@ public class TestData {
             .pet(mittens)
             .vet(kennyWiggins)
             .reason("Too fluffy kitty")
-            .vetComment("Suggestion: Shave cat")
+            .vetComment("Suggested to shave cat")
             .build();
 
     public static final Visit mittensVisit3 = Visit.builder()
@@ -85,7 +85,7 @@ public class TestData {
             .pet(mittens)
             .vet(kennyWiggins)
             .reason("Bitty kitty")
-            .vetComment("Observation: Cat is actually a capybara")
+            .vetComment("Cat is actually a capybara")
             .build()
             ;
 }

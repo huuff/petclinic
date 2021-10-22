@@ -6,7 +6,6 @@
 * Add RememberMe, use full authentication for CUD
 * See if I can use `mapstruct` for form converters
 * My own login form
-* Add the option to appoint a new visit for an owner in front page
 * Show different colors for visits in accordion depending on whether they are today, upcoming or passed.
 * Allow option for a vet to add a comment to a visit
 * Request vets to comment all past visits
