@@ -24,6 +24,21 @@
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('pet')}" th:errors="*{pet}"></div>
             </div>
         </div>
+
+        <div class="row mb-3 align-items-center">
+            <label class="col-sm-3 text-muted" for="pet" th:text="#{vet}">Vet</label>
+            <div class="col-sm-9">
+                <select class="form-select" th:field="*{vet}" id="vet" th:errorclass="is-invalid">
+                    <option th:text="#{selector}" th:value="null" th:selected="${visitForm.vet == null}"></option>
+                    <option th:each="vet : ${vets}"
+                            th:value="${vet.getId()}"
+                            th:text="${vet.getPersonalData().fullName()}"
+                    >Pet
+                    </option>
+                </select>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('vet')}" th:errors="*{vet}"></div>
+            </div>
+        </div>
     </form>
 </main>
 </body>

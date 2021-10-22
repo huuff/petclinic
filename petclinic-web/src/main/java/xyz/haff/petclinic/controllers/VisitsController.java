@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.haff.petclinic.exceptions.SpecificNotFoundException;
 import xyz.haff.petclinic.models.forms.VisitForm;
 import xyz.haff.petclinic.repositories.OwnerRepository;
+import xyz.haff.petclinic.repositories.VetRepository;
 import xyz.haff.petclinic.security.UserDetailsAdapter;
 import xyz.haff.petclinic.services.TitleService;
 
@@ -22,6 +23,7 @@ public class VisitsController {
     public static final String CREATE_PATH = "/create";
 
     private final OwnerRepository ownerRepository;
+    private final VetRepository vetRepository;
     private final TitleService titleService;
 
     @RequestMapping(VisitsController.CREATE_PATH)
@@ -39,6 +41,7 @@ public class VisitsController {
 
         model.addAttribute("visitForm", new VisitForm());
         model.addAttribute("pets", owner.getPets());
+        model.addAttribute("vets", vetRepository.findAll());
 
         return "visits/edit";
     }
