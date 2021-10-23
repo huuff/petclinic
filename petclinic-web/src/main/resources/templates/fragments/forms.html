@@ -14,6 +14,42 @@
 </div>
 
 
+<div th:fragment="alignedSelector(field, items, label)" class="row mb-3 align-items-center">
+    <label class="col-sm-3 text-muted" th:for="${field}" th:text="#{${label}}">Label</label>
+    <div class="col-sm-9">
+        <select class="form-select" th:field="*{__${field}__}" th:id="${field}" th:errorclass="is-invalid">
+            <option th:text="#{selector}" th:value="null" th:selected="*{__${field}__ == null}"></option>
+            <option th:each="value : ${items}"
+                    th:value="${value}"
+                    th:text="#{${value.prettyName()}}"
+            >Specialty
+            </option>
+        </select>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}">Error description</div>
+    </div>
+</div>
+
+<!--
+HACK: Since wherever I use these I don't need to translate the names of the fields, this one doesn't translate
+so there is this slight difference between aligned and stacked selectors
+HACK: They also have IDs as value instead of the name
+-->
+<div th:fragment="stackedSelector(field, items, label)" class="row mb-3 align-items-center">
+    <label class="text-muted" th:for="${field}" th:text="#{${label}}">Label</label>
+    <div>
+        <select class="form-select" th:field="*{__${field}__}" th:id="${field}" th:errorclass="is-invalid">
+            <option th:text="#{selector}" th:value="null" th:selected="*{__${field}__ == null}"></option>
+            <option th:each="value : ${items}"
+                    th:value="${value.getId()}"
+                    th:text="${value.prettyName()}"
+            >Specialty
+            </option>
+        </select>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}">Error description</div>
+    </div>
+</div>
+
+
 <div th:fragment="stackedInput (type, field, label)">
     <div class="mb-3">
         <label class="text-muted" th:for="${field}" th:text="#{${label}}"></label>

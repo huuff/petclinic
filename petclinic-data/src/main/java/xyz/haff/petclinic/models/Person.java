@@ -14,8 +14,13 @@ import javax.persistence.OneToOne;
 @MappedSuperclass
 @ToString(callSuper = true)
 @SuperBuilder
-public abstract class Person extends AbstractBaseEntity {
+public abstract class Person extends AbstractBaseEntity implements Named {
     @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "personal_data_id", referencedColumnName = "id")
     @Builder.Default private PersonalData personalData = PersonalData.builder().build();
+
+    @Override
+    public String prettyName() {
+        return personalData.fullName();
+    }
 }

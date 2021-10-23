@@ -15,20 +15,10 @@
 
         <div th:insert="fragments/forms :: alignedInput ('date', 'birthDate', 'birthdate')"></div>
 
-        <div class="row mb-3">
-            <label class="col-sm-3 text-muted" for="type" th:text="#{type}">Type</label>
-            <div class="col-sm-9">
-                <select class="form-select" th:field="*{type}" id="type" th:errorclass="is-invalid">
-                    <option th:text="#{selector}" th:value="null" th:selected="${petForm.type == null}">Choose one
-                    </option>
-                    <option th:each="petType : ${T(xyz.haff.petclinic.models.PetType).values()}"
-                            th:value="${petType.name()}"
-                            th:text="#{${petType.name.toLowerCase()}}"
-                    ></option>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Error description</div>
-                </select>
-            </div>
-        </div>
+        <div th:replace="~{fragments/forms :: alignedSelector(
+        'type',
+        ${@petTypeService.findAll()},
+         'type')}"></div>
 
         <div th:insert="fragments/forms :: submission"></div>
     </form>

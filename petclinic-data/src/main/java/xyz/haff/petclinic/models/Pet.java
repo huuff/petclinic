@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
-public class Pet extends AbstractBaseEntity {
+public class Pet extends AbstractBaseEntity implements Named {
 
     @ToString.Include
     @Column(name = "name")
@@ -45,4 +45,9 @@ public class Pet extends AbstractBaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
     private List<Visit> visits;
+
+    @Override
+    public String prettyName() {
+        return name;
+    }
 }

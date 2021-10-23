@@ -13,41 +13,27 @@
 
         <div class="row">
             <div class="col-lg-6 mb-3 align-items-center">
-                <label class="text-muted" for="pet" th:text="#{pet}">Pet</label>
-                <div>
-                    <select class="form-select" th:field="*{pet}" id="pet" th:errorclass="is-invalid">
-                        <option th:text="#{selector}" th:value="null" th:selected="${visitForm.pet == null}"></option>
-                        <option th:each="pet : ${pets}"
-                                th:value="${pet.getId()}"
-                                th:text="${pet.getName()}"
-                        >Pet
-                        </option>
-                    </select>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('pet')}" th:errors="*{pet}"></div>
-                </div>
+                <div th:replace="~{fragments/forms :: stackedSelector(
+                'pet',
+                ${pets},
+                'pet'
+                )}"></div>
             </div>
-
             <div class="col-lg-6 mb-3 align-items-center">
-                <label class="col-sm-3 text-muted" for="pet" th:text="#{vet}">Vet</label>
-                <div>
-                    <select class="form-select" th:field="*{vet}" id="vet" th:errorclass="is-invalid">
-                        <option th:text="#{selector}" th:value="null" th:selected="${visitForm.vet == null}"></option>
-                        <option th:each="vet : ${vets}"
-                                th:value="${vet.getId()}"
-                                th:text="${vet.getPersonalData().fullName()}"
-                        >Pet
-                        </option>
-                    </select>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('vet')}" th:errors="*{vet}"></div>
-                </div>
+                <div th:replace="~{fragments/forms :: stackedSelector(
+            'vet',
+            ${vets},
+             'vet')}"></div>
             </div>
         </div>
 
+
         <div class="row">
-            <div class="col-lg-6" th:insert="fragments/forms :: stackedInput('datetime-local', 'dateTime', 'date')"></div>
+            <div class="col-lg-6"
+                 th:insert="fragments/forms :: stackedInput('datetime-local', 'dateTime', 'date')"></div>
             <div class="col-lg-6">
-                <label class="text-muted" for="pet" th:text="#{reason}">Reason</label>
-                <textarea class="form-control" th:field="*{reason}" th:errorclass="is-invalid" id="reasonTextArea"></textarea>
+                <label class="text-muted" for="reason" th:text="#{reason}">Reason</label>
+                <textarea class="form-control" th:field="*{reason}" th:errorclass="is-invalid" id="reason"></textarea>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></div>
             </div>
         </div>

@@ -13,20 +13,10 @@
 
         <div th:insert="fragments/forms :: personalData"></div>
 
-        <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 text-muted" for="specialty" th:text="#{specialty}">Specialty</label>
-            <div class="col-sm-9">
-                <select class="form-select" th:field="*{specialty}" id="specialty" th:errorclass="is-invalid">
-                    <option th:text="#{selector}" th:value="null" th:selected="${vetForm.firstName == null}"></option>
-                    <option th:each="specialty : ${T(xyz.haff.petclinic.models.Specialty).values()}"
-                            th:value="${specialty.name()}"
-                            th:text="#{${specialty.name.toLowerCase()}}"
-                    >Specialty
-                    </option>
-                </select>
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></div>
-            </div>
-        </div>
+        <div th:replace="~{fragments/forms :: alignedSelector(
+        'specialty',
+        ${@specialtyService.findAll()},
+         'specialty')}"></div>
 
         <div th:insert="fragments/forms :: userData"></div>
 
