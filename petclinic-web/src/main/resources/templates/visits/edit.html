@@ -44,7 +44,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6" th:insert="fragments/forms :: formInputStacked('datetime-local', 'dateTime', 'date')"></div>
+            <div class="col-lg-6" th:insert="fragments/forms :: stackedInput('datetime-local', 'dateTime', 'date')"></div>
             <div class="col-lg-6">
                 <label class="text-muted" for="pet" th:text="#{reason}">Reason</label>
                 <textarea class="form-control" th:field="*{reason}" th:errorclass="is-invalid" id="reasonTextArea"></textarea>
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="text-center mt-3" th:insert="fragments/forms :: formSubmission"></div>
+        <div class="text-center mt-3" th:insert="fragments/forms :: submission"></div>
     </form>
 </main>
 </body>

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
 <body>
-<div th:fragment="formSubmission">
+<div th:fragment="submission">
     <div class="mb-2">
         <input class="btn btn-primary" type="submit" th:value="#{submit}"/>
     </div>
@@ -10,15 +13,15 @@
     </div>
 </div>
 
-<!-- TODO: Remove the `form` prefix from the names ` -->
-<div th:fragment="formInputStacked (type, field, label)">
+
+<div th:fragment="stackedInput (type, field, label)">
     <div class="mb-3">
         <label class="text-muted" th:for="${field}" th:text="#{${label}}"></label>
         <div th:replace="this :: inputField(type=${type}, field=${field})"></div>
         <div th:replace="this :: feedback(${field})"></div>
     </div>
 </div>
-<div th:fragment="formInputAligned (type, field, label)">
+<div th:fragment="alignedInput (type, field, label)">
     <div class="row mb-3 align-items-center">
         <label class="col-sm-3 col-form-label text-muted" th:for="${field}" th:text="#{${label}}"></label>
         <div class="col-sm-9">
@@ -67,22 +70,19 @@
 <div th:fragment="personalData">
     <div class="row">
         <div class="col-lg-6">
-            <div th:insert="fragments/forms :: formInputStacked ('text', 'firstName', 'first_name')"></div>
+            <div th:insert="fragments/forms :: stackedInput ('text', 'firstName', 'first_name')"></div>
         </div>
         <div class="col-lg-6">
-            <div th:insert="fragments/forms :: formInputStacked ('text', 'lastName', 'last_name')"></div>
+            <div th:insert="fragments/forms :: stackedInput ('text', 'lastName', 'last_name')"></div>
         </div>
     </div>
 </div>
 <div th:fragment="userData">
     <div class="mb-4">
-        <div th:insert="fragments/forms :: formInputAligned ('text', 'username', 'username')"></div>
+        <div th:insert="fragments/forms :: alignedInput ('text', 'username', 'username')"></div>
     </div>
-    <div th:insert="fragments/forms :: formInputAligned ('password', 'password', 'password')"></div>
-    <div th:insert="fragments/forms :: formInputAligned ('password', 'repeatPassword', 'repeat_password')"></div>
+    <div th:insert="fragments/forms :: alignedInput ('password', 'password', 'password')"></div>
+    <div th:insert="fragments/forms :: alignedInput ('password', 'repeatPassword', 'repeat_password')"></div>
 </div>
 </body>
-<head>
-    <meta charset="UTF-8">
-</head>
 </html>
